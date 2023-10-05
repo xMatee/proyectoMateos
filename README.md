@@ -27,5 +27,8 @@ Es una aplicación de gestión financiera diseñada para ayudarte a llevar un re
 9. **Estadísticas Mensuales:** Como usuario registrado, quiero ver estadísticas mensuales que muestren el total de mis gastos por mes para identificar tendencias a lo largo del tiempo.
 
 10. **Inicio de Sesión Segura:** Como usuario registrado, quiero iniciar sesión de forma segura con mi nombre de usuario y contraseña para proteger mis datos financieros personales.
+11. **Asociación de Productos a Gastos:** Como usuario registrado, quiero asociar productos comprados a mis gastos para tener un registro detallado de mis compras.
+12. **Creación de Subcategorías:** Como usuario registrado, quiero poder crear subcategorías dentro de las categorías principales para una clasificación más detallada de mis gastos.
+12. **Asignación de Subcategorías a Gastos:** Como usuario registrado, quiero poder asignar subcategorías a mis gastos para una categorización más precisa y detallada.
 
  
