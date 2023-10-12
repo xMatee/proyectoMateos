@@ -8,7 +8,7 @@ import {
 } from "../../DB/queries/users.js";
 
 export default async function (fastify, opts) {
-    // Obtener Todos los usuarios 
+    //Obtener Todos los usuarios 
     fastify.get("/", async (request, reply) => {
         try {
             const res = await query(getUsersQuery);
@@ -18,7 +18,7 @@ export default async function (fastify, opts) {
             reply.status(500).send("Error del servidor");
         }
     });
-    // Obtener usuario x id
+    //Obtener usuario x id
     fastify.get("/:id", async (request, reply) => {
         const { id } = request.params;
         try {
