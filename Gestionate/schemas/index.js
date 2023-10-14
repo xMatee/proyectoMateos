@@ -1,7 +1,7 @@
-import expenseSchemas from "./expenses";
-import incomeSchema from "./incomes";
-import userSchema from "./user";
-import productSchema from "./products";
+import expenseSchemas from "./expenses.js";
+import incomeSchema from "./incomes.js";
+import userSchema from "./user.js";
+import productSchema from "./products.js";
 
 const genericLinkSchema = {
     $id: "genericLinkSchema",
