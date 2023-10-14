@@ -32,7 +32,7 @@ export default async function (fastify, opts) {
     });
 
     //Crear un nuevo gasto
-    fastify.post("/", async function (request, reply) {
+    fastify.post("/", { schema: createExpenseSchema }, async function (request, reply) {
         const { cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id } = request.body;
         try {
             const res = await query(insertGastoQuery, [cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id]);

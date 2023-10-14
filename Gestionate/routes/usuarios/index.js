@@ -34,7 +34,7 @@ export default async function (fastify, opts) {
     });
 
     //Crear usuario
-    fastify.post("/", async (request, reply) => {
+    fastify.post("/", { schema: createUserSchema }, async (request, reply) => {
         const { nombre, email, contrasena } = request.body;
         try {
             const res = await query(createUserQuery, [nombre, email, contrasena]);
