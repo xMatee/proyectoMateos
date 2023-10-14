@@ -156,7 +156,7 @@ response: {
 **Descripción:**
 Permite a los usuarios cerrar sesión con su cuenta
 **Ruta:**
-POST /api/usuarios/
+PUT /api/usuarios/
 Schem:
 {
   "$id": "logoutUserSchema",
@@ -351,7 +351,7 @@ POST /api/gastos/{gasto_id}/categorias/{categoria_id}/subcategoria/{categoria_id
 Schem:
 {
   "$id": "addExpenseToSubcategorySchema",
-  "type": "object",
+  "type": "object",  
   "properties": {
     "categoria_id": {
       "type": "integer",
@@ -763,10 +763,6 @@ Schem:
   "$id": "editProductSchema",
   "type": "object",
   "properties": {
-    "producto_id": {
-      "type": "string",
-      "description": "ID del producto."
-    },
     "nombre": {
       "type": "string",
       "description": "Nuevo nombre del producto."
@@ -775,9 +771,8 @@ Schem:
       "type": "string",
       "description": "Nueva descripción del producto."
     }
-  }
-}
-
+  },
+"required": ["nombre", "descripcion"],
 "response": {
 200: {
   "$id": "productEditedResponseSchema",
@@ -788,7 +783,7 @@ Schem:
       "description": "Mensaje de éxito."
     }
   }
-}
+},
 400: {
 {
   "$id": "errorResponseSchema",
