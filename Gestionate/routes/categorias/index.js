@@ -40,7 +40,7 @@ export default async function (fastify, opts) {
     });
 
     //rear una nueva categoría
-    fastify.post("/", async function (request, reply) {
+    fastify.post("/", { schema: createExpenseCategorySchema }, async function (request, reply) {
         const { nombre } = request.body;
         try {
             const res = await query(insertCategoriaQuery, [nombre]);
@@ -50,7 +50,6 @@ export default async function (fastify, opts) {
             reply.status(500).send("Error del servidor");
         }
     });
-
     //Actualizar una categoría por su Id
     fastify.put("/:id", async function (request, reply) {
         const id = request.params.id;
