@@ -16,7 +16,7 @@ import {
 } from '../../DB/queries/subcategorias.js';
 
 export default async function (fastify, opts) {
-    //Obtener todas las categorís
+    //Obtener todas las categorías
     fastify.get("/", async function (request, reply) {
         try {
             const res = await query(getAllCategoriasQuery);
