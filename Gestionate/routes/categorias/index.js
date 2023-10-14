@@ -6,7 +6,6 @@ import {
     updateCategoriaQuery,
     deleteCategoriaQuery,
 } from "../../DB/queries/categorias.js";
-
 import {
     crearSubcategoriaQuery,
     editarSubcategoriaQuery,
@@ -14,6 +13,7 @@ import {
     getSubcategoriaPorIdYCategoriaQuery,
     getSubcategoriasPorCategoriaQuery
 } from '../../DB/queries/subcategorias.js';
+import schemas from '../../schemas/index.js';
 
 export default async function (fastify, opts) {
     //Obtener todas las categorías
@@ -40,7 +40,7 @@ export default async function (fastify, opts) {
     });
 
     //rear una nueva categoría
-    fastify.post("/", { schema: createExpenseCategorySchema }, async function (request, reply) {
+    fastify.post("/", { schema: schemas.createExpenseCategorySchema }, async function (request, reply) {
         const { nombre } = request.body;
         try {
             const res = await query(insertCategoriaQuery, [nombre]);

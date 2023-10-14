@@ -1,4 +1,6 @@
 import { query } from '../../DB/db.js';
+import schemas from "../../schemas/index.js"
+
 import {
     getUsersQuery,
     getUserByIdQuery,
@@ -34,7 +36,7 @@ export default async function (fastify, opts) {
     });
 
     //Crear usuario
-    fastify.post("/", { schema: createUserSchema }, async (request, reply) => {
+    fastify.post("/", { schema: schemas.createUserSchema }, async (request, reply) => {
         const { nombre, email, contrasena } = request.body;
         try {
             const res = await query(createUserQuery, [nombre, email, contrasena]);
@@ -75,4 +77,4 @@ export default async function (fastify, opts) {
             reply.status(500).send("Error del servidor");
         }
     });
-}   
+}
