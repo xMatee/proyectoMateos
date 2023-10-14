@@ -41,7 +41,6 @@ export default async function (fastify, opts) {
 
     //crear una nueva categoría
     fastify.post("/", async function (request, reply) {
-        schema: createExpenseCategorySchema
         const { nombre } = request.body;
         try {
             const res = await query(insertCategoriaQuery, [nombre]);
