@@ -423,7 +423,13 @@ const expenseSchemas = {
     expenseDeletedResponseSchema,
     expenseSearchResponseSchema,
     monthlyExpenseStatisticsResponseSchema,
-    productAssociatedToExpenseResponseSchema
+    productAssociatedToExpenseResponseSchema,
+    expenseGraphicResponseSchema,
+    expenseListResponseSchema,
+    addExpenseToSubategorySchema,
+    addExpenseToCategorySchema,
+    createExpenseSubcategorySchema,
+    createExpenseCategorySchema
 }
 
 export default expenseSchemas;

@@ -16,7 +16,7 @@ import {
 } from '../../DB/queries/subcategorias.js';
 
 export default async function (fastify, opts) {
-    //Obtener todas las categorís
+    //Obtener todas las categorías
     fastify.get("/", async function (request, reply) {
         try {
             const res = await query(getAllCategoriasQuery);
@@ -39,8 +39,9 @@ export default async function (fastify, opts) {
         }
     });
 
-    //rear una nueva categoría
+    //crear una nueva categoría
     fastify.post("/", async function (request, reply) {
+        schema: createExpenseCategorySchema
         const { nombre } = request.body;
         try {
             const res = await query(insertCategoriaQuery, [nombre]);
