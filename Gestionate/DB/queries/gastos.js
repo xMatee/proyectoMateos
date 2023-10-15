@@ -24,3 +24,5 @@ export const deleteGastoQuery = `
   WHERE id = $1
   RETURNING *;
 `;
+
+

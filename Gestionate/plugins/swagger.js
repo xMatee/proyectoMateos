@@ -9,8 +9,8 @@ export default fp(async (fastify, opts) => {
     fastify.register(swagger, {
         openapi: {
             info: {
-                title: 'Probando OPEN API en softest',
-                description: 'Testing the softest OpenAPI API',
+                title: 'OPEN API de Gestionate',
+                description: 'Gestionate',
                 version: '0.1.0',
             },
             servers: [
@@ -47,13 +47,5 @@ export default fp(async (fastify, opts) => {
             preHandler: function (request, reply, next) { next() },
         },
         staticCSP: false,
-        // transformStaticCSP: (header) => header,
-        // transformSpecification: (swaggerObject, request, reply) => { return swaggerObject },
-        // transformSpecificationClone: true
     })
-
-    // fastify.ready(() => {
-    //   fastify.swagger();
-    // });
-
 })

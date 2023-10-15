@@ -1,7 +1,7 @@
 import expenseSchemas from "./expenses.js";
 import incomeSchema from "./incomes.js";
 import userSchema from "./user.js";
-import productSchema from "./products.js";
+import productSchemas from "./products.js";
 
 const genericLinkSchema = {
     $id: "genericLinkSchema",
@@ -31,14 +31,13 @@ const errorResponseSchema = {
     "$id": "errorResponseSchema",
     "type": "object",
     "properties": {
-      "error": {
-        "type": "string",
-        "description": "Mensaje de error."
-      }
+        "error": {
+            "type": "string",
+            "description": "Mensaje de error."
+        }
     }
-  };
+};
 
-// Quede en la 5 como ejemplo, cuando esten corregidos seguir agregando
 
 const schemas = {
     genericLinkSchema,
@@ -48,6 +47,6 @@ const schemas = {
     ...expenseSchemas,
     ...incomeSchema,
     ...userSchema,
-    ...productSchema
+    ...productSchemas
 }
 export default schemas; 
