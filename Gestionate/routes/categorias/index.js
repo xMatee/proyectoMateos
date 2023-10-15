@@ -114,7 +114,7 @@ export default async function (fastify, opts) {
     });
 
     //crear una subcategoría
-    fastify.post('/:categoriaId/subcategorias', {
+    fastify.post('/:categoriaId/subcategorias', {schema: createExpenseSubcategorySchema}, {
         handler: async function (request, reply) {
             const { nombre } = request.body;
             const { categoriaId } = request.params;
