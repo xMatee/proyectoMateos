@@ -628,3 +628,42 @@ ALTER TABLE ONLY public.subcategorias
 -- PostgreSQL database dump complete
 --
 
+
+-- Datos agregados para las pruebas:
+
+-- Usuarios
+INSERT INTO usuarios (id, nombre, email, contrasena)
+VALUES (50, 'Don Pepito', 'pepito@outlook.com', '123456');
+INSERT INTO usuarios (id, nombre, email, contrasena)
+VALUES (51, 'Don Jose', 'jose@hotmail.com', '123456');
+
+-- Categorias
+INSERT INTO categorias (id, nombre) VALUES (60, 'Comida');
+INSERT INTO categorias (id, nombre) VALUES (61, 'Ropa');
+
+-- Subcategorias
+INSERT INTO subcategorias (id, nombre, categoria_id) VALUES (70, 'Dulces', 60);
+INSERT INTO subcategorias (id, nombre, categoria_id) VALUES (71 ,'Camisas', 61);
+
+-- Productos
+INSERT INTO productos (id, nombre) VALUES (80, 'Chivito');
+INSERT INTO productos (id, nombre) VALUES (81, 'Camisa de jean');
+
+-- Gastos
+INSERT INTO gastos (id, cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id)
+VALUES (100, 500, '2023-08-31', 'Chivito al plato para 1 con guarnición y postre - Pizzeria Piccola', 60, 70, 50);
+
+INSERT INTO gastos (id, cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id)
+VALUES (101, 600, '2023-08-31', 'Camisa de jean oscura con botones metalicos - Jack and Jones', 61, 71, 51);
+
+-- GastosProductos
+INSERT INTO gastos_productos (id, gasto_id, producto_id) VALUES (90, 100, 80);
+INSERT INTO gastos_productos (id, gasto_id, producto_id) VALUES (91, 101, 81);
+
+-- Ingresos
+INSERT INTO ingresos (id, cantidad, fecha, descripcion, usuario_id) 
+VALUES (120, 1000, '2023-08-31', 'Venta de una licuadora', 50);
+INSERT INTO ingresos (id, cantidad, fecha, descripcion, usuario_id) 
+VALUES (121, 1200, '2023-08-31', 'Venta de una camisa', 51);
+
+--

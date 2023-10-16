@@ -41,6 +41,7 @@ export default async function (fastify, opts) {
         const { cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id } = request.body;
         try {
             const res = await query(insertGastoQuery, [cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id]);
+            reply.code(201);
             return res.rows[0];
         } catch (error) {
             console.error("Error al crear el gasto", error.message);
@@ -66,6 +67,7 @@ export default async function (fastify, opts) {
         const id = request.params.id;
         try {
             const res = await query(deleteGastoQuery, [id]);
+            reply.code(204);
             return res.rows[0];
         } catch (error) {
             console.error("Error al eliminar el gasto", error.message);
@@ -73,7 +75,7 @@ export default async function (fastify, opts) {
         }
     });
 
-
+    
     //PRODUCTOS ASOCIADOS A GASTOS
 
     //ASOCIAR PRODUCTO
@@ -81,6 +83,7 @@ export default async function (fastify, opts) {
         const { gasto_id, producto_id } = request.params;
         try {
             const res = await query(associateProductoToGastoQuery, [gasto_id, producto_id]);
+            reply.code(201);
             return res.rows[0];
         } catch (error) {
             console.error("Error al asociar producto a gasto", error.message);
@@ -93,6 +96,7 @@ export default async function (fastify, opts) {
         const { gasto_id, producto_id } = request.params;
         try {
             const res = await query(disassociateProductoFromGastoQuery, [gasto_id, producto_id]);
+            reply.code(204);
             return res.rows[0];
         } catch (error) {
             console.error("Error al desasociar producto de gasto", error.message);

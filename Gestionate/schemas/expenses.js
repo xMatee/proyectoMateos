@@ -62,14 +62,10 @@ const createExpenseCategorySchema = {
         "description": {
             "type": "integer",
             "description": "Descripción de la categoría."
-        },
-        "usuario_id": {
-            "type": "integer",
-            "description": "ID del usuario al que pertenece esta categoría."
-        },
+        }
     },
 
-    "required": ["nombre", "usuario_id"],
+    "required": ["nombre"],
     response: {
         201: {
             "$id": "expenseCategoryCreatedResponseSchema",
@@ -109,13 +105,9 @@ const createExpenseSubcategorySchema = {
         "categoria_id": {
             "type": "integer",
             "description": "ID de la categoría principal a la que pertenece esta subcategoría."
-        },
-        "usuario_id": {
-            "type": "integer",
-            "description": "ID del usuario al que pertenece esta subcategoría."
         }
     },
-    "required": ["nombre", "categoria_id", "usuario_id"],
+    "required": ["nombre", "categoria_id"],
 
     "response": {
         201: {

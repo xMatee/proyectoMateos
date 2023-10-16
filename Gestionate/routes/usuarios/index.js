@@ -40,6 +40,7 @@ export default async function (fastify, opts) {
         const { nombre, email, contrasena } = request.body;
         try {
             const res = await query(createUserQuery, [nombre, email, contrasena]);
+            reply.code(201);
             return res.rows[0];
         } catch (error) {
             console.error("Error al crear usuario", error.message);

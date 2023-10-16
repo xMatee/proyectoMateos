@@ -24,6 +24,7 @@ export default async function (fastify, opts) {
 
         try {
             const res = await query(insertProductoQuery, [nombre]);
+            reply.code(201);
             return res.rows[0];
         } catch (error) {
             console.error("Error al crear el producto no asociado a un gasto", error.message);
@@ -44,9 +45,9 @@ export default async function (fastify, opts) {
 
     fastify.put("/:id", { schema: schemas.editProductSchema }, async (request, reply) => {
         const id = request.params.id;
-        const { nombre, gasto_id } = request.body;
+        const { nombre } = request.body;
         try {
-            const res = await query(updateProductoQuery, [nombre, gasto_id, id]);
+            const res = await query(updateProductoQuery, [nombre, id]);
             return res.rows[0];
         } catch (error) {
             console.error("Error al actualizar el producto", error.message);
@@ -58,6 +59,7 @@ export default async function (fastify, opts) {
         const id = request.params.id;
         try {
             const res = await query(deleteProductoQuery, [id]);
+            reply.code(204);
             return res.rows[0];
         } catch (error) {
             console.error("Error al eliminar el producto", error.message);
