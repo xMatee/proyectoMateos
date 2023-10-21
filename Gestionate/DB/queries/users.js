@@ -1,6 +1,6 @@
 
 export const getUsersQuery = `
-  SELECT * FROM public.usuarios;
+SELECT * FROM usuarios WHERE estado = 1;
 `;
 
 export const getUserByIdQuery = `
@@ -21,5 +21,5 @@ export const updateUserQuery = `
 `;
 
 export const deleteUserQuery = `
-  DELETE FROM public.usuarios WHERE id = $1;
+UPDATE usuarios SET estado = -1 WHERE id = $1;
 `;

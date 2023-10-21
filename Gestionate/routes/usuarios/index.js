@@ -16,6 +16,13 @@ import {
     deleteGastoQuery,
 } from "../../DB/queries/gastos.js";
 import {
+    getAllIngresosQuery,
+    getIngresoByIdQuery,
+    insertIngresoQuery,
+    updateIngresoQuery,
+    deleteIngresoQuery,
+} from "../../DB/queries/ingresos.js";
+import {
     associateProductoToGastoQuery,
     disassociateProductoFromGastoQuery,
 } from "../../DB/queries/productos.js";
@@ -179,6 +186,72 @@ export default async function (fastify, opts) {
             return res.rows[0];
         } catch (error) {
             console.error("Error al desasociar producto de gasto", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    // INGRESOS
+
+    // Obtener todos los ingresos de un usuario
+    fastify.get("/:usuario_id/ingresos", async function (request, reply) {
+        const { usuario_id } = request.params;
+        try {
+            const res = await query(getAllIngresosQuery, [usuario_id]);
+            return res.rows;
+        } catch (error) {
+            console.error("Error al obtener ingresos", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    // Obtener un ingreso de un usuario por su ID
+    fastify.get("/:usuario_id/ingresos/:id", async function (request, reply) {
+        const { usuario_id, id } = request.params;
+        try {
+            const res = await query(getIngresoByIdQuery, [usuario_id, id]);
+            return res.rows[0];
+        } catch (error) {
+            console.error("Error al obtener el ingreso", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    // Crear un nuevo ingreso para un usuario
+    fastify.post("/:usuario_id/ingresos", { schema: schemas.createIncomeSchema }, async function (request, reply) {
+        const { cantidad, fecha, descripcion } = request.body;
+        const { usuario_id } = request.params;
+        try {
+            const res = await query(insertIngresoQuery, [cantidad, fecha, descripcion, usuario_id]);
+            reply.code(201);
+            return res.rows[0];
+        } catch (error) {
+            console.error("Error al crear el ingreso", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    // Actualizar un ingreso de un usuario por su ID
+    fastify.put("/:usuario_id/ingresos/:id", { schema: schemas.editIncomeSchema }, async function (request, reply) {
+        const { usuario_id, id } = request.params;
+        const { cantidad, fecha, descripcion } = request.body;
+        try {
+            const res = await query(updateIngresoQuery, [cantidad, fecha, descripcion, usuario_id, id]);
+            return res.rows[0];
+        } catch (error) {
+            console.error("Error al actualizar el ingreso", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    // Eliminar un ingreso de un usuario por su ID
+    fastify.delete("/:usuario_id/ingresos/:id", { schema: schemas.incomeDeletedResponseSchema }, async function (request, reply) {
+        const { usuario_id, id } = request.params;
+        try {
+            const res = await query(deleteIngresoQuery, [usuario_id, id]);
+            reply.code(204);
+            return res.rows[0];
+        } catch (error) {
+            console.error("Error al eliminar el ingreso", error.message);
             reply.status(500).send("Error del servidor");
         }
     });
