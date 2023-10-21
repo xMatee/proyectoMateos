@@ -1,5 +1,5 @@
 export const getAllCategoriasQuery = `
-  SELECT * FROM categorias;
+SELECT * FROM categorias WHERE estado = 1;
 `;
 
 export const getCategoriaByIdQuery = `
@@ -20,9 +20,8 @@ export const updateCategoriaQuery = `
 `;
 
 export const deleteCategoriaQuery = `
-  DELETE FROM categorias
-  WHERE id = $1
-  RETURNING *;
+UPDATE categorias SET estado = -1 WHERE id = $1;
+
 `;
 
 export const getAllSubcategoriasQuery = `
@@ -30,7 +29,7 @@ export const getAllSubcategoriasQuery = `
 `;
 
 export const getSubcategoriaByIdQuery = `
-  SELECT * FROM subcategorias WHERE id = $1;
+  SELECT * FROM subcategorias WHERE estado = 1;
 `;
 
 export const insertSubcategoriaQuery = `
@@ -47,7 +46,5 @@ export const updateSubcategoriaQuery = `
 `;
 
 export const deleteSubcategoriaQuery = `
-  DELETE FROM subcategorias
-  WHERE id = $1
-  RETURNING *;
+  UPDATE subcategorias SET estado = -1
 `;
