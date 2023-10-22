@@ -8,6 +8,7 @@ import {
     updateUserQuery,
     deleteUserQuery
 } from "../../DB/queries/users.js";
+
 import {
     getAllGastosQuery,
     getGastoByIdQuery,
@@ -256,3 +257,4 @@ export default async function (fastify, opts) {
         }
     });
 }
+

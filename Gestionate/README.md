@@ -19,6 +19,12 @@ For production mode
 
 Run the test cases.
 
-## Learn More
+### `DB`
+Ejecutar el SQL ubicado en la carpeta superior de DB, los datos de la db son: 
+HOST=localhost
+PORT=5432
+USER=postgres
+DATABASE=ProyectoDesa
+PASSWORD=postgres
 
-To learn Fastify, check out the [Fastify documentation](https://www.fastify.io/docs/latest/).
+
