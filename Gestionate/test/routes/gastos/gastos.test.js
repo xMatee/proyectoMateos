@@ -6,7 +6,7 @@ test('get all expenses', async (t) => {
     t.teardown(() => app.close());
     const res = await app.inject({
         method: 'GET',
-        url: '/gastos'
+        url: '/usuarios/51/gastos'
     });
 
     t.equal(res.statusCode, 200, 'El código de respuesta es 200 (OK)');
@@ -17,7 +17,7 @@ test('get expense by id', async (t) => {
     t.teardown(() => app.close());
     const res = await app.inject({
         method: 'GET',
-        url: '/gastos/101'
+        url: '/usuarios/51/gastos/101'
     });
     const payload = JSON.parse(res.payload);
     t.equal(res.statusCode, 200, 'El código de respuesta es 200 (OK)');
@@ -37,7 +37,7 @@ test('create expense', async (t) => {
     t.teardown(() => app.close());
     const res = await app.inject({
         method: 'POST',
-        url: '/gastos',
+        url: '/usuarios/51/gastos',
         payload: {
             cantidad: 200,
             fecha: '2023-11-11',
@@ -55,11 +55,11 @@ test('update expense', async (t) => {
     t.teardown(() => app.close());
     const res = await app.inject({
         method: 'PUT',
-        url: '/gastos/100',
+        url: '/usuarios/51/gastos/121',
         payload: {
-            cantidad: 200,
+            cantidad: 700,
             fecha: '2023-11-11',
-            descripcion: 'Pastel',
+            descripcion: 'Venta de una camisa de jean',
             categoria_id: 60,
             subcategoria_id: 70,
             usuario_id: 26
@@ -73,7 +73,7 @@ test('delete expense', async (t) => {
     t.teardown(() => app.close());
     const res = await app.inject({
         method: 'DELETE',
-        url: '/gastos/100'
+        url: '/usuarios/50/gastos/120'
     });
     t.equal(res.statusCode, 204, 'El código de respuesta es 204 (No Content)');
 })
@@ -82,10 +82,10 @@ test('Associate expense to product', async (t) => {
     const app = await build(t);
     t.teardown(() => app.close());
     const res = await app.inject({
-        method: 'PUT',
-        url: '/gastos/100/productos/80',
+        method: 'POST',
+        url: '/usuarios/51/gastos/101/productos/81',
     });
-    t.equal(res.statusCode, 200, 'El código de respuesta es 200 (OK)');
+    t.equal(res.statusCode, 201, 'El código de respuesta es 201 (OK)');
 });
 
 test('disassociate expense of product', async (t) => {
@@ -93,7 +93,7 @@ test('disassociate expense of product', async (t) => {
     t.teardown(() => app.close());
     const res = await app.inject({
         method: 'DELETE',
-        url: '/gastos/100/productos/80',
+        url: '/usuarios/51/gastos/101/productos/81',
     });
     t.equal(res.statusCode, 204, 'El código de respuesta es 204 (No Content)');
 });
