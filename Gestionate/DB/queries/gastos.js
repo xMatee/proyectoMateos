@@ -1,9 +1,9 @@
 export const getAllGastosQuery = `
-  SELECT * FROM gastos;
+  SELECT * FROM gastos WHERE usuario_id = $1;
 `;
 
 export const getGastoByIdQuery = `
-  SELECT * FROM gastos WHERE id = $1;
+  SELECT * FROM gastos WHERE usuario_id = $1 AND id = $2;
 `;
 
 export const insertGastoQuery = `
@@ -14,14 +14,14 @@ export const insertGastoQuery = `
 
 export const updateGastoQuery = `
   UPDATE gastos
-  SET cantidad = $2, fecha = $3, descripcion = $4, categoria_id = $5, subcategoria_id = $6, usuario_id = $7
-  WHERE id = $1
+  SET cantidad = $1, fecha = $2, descripcion = $3, categoria_id = $4, subcategoria_id = $5, usuario_id = $6
+  WHERE id = $7
   RETURNING *;
 `;
 
 export const deleteGastoQuery = `
   DELETE FROM gastos
-  WHERE id = $1
+  WHERE usuario_id = $1 AND id = $2
   RETURNING *;
 `;
 
