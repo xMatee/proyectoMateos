@@ -1,21 +1,19 @@
 export const getSubcategoriasPorCategoriaQuery = `
-SELECT * FROM Subcategorias WHERE categoria_id = $1;
+SELECT * FROM subcategorias WHERE categoria_id = $1 AND estado = 1;
 `;
 
 export const getSubcategoriaPorIdYCategoriaQuery = `
-SELECT * FROM Subcategorias WHERE id = $1 AND categoria_id = $2;
+SELECT * FROM subcategorias WHERE id = $1 AND categoria_id = $2 AND estado = 1;
 `;
 
 export const crearSubcategoriaQuery = `
-INSERT INTO Subcategorias (nombre, categoria_id) VALUES ($1, $2) RETURNING *;
+INSERT INTO subcategorias (nombre, categoria_id, estado) VALUES ($1, $2, 1) RETURNING *;
 `;
 
 export const editarSubcategoriaQuery = `
-UPDATE Subcategorias SET nombre = $1 WHERE id = $2 AND categoria_id = $3 RETURNING *;
+UPDATE subcategorias SET nombre = $1, estado = 1 WHERE id = $2 AND categoria_id = $3 AND estado = 1 RETURNING *;
 `;
 
 export const eliminarSubcategoriaQuery = `
-DELETE FROM Subcategorias WHERE id = $1 AND categoria_id = $2 RETURNING *;
+UPDATE subcategorias SET estado = -1 WHERE id = $1 AND categoria_id = $2 AND estado = 1 RETURNING *;
 `;
-
-
