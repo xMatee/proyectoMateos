@@ -1,0 +1,17 @@
+<ol class="list-group">
+    <li class="list-group-item" *ngIf="!isLoggedIn(); else loggedIn">
+        <a routerLink="/auth/login" class="btn btn-primary text-white d-block mb-2">Login</a>
+        <a routerLink="/auth/register" class="btn btn-primary text-white d-block">Registro</a>
+    </li>
+    <ng-template #loggedIn>
+        <li class="list-group-item">
+            <a (click)="logout()" class="btn btn-primary text-white">Logout</a>
+        </li>
+        <li class="list-group-item">
+            <a routerLink="/gastos" class="btn btn-primary text-white">Gastos</a>
+        </li>
+        <li class="list-group-item">
+            <a routerLink="/ingresos" class="btn btn-primary text-white">Ingresos</a>
+        </li>
+    </ng-template>
+</ol>

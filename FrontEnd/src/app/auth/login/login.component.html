@@ -1,0 +1,17 @@
+<div class="container">
+    <h2>Iniciar Sesión</h2>
+    <form (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" [(ngModel)]="usuario.email" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="text" class="form-control" [(ngModel)]="usuario.password" id="password" name="password"
+                required>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="onSubmit()">Iniciar Sesión</button>
+    </form>
+</div>
+
+{{ usuario | json }}
