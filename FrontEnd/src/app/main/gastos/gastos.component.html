@@ -1,1 +1,22 @@
-<p>gastos works!</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cantidad</th>
+            <th>Fecha</th>
+            <th>Descripción</th>
+            <th>Categoría ID</th>
+            <th>Subcategoría ID</th>
+            <th>Usuario ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let dato of datosA">
+            <td>{{ dato.cantidad }}</td>
+            <td>{{ dato.fecha }}</td>
+            <td>{{ dato.descripcion }}</td>
+            <td>{{ dato.categoria_id }}</td>
+            <td>{{ dato.subcategoria_id }}</td>
+            <td>{{ dato.usuario_id }}</td>
+        </tr>
+    </tbody>
+</table>

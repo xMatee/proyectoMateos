@@ -4,13 +4,15 @@ import { CommonModule } from '@angular/common';
 import { MainRoutingModule } from './main-routing.module';
 import { GastosComponent } from './gastos/gastos.component';
 import { IngresosComponent } from './ingresos/ingresos.component';
+import { GastosService } from './gastos/gastos.service';
 
 
 @NgModule({
-  declarations: [GastosComponent, IngresosComponent],
+  declarations: [GastosComponent, IngresosComponent
+  ],
   imports: [
     CommonModule,
-    MainRoutingModule
+    MainRoutingModule,
   ]
 })
 export class MainModule { }
