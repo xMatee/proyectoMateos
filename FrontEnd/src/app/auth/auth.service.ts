@@ -18,20 +18,10 @@ export class AuthService {
   private saveUserToLocalStorage(user: User) {
     localStorage.setItem(this.USER_KEY, JSON.stringify(user))
   }
-  // doLogin(email: string, password: string): boolean {
-  //   //TODO Hacer un POST al backend con email y password
-  //   const usuarioObtenidoDelBackend = {
-  //     id: 1,
-  //     password: "pepe",
-  //     email: "pepe@gmail.com"
-  //   }
-  //   this.saveUserToLocalStorage(usuarioObtenidoDelBackend)
-  //   return true
-  // }
   doRegister(name: string, email: string, password: string): Observable<User> {
 
     const newUser: User = {
-      id: 2, // Supongamos que el nuevo usuario tiene un ID diferente.
+      id: 2,
       name: name,
       email: email,
       password: password
