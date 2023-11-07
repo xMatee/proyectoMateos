@@ -44,6 +44,7 @@ export default async function (fastify, opts) {
         const { nombre } = request.body;
         try {
             const res = await query(insertCategoriaQuery, [nombre]);
+            reply.code(201);
             return res.rows[0];
         } catch (error) {
             console.error("Error al crear la categoría", error.message);
@@ -68,7 +69,8 @@ export default async function (fastify, opts) {
         const id = request.params.id;
         try {
             const res = await query(deleteCategoriaQuery, [id]);
-            return res.rows[0];
+            reply.code(204);
+            return;
         } catch (error) {
             console.error("Error al eliminar la categoría", error.message);
             reply.status(500).send("Error del servidor");
@@ -121,6 +123,7 @@ export default async function (fastify, opts) {
 
             try {
                 const queryResult = await query(crearSubcategoriaQuery, [nombre, categoriaId]);
+                reply.code(201);
                 return queryResult.rows[0];
             } catch (error) {
                 console.error('Error al crear subcategoría:', error.message);
@@ -130,7 +133,7 @@ export default async function (fastify, opts) {
     });
 
     //Editar una subcategoría
-    fastify.put('/categorias/:categoriaId/subcategorias/:subcategoriaId', {
+    fastify.put('/:categoriaId/subcategorias/:subcategoriaId', {
         handler: async function (request, reply) {
             const { subcategoriaId } = request.params;
             const { nombre } = request.body;
@@ -150,7 +153,7 @@ export default async function (fastify, opts) {
     });
 
     //Eliminar una subcategoría
-    fastify.delete('/categorias/:categoriaId/subcategorias/:subcategoriaId', {
+    fastify.delete('/:categoriaId/subcategorias/:subcategoriaId', {
         handler: async function (request, reply) {
             const { subcategoriaId } = request.params;
 
@@ -159,7 +162,8 @@ export default async function (fastify, opts) {
                 if (queryResult.rows.length === 0) {
                     reply.status(404).send('Subcategoría no encontrada');
                 } else {
-                    return queryResult.rows[0];
+                    reply.code(204);
+                    return;
                 }
             } catch (error) {
                 console.error('Error al eliminar subcategoría:', error.message);
