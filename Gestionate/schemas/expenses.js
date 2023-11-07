@@ -69,29 +69,7 @@ const createExpenseCategorySchema = {
         },
     },
 
-    "required": ["nombre", "usuario_id"],
-    response: {
-        201: {
-            "$id": "expenseCategoryCreatedResponseSchema",
-            "type": "object",
-            "properties": {
-                "mensaje": {
-                    "type": "string",
-                    "description": "Mensaje de éxito."
-                }
-            }
-        },
-        400: {
-            "$id": "errorResponseSchema",
-            "type": "object",
-            "properties": {
-                "error": {
-                    "type": "string",
-                    "description": "Mensaje de error."
-                }
-            }
-        }
-    }
+    "required": ["nombre", "usuario_id"]
 }
 
 const createExpenseSubcategorySchema = {
@@ -115,30 +93,7 @@ const createExpenseSubcategorySchema = {
             "description": "ID del usuario al que pertenece esta subcategoría."
         }
     },
-    "required": ["nombre", "categoria_id", "usuario_id"],
-
-    "response": {
-        201: {
-            "$id": "subcategoryCreatedResponseSchema",
-            "type": "object",
-            "properties": {
-                "mensaje": {
-                    "type": "string",
-                    "description": "Mensaje de éxito."
-                }
-            }
-        },
-        400: {
-            "$id": "errorResponseSchema",
-            "type": "object",
-            "properties": {
-                "error": {
-                    "type": "string",
-                    "description": "Mensaje de error."
-                }
-            }
-        }
-    }
+    "required": ["nombre", "categoria_id", "usuario_id"]
 }
 
 const addExpenseToCategorySchema = {

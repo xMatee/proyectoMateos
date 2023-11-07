@@ -1,6 +1,7 @@
 import path from 'path'
 import AutoLoad from '@fastify/autoload'
 import { fileURLToPath } from 'url'
+import fastifyFormbody from '@fastify/formbody'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -10,6 +11,7 @@ dotenv.config();
 export const options = {}
 
 export default async function (fastify, opts) {
+  fastify.register(fastifyFormbody)
   // Place here your custom code!
 
   // Do not touch the following lines

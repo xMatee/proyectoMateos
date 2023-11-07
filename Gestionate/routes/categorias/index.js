@@ -40,7 +40,7 @@ export default async function (fastify, opts) {
     });
 
     //rear una nueva categoría
-    fastify.post("/", { schema: schemas.createExpenseCategorySchema }, async function (request, reply) {
+    fastify.post("/", async function (request, reply) {
         const { nombre } = request.body;
         try {
             const res = await query(insertCategoriaQuery, [nombre]);
@@ -114,7 +114,7 @@ export default async function (fastify, opts) {
     });
 
     //crear una subcategoría
-    fastify.post('/:categoriaId/subcategorias', {schema: createExpenseSubcategorySchema}, {
+    fastify.post('/:categoriaId/subcategorias', {
         handler: async function (request, reply) {
             const { nombre } = request.body;
             const { categoriaId } = request.params;
