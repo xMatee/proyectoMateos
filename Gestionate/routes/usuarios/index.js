@@ -27,7 +27,17 @@ import {
     associateProductoToGastoQuery,
     disassociateProductoFromGastoQuery,
 } from "../../DB/queries/productos.js";
-
+class Gasto {
+    constructor(id, cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id) {
+        this.id = id;
+        this.cantidad = cantidad;
+        this.fecha = fecha;
+        this.descripcion = descripcion;
+        this.categoria_id = categoria_id;
+        this.subcategoria_id = subcategoria_id;
+        this.usuario_id = usuario_id
+    }
+}
 export default async function (fastify, opts) {
     // Obtener Todos los usuarios
     fastify.get("/", async (request, reply) => {
@@ -104,7 +114,9 @@ export default async function (fastify, opts) {
         const { usuario_id } = request.params;
         try {
             const res = await query(getAllGastosQuery, [usuario_id]);
-            return res.rows;
+            const gastos = res.rows.map(row => new Gasto(row.id, row.cantidad, row.fecha, row.descripcion, row.categoria_id, row.subcategoria_id, row.usuario_id));
+            console.log(gastos)
+            return gastos;
         } catch (error) {
             console.error("Error al obtener gastos", error.message);
             reply.status(500).send("Error del servidor");

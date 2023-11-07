@@ -1,4 +1,5 @@
 export interface Gasto {
+    id: number,
     cantidad: string,
     fecha: string,
     descripcion: string,

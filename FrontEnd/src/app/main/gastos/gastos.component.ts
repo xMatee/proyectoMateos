@@ -7,13 +7,12 @@ import { Gasto } from './gasto';
   styleUrls: ['./gastos.component.css']
 })
 export class GastosComponent implements OnInit {
-  datosA: Array<Gasto> = []
+  datosA: Gasto[] = []
   constructor(private gastosService: GastosService) { }
   ngOnInit(): void {
     this.gastosService.ConsultarGastos().subscribe(datos => {
-      for (let i = 0; i < datos.length; i++) {
-        this.datosA.push(datos[i])
-      }
-    })
+      this.datosA = datos
+    }
+    )
   }
 }
