@@ -12,6 +12,6 @@ export class GastosService {
     constructor(private http: HttpClient) { }
 
     ConsultarGastos(): Observable<Gasto[]> {
-        return this.http.get<Gasto[]>(`${this.server}/usuarios/3/gastos`);
+        return this.http.get<Gasto[]>(`/usuarios/3/gastos`);
     }
 }

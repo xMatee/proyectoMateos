@@ -1,7 +1,5 @@
 import { query } from '../../DB/db.js';
 import schemas from "../../schemas/index.js";
-import fastify from 'fastify';
-import fastifyCors from 'fastify-cors';
 import {
     getUsersQuery,
     getUserByIdQuery,
@@ -28,6 +26,20 @@ import {
     associateProductoToGastoQuery,
     disassociateProductoFromGastoQuery,
 } from "../../DB/queries/productos.js";
+import {
+    getAllCategoriasByUserQuery,
+    getCategoriaByIdAndUserQuery,
+    insertCategoriaForUserQuery,
+    updateCategoriaForUserQuery,
+    deleteCategoriaForUserQuery,
+} from "../../DB/queries/categorias.js";
+import {
+    crearSubcategoriaQuery,
+    editarSubcategoriaQuery,
+    eliminarSubcategoriaQuery,
+    getSubcategoriaPorIdYCategoriaQuery,
+    getSubcategoriasPorCategoriaQuery
+} from '../../DB/queries/subcategorias.js';
 class Gasto {
     constructor(id, cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id) {
         this.id = id;
@@ -39,9 +51,15 @@ class Gasto {
         this.usuario_id = usuario_id
     }
 }
-const app = fastify();
-app.register(fastifyCors, {
-    origin: '*'
+import fastify from 'fastify';
+import fastifyCors from 'fastify-cors';
+
+const server = fastify();
+
+// Habilita CORS con opciones personalizadas
+server.register(fastifyCors, {
+    origin: 'http://localhost:4200', //
+    methods: 'GET,PUT,POST,DELETE',
 });
 export default async function (fastify, opts) {
     // Obtener Todos los usuarios
@@ -273,5 +291,169 @@ export default async function (fastify, opts) {
             reply.status(500).send("Error del servidor");
         }
     });
+
+
+    //CATEGORIAS
+
+    // Obtener todas las categorías de un usuario
+    fastify.get("/:usuario_id/categorias", async function (request, reply) {
+        const { usuario_id } = request.params;
+        try {
+            const res = await query(getAllCategoriasByUserQuery, [usuario_id]);
+            const categorias = res.rows;
+            return categorias;
+        } catch (error) {
+            console.error("Error al obtener las categorías del usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    // Obtener una categoría de un usuario por su ID
+    fastify.get("/:usuario_id/categorias/:categoria_id", async function (request, reply) {
+        const { usuario_id, categoria_id } = request.params;
+        try {
+            const res = await query(getCategoriaByIdAndUserQuery, [categoria_id, usuario_id]);
+            return res.rows[0];
+        } catch (error) {
+            console.error("Error al obtener la categoría del usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    // Crear una nueva categoría para un usuario
+    fastify.post("/:usuario_id/categorias", { schema: schemas.createExpenseCategorySchema }, async function (request, reply) {
+        const { nombre } = request.body;
+        const { usuario_id } = request.params;
+        try {
+            const res = await query(insertCategoriaForUserQuery, [nombre, usuario_id]);
+            reply.code(201);
+            return res.rows[0];
+        } catch (error) {
+            console.error("Error al crear la categoría para el usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    // Actualizar una categoría de un usuario por su ID
+    fastify.put("/:usuario_id/categorias/:categoria_id", async function (request, reply) {
+        const { usuario_id, categoria_id } = request.params;
+        const { nombre } = request.body;
+        try {
+            const res = await query(updateCategoriaForUserQuery, [categoria_id, nombre, usuario_id]);
+            return res.rows[0];
+        } catch (error) {
+            console.error("Error al actualizar la categoría del usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    // Eliminar una categoría de un usuario por su ID
+    fastify.delete("/:usuario_id/categorias/:categoria_id", async function (request, reply) {
+        const { usuario_id, categoria_id } = request.params;
+        try {
+            await query(deleteCategoriaForUserQuery, [categoria_id, usuario_id]);
+            reply.code(204);
+        } catch (error) {
+            console.error("Error al eliminar la categoría del usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+
+
+    //SUBCATEGORIAS
+
+
+    // //Obtener todas las subcategorías de una categoría
+    // fastify.get('/:categoriaId/subcategorias', {
+    //     handler: async function (request, reply) {
+    //         const { categoriaId } = request.params;
+
+    //         try {
+    //             const queryResult = await query(getSubcategoriasPorCategoriaQuery, [categoriaId]);
+    //             return queryResult.rows;
+    //         } catch (error) {
+    //             console.error('Error al obtener subcategorías:', error.message);
+    //             reply.status(500).send('Error del servidor');
+    //         }
+    //     }
+    // });
+
+    // //Obtener una subcategoría por su id
+    // fastify.get('/:categoriaId/subcategorias/:subcategoriaId', {
+    //     handler: async function (request, reply) {
+    //         const { subcategoriaId } = request.params;
+
+    //         try {
+    //             const queryResult = await query(getSubcategoriaPorIdYCategoriaQuery, [subcategoriaId, request.params.categoriaId]);
+    //             if (queryResult.rows.length === 0) {
+    //                 reply.status(404).send('Subcategoría no encontrada');
+    //             } else {
+    //                 return queryResult.rows[0];
+    //             }
+    //         } catch (error) {
+    //             console.error('Error al obtener subcategoría:', error.message);
+    //             reply.status(500).send('Error del servidor');
+    //         }
+    //     }
+    // });
+
+    // //crear una subcategoría
+    // fastify.post('/:categoriaId/subcategorias', {
+    //     handler: async function (request, reply) {
+    //         const { nombre } = request.body;
+    //         const { categoriaId } = request.params;
+
+    //         try {
+    //             const queryResult = await query(crearSubcategoriaQuery, [nombre, categoriaId]);
+    //             reply.code(201);
+    //             return queryResult.rows[0];
+    //         } catch (error) {
+    //             console.error('Error al crear subcategoría:', error.message);
+    //             reply.status(500).send('Error del servidor');
+    //         }
+    //     }
+    // });
+
+    // //Editar una subcategoría
+    // fastify.put('/:categoriaId/subcategorias/:subcategoriaId', {
+    //     handler: async function (request, reply) {
+    //         const { subcategoriaId } = request.params;
+    //         const { nombre } = request.body;
+
+    //         try {
+    //             const queryResult = await query(editarSubcategoriaQuery, [nombre, subcategoriaId, request.params.categoriaId]);
+    //             if (queryResult.rows.length === 0) {
+    //                 reply.status(404).send('Subcategoría no encontrada');
+    //             } else {
+    //                 return queryResult.rows[0];
+    //             }
+    //         } catch (error) {
+    //             console.error('Error al editar subcategoría:', error.message);
+    //             reply.status(500).send('Error del servidor');
+    //         }
+    //     }
+    // });
+
+    // //Eliminar una subcategoría
+    // fastify.delete('/:categoriaId/subcategorias/:subcategoriaId', {
+    //     handler: async function (request, reply) {
+    //         const { subcategoriaId } = request.params;
+
+    //         try {
+    //             const queryResult = await query(eliminarSubcategoriaQuery, [subcategoriaId, request.params.categoriaId]);
+    //             if (queryResult.rows.length === 0) {
+    //                 reply.status(404).send('Subcategoría no encontrada');
+    //             } else {
+    //                 reply.code(204);
+    //                 return;
+    //             }
+    //         } catch (error) {
+    //             console.error('Error al eliminar subcategoría:', error.message);
+    //             reply.status(500).send('Error del servidor');
+    //         }
+    //     }
+    // });
 }
+
 

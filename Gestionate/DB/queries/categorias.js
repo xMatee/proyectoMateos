@@ -1,3 +1,31 @@
+export const getAllCategoriasByUserQuery = `
+SELECT * FROM categorias WHERE estado = 1 AND usuario_id = $1;
+`;
+
+export const getCategoriaByIdAndUserQuery = `
+SELECT * FROM categorías WHERE id = $1 AND usuario_id = $2;
+`;
+
+export const insertCategoriaForUserQuery = `
+INSERT INTO categorias (nombre, usuario_id)
+VALUES ($1, $2)
+RETURNING *;
+`;
+
+export const updateCategoriaForUserQuery = `
+UPDATE categorias
+SET nombre = $2
+WHERE id = $1 AND usuario_id = $3
+RETURNING *;
+`;
+
+export const deleteCategoriaForUserQuery = `
+UPDATE categorias SET estado = -1
+WHERE id = $1 AND usuario_id = $2;
+`;
+
+
+//pa que no haya error luego borrar
 export const getAllCategoriasQuery = `
 SELECT * FROM categorias WHERE estado = 1;
 `;

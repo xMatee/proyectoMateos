@@ -1,23 +1,43 @@
-<h2>{{datosA.length}}</h2>
 <table class="table">
     <thead>
         <tr>
+            <th>Categoría</th>
+            <th>%</th>
             <th>Cantidad</th>
-            <th>Fecha</th>
-            <th>Descripción</th>
-            <th>Categoría ID</th>
-            <th>Subcategoría ID</th>
-            <th>Usuario ID</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let dato of datosA">
-            <td>{{ dato.cantidad }}</td>
-            <td>{{ dato.fecha }}</td>
-            <td>{{ dato.descripcion }}</td>
+            <div class="list-group">
+                <a [routerLink]="['/usuarios', dato.usuario_id, 'gastos', dato.id]"
+                    class="list-group-item list-group-item-action">
+                    {{ dato.categoria_id }} / % / {{ dato.cantidad }}
+                </a>
+            </div>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Alternativa:</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Categoría</th>
+            <th>% de Gastos Totales</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let dato of datosA">
             <td>{{ dato.categoria_id }}</td>
-            <td>{{ dato.subcategoria_id }}</td>
-            <td>{{ dato.usuario_id }}</td>
+            <td>%</td>
+            <td>{{ dato.cantidad }}</td>
+            <td>
+                <a [routerLink]="['/usuarios', dato.usuario_id, 'gastos', dato.id]" class="btn btn-primary btn-sm">
+                    Ver
+                </a>
+            </td>
         </tr>
     </tbody>
 </table>
