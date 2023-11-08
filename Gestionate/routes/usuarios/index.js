@@ -1,6 +1,7 @@
 import { query } from '../../DB/db.js';
 import schemas from "../../schemas/index.js";
-
+import fastify from 'fastify';
+import fastifyCors from 'fastify-cors';
 import {
     getUsersQuery,
     getUserByIdQuery,
@@ -38,6 +39,10 @@ class Gasto {
         this.usuario_id = usuario_id
     }
 }
+const app = fastify();
+app.register(fastifyCors, {
+    origin: '*'
+});
 export default async function (fastify, opts) {
     // Obtener Todos los usuarios
     fastify.get("/", async (request, reply) => {

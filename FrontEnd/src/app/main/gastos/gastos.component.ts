@@ -11,6 +11,7 @@ export class GastosComponent implements OnInit {
   constructor(private gastosService: GastosService) { }
   ngOnInit(): void {
     this.gastosService.ConsultarGastos().subscribe(datos => {
+      console.log(datos)
       this.datosA = datos
     }
     )
