@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GastosService } from './gastos.service';
-import { Gasto } from './interface/gasto';
+import { Gasto } from './interfaces/gasto';
+import { Categoria } from './interfaces/categoria';
 
 @Component({
   selector: 'app-gastos',
@@ -42,7 +43,8 @@ export class GastosComponent implements OnInit {
     const categoriasTotales: any[] = [];
     categoriasMap.forEach((cantidad, categoriaId) => {
       // Deberías obtener los nombres de las categorías según tu estructura de datos
-      const categoriaNombre = "Nombre de la Categoría"; // Reemplaza esto con la obtención real del nombre
+      const categoria: Categoria = this.gastosService.ConsultarCategoria(categoriaId)
+      const categoriaNombre = categoria.nombre // Reemplaza esto con la obtención real del nombre
       categoriasTotales.push({ categoria: categoriaNombre, cantidad });
     });
 

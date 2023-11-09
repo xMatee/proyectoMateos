@@ -1,6 +1,6 @@
 export interface Gasto {
     id: number,
-    cantidad: string,
+    cantidad: number,
     fecha: string,
     descripcion: string,
     categoria_id: number,

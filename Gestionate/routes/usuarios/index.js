@@ -51,6 +51,16 @@ class Gasto {
         this.subcategoria_id = subcategoria_id;
         this.usuario_id = usuario_id
     }
+
+}
+class Categoria {
+    constructor(id, nombre, estado, usuario_id, tipo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.estado = estado;
+        this.usuario_id = usuario_id;
+        this.tipo = tipo
+    }
 }
 import fastify from 'fastify';
 import fastifyCors from 'fastify-cors';
@@ -309,12 +319,12 @@ export default async function (fastify, opts) {
 
     //CATEGORIAS
 
-    // Obtener todas las categorías de un usuario
     fastify.get("/:usuario_id/categorias", async function (request, reply) {
         const { usuario_id } = request.params;
         try {
             const res = await query(getAllCategoriasByUserQuery, [usuario_id]);
-            const categorias = res.rows;
+            const categorias = res.rows.map(row => new Categoria(row.id, row.nombre, row.estado, row.usuario_id, row.tipo));
+            console.log(categorias)
             return categorias;
         } catch (error) {
             console.error("Error al obtener las categorías del usuario", error.message);
@@ -327,7 +337,7 @@ export default async function (fastify, opts) {
         const { usuario_id, categoria_id } = request.params;
         try {
             const res = await query(getCategoriaByIdAndUserQuery, [categoria_id, usuario_id]);
-            return res.rows[0];
+            return new Categoria(res.rows[0].id, res.rows[0].nombre, res.rows[0].estado, res.rows[0].usuario_id, res.rows[0].tipo);
         } catch (error) {
             console.error("Error al obtener la categoría del usuario", error.message);
             reply.status(500).send("Error del servidor");

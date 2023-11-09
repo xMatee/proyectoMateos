@@ -1,43 +1,8 @@
-<table class="table">
-    <thead>
-        <tr>
-            <th>Categoría</th>
-            <th>%</th>
-            <th>Cantidad</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let dato of datosA">
-            <div class="list-group">
-                <a [routerLink]="['/usuarios', dato.usuario_id, 'gastos', dato.id]"
-                    class="list-group-item list-group-item-action">
-                    {{ dato.categoria_id }} / % / {{ dato.cantidad }}
-                </a>
-            </div>
-        </tr>
-    </tbody>
-</table>
-
-<h2>Alternativa:</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Categoría</th>
-            <th>% de Gastos Totales</th>
-            <th>Cantidad</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let dato of datosA">
-            <td>{{ dato.categoria_id }}</td>
-            <td>%</td>
-            <td>{{ dato.cantidad }}</td>
-            <td>
-                <a [routerLink]="['/usuarios', dato.usuario_id, 'gastos', dato.id]" class="btn btn-primary btn-sm">
-                    Ver
-                </a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div>
+    <h2>Categorías de Gastos</h2>
+    <ul>
+        <li *ngFor="let categoria of categoriasTotales">
+            {{ categoria.categoria }} - Total: {{ categoria.cantidad }}
+        </li>
+    </ul>
+</div>
