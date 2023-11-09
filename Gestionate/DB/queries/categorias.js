@@ -7,10 +7,11 @@ SELECT * FROM categorías WHERE id = $1 AND usuario_id = $2;
 `;
 
 export const insertCategoriaForUserQuery = `
-INSERT INTO categorias (nombre, usuario_id)
-VALUES ($1, $2)
+INSERT INTO categorias (nombre, usuario_id, estado)
+VALUES ($1, $2, $3)
 RETURNING *;
 `;
+
 
 export const updateCategoriaForUserQuery = `
 UPDATE categorias

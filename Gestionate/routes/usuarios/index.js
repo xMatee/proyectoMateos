@@ -14,6 +14,7 @@ import {
     insertGastoQuery,
     updateGastoQuery,
     deleteGastoQuery,
+    getGastosByCategoriaQuery
 } from "../../DB/queries/gastos.js";
 import {
     getAllIngresosQuery,
@@ -145,6 +146,19 @@ export default async function (fastify, opts) {
             reply.status(500).send("Error del servidor");
         }
     });
+    // Obtener todos los gastos de un usuario dentro de una categoría
+    fastify.get("/:usuario_id/gastos/categorias/:categoria_id", async function (request, reply) {
+        const { usuario_id, categoria_id } = request.params;
+        try {
+            const res = await query(getGastosByCategoriaQuery, [usuario_id, categoria_id]);
+            const gastos = res.rows.map(row => new Gasto(row.id, row.cantidad, row.fecha, row.descripcion, row.categoria_id, row.subcategoria_id, row.usuario_id));
+            return gastos;
+        } catch (error) {
+            console.error("Error al obtener gastos por categoría", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
 
     // Obtener un gasto de un usuario por su ID
     fastify.get("/:usuario_id/gastos/:id", async function (request, reply) {
@@ -322,10 +336,10 @@ export default async function (fastify, opts) {
 
     // Crear una nueva categoría para un usuario
     fastify.post("/:usuario_id/categorias", { schema: schemas.createExpenseCategorySchema }, async function (request, reply) {
-        const { nombre } = request.body;
+        const { nombre, estado } = request.body;
         const { usuario_id } = request.params;
         try {
-            const res = await query(insertCategoriaForUserQuery, [nombre, usuario_id]);
+            const res = await query(insertCategoriaForUserQuery, [nombre, usuario_id, estado]);
             reply.code(201);
             return res.rows[0];
         } catch (error) {
@@ -333,6 +347,7 @@ export default async function (fastify, opts) {
             reply.status(500).send("Error del servidor");
         }
     });
+
 
     // Actualizar una categoría de un usuario por su ID
     fastify.put("/:usuario_id/categorias/:categoria_id", async function (request, reply) {

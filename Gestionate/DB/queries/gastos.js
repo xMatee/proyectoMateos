@@ -24,5 +24,10 @@ export const deleteGastoQuery = `
   WHERE usuario_id = $1 AND id = $2
   RETURNING *;
 `;
+export const getGastosByCategoriaQuery = `
+  SELECT * FROM gastos
+  WHERE usuario_id = $1 AND categoria_id = $2;
+`;
+
 
 
