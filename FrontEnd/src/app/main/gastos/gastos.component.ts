@@ -11,21 +11,27 @@ import { Categoria } from './interfaces/categoria';
 export class GastosComponent implements OnInit {
   datosA: Gasto[] = [];
   categoriasTotales: any[] = [];
+  categorias: Categoria[] = []
 
   constructor(private gastosService: GastosService) { }
 
   ngOnInit(): void {
     this.gastosService.ConsultarGastos().subscribe((datos) => {
       this.datosA = datos;
-      console.log(this.datosA);
 
       // Calcular las cantidades totales por categoría
       this.calcularCantidadesTotales(this.datosA);
-    });
+
+    })
+    this.gastosService.ConsultarCategorias().subscribe((datosC) => {
+      this.categorias = datosC
+      console.log(this.categorias)
+    })
+
   }
 
   calcularCantidadesTotales(gastos: Gasto[]): void {
-    const categoriasMap = new Map<number, number>(); // Usar number para los IDs y la cantidad
+    const categoriasMap = new Map<number, number>();
 
     // Agrupar gastos por categoría y sumar las cantidades
     gastos.forEach((gasto) => {
@@ -39,12 +45,12 @@ export class GastosComponent implements OnInit {
       }
     });
 
-    // Crear objetos para cada categoría
+    // Crear objetos para cada categoría con su nombre y cantidad
     const categoriasTotales: any[] = [];
     categoriasMap.forEach((cantidad, categoriaId) => {
-      // Deberías obtener los nombres de las categorías según tu estructura de datos
-      const categoria: Categoria = this.gastosService.ConsultarCategoria(categoriaId)
-      const categoriaNombre = categoria.nombre // Reemplaza esto con la obtención real del nombre
+      // Buscar el nombre de la categoría correspondiente en la lista de categorías
+      const categoria = this.categorias.find(c => c.id === categoriaId);
+      const categoriaNombre = categoria ? categoria.nombre : 'Categoría Desconocida';
       categoriasTotales.push({ categoria: categoriaNombre, cantidad });
     });
 

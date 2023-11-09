@@ -346,10 +346,10 @@ export default async function (fastify, opts) {
 
     // Crear una nueva categoría para un usuario
     fastify.post("/:usuario_id/categorias", { schema: schemas.createExpenseCategorySchema }, async function (request, reply) {
-        const { nombre, estado } = request.body;
+        const { nombre, tipo } = request.body;
         const { usuario_id } = request.params;
         try {
-            const res = await query(insertCategoriaForUserQuery, [nombre, usuario_id, estado]);
+            const res = await query(insertCategoriaForUserQuery, [nombre, usuario_id, tipo]);
             reply.code(201);
             return res.rows[0];
         } catch (error) {
