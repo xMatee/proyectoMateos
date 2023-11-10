@@ -49,7 +49,7 @@ export class GastosComponent implements OnInit {
     const categoriasTotales: any[] = [];
     categoriasMap.forEach((cantidad, categoriaId) => {
       // Buscar el nombre de la categoría correspondiente en la lista de categorías
-      const categoria = this.categorias.find(c => c.id === categoriaId);
+      const categoria = this.categorias.find(c => c.id == categoriaId);
       const categoriaNombre = categoria ? categoria.nombre : 'Categoría Desconocida';
       categoriasTotales.push({ categoria: categoriaNombre, cantidad });
     });
