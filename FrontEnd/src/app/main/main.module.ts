@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MainRoutingModule } from './main-routing.module';
-import { GastosComponent } from './gastos/gastos.component';
+import { GastosComponent } from './gastos/gastosComponent/gastos.component';
 import { IngresosComponent } from './ingresos/ingresos.component';
 import { GastosService } from './gastos/gastos.service';
 
 
 @NgModule({
-  declarations: [GastosComponent, IngresosComponent
+  declarations: [IngresosComponent
   ],
   imports: [
     CommonModule,

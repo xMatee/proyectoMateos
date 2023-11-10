@@ -3,7 +3,7 @@ SELECT * FROM categorias WHERE estado = 1 AND usuario_id = $1;
 `;
 
 export const getCategoriaByIdAndUserQuery = `
-SELECT * FROM categorías WHERE id = $1 AND usuario_id = $2;
+SELECT * FROM categorias WHERE id = $1 AND usuario_id = $2;
 `;
 
 export const insertCategoriaForUserQuery = `

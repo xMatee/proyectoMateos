@@ -9,16 +9,21 @@ import { Categoria } from './interfaces/categoria';
 })
 export class GastosService {
 
-    server = "http://127.0.0.1:3000"
     constructor(private http: HttpClient) { }
 
-    ConsultarGastos(): Observable<Gasto[]> {
-        return this.http.get<Gasto[]>(`/usuarios/3/gastos`);
+    ConsultarGastos(usuarioId: number): Observable<Gasto[]> {
+        return this.http.get<Gasto[]>(`/usuarios/${usuarioId}/gastos`);
     }
-    ConsultarCategorias(): Observable<Categoria[]> {
-        return this.http.get<Categoria[]>(`/usuarios/3/categorias`);
+
+    ConsultarCategorias(usuarioId: number): Observable<Categoria[]> {
+        return this.http.get<Categoria[]>(`/usuarios/${usuarioId}/categorias`);
     }
+
+    ConsultarCategoriaId(usuarioId: number, id: number): Observable<Categoria> {
+        return this.http.get<Categoria>(`/usuarios/${usuarioId}/categorias/${id}`);
+    }
+
     ConsultarGastosPorCategoria(usuarioId: number, categoriaId: number): Observable<Gasto[]> {
-        return this.http.get<Gasto[]>(`/usuarios/3/gastos/categorias/31`);
+        return this.http.get<Gasto[]>(`/usuarios/${usuarioId}/gastos/categorias/${categoriaId}`);
     }
 }

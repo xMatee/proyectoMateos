@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutPageComponent } from 'src/app/share/pages/main-layout-page/main-layout-page.component';
+import { GastosComponent } from './gastosComponent/gastos.component';
+import { VerGastosCategoriaComponent } from './ver-gastos-categoria/ver-gastos-categoria.component';
 
 const routes: Routes = [{
   path: "",
   component: MainLayoutPageComponent,
   children: [
-    // {
-    //   path: "new",
-    //   component: GastoFormComponent
-    // },
-    // {
-    //   path: "edit/:id",
-    //   component: GastoFormComponent
-    // },
+    {
+      path: "",
+      component: GastosComponent
+    },
+    {
+      path: "ver/:id",
+      component: VerGastosCategoriaComponent
+    },
   ]
 },];
 

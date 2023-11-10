@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MenuComponent } from '../share/menu/menu.component';
-import { GastosComponent } from './gastos/gastos.component';
+import { GastosComponent } from './gastos/gastosComponent/gastos.component';
 import { IngresosComponent } from './ingresos/ingresos.component';
 import { MainLayoutPageComponent } from '../share/pages/main-layout-page/main-layout-page.component';
 

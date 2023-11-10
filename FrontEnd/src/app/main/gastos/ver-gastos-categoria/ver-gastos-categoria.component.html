@@ -1,0 +1,15 @@
+<div>
+    <h2>Gastos de la Categoría
+    </h2>
+    <ul class="list-group">
+        <li *ngFor="let gasto of gastos" class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="mb-1">{{ gasto.descripcion }}</h4>
+                    <p class="mb-1">{{ gasto.fecha }}</p>
+                </div>
+                <span class="badge badge-primary badge-pill" style="color: black;">${{ gasto.cantidad }}</span>
+            </div>
+        </li>
+    </ul>
+</div>

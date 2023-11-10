@@ -149,7 +149,6 @@ export default async function (fastify, opts) {
         try {
             const res = await query(getAllGastosQuery, [usuario_id]);
             const gastos = res.rows.map(row => new Gasto(row.id, row.cantidad, row.fecha, row.descripcion, row.categoria_id, row.subcategoria_id, row.usuario_id));
-            console.log(gastos)
             return gastos;
         } catch (error) {
             console.error("Error al obtener gastos", error.message);
@@ -324,7 +323,6 @@ export default async function (fastify, opts) {
         try {
             const res = await query(getAllCategoriasByUserQuery, [usuario_id]);
             const categorias = res.rows.map(row => new Categoria(row.id, row.nombre, row.estado, row.usuario_id, row.tipo));
-            console.log(categorias)
             return categorias;
         } catch (error) {
             console.error("Error al obtener las categorías del usuario", error.message);

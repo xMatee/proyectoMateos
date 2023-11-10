@@ -5,5 +5,6 @@ export interface Gasto {
     descripcion: string,
     categoria_id: number,
     subcategoria_id: number,
-    usuario_id: number
+    usuario_id: number,
+    categoria_nombre: string
 }
