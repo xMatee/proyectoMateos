@@ -19,6 +19,7 @@ import {
 import {
     getAllIngresosQuery,
     getIngresoByIdQuery,
+    getIngresoByCategoriaQuery,
     insertIngresoQuery,
     updateIngresoQuery,
     deleteIngresoQuery,
@@ -29,6 +30,7 @@ import {
 } from "../../DB/queries/productos.js";
 import {
     getAllCategoriasByUserQuery,
+    getCategoriasByTipoQuery,
     getCategoriaByIdAndUserQuery,
     insertCategoriaForUserQuery,
     updateCategoriaForUserQuery,
@@ -42,6 +44,17 @@ import {
     getSubcategoriasPorCategoriaQuery
 } from '../../DB/queries/subcategorias.js';
 class Gasto {
+    constructor(id, cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id) {
+        this.id = id;
+        this.cantidad = cantidad;
+        this.fecha = fecha;
+        this.descripcion = descripcion;
+        this.categoria_id = categoria_id;
+        this.subcategoria_id = subcategoria_id;
+        this.usuario_id = usuario_id
+    }
+}
+class Ingreso {
     constructor(id, cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id) {
         this.id = id;
         this.cantidad = cantidad;
@@ -274,13 +287,25 @@ export default async function (fastify, opts) {
             reply.status(500).send("Error del servidor");
         }
     });
+    // Obtener todos los ingresos de un usuario dentro de una categoría
+    fastify.get("/:usuario_id/ingresos/categorias/:categoria_id", async function (request, reply) {
+        const { usuario_id, categoria_id } = request.params;
+        try {
+            const res = await query(getIngresoByCategoriaQuery, [usuario_id, categoria_id]);
+            const ingresos = res.rows.map(row => new Ingreso(row.id, row.cantidad, row.fecha, row.descripcion, row.categoria_id, row.subcategoria_id, row.usuario_id));
+            return ingresos;
+        } catch (error) {
+            console.error("Error al obtener ingresos por categoría", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
 
     // Crear un nuevo ingreso para un usuario
     fastify.post("/:usuario_id/ingresos", { schema: schemas.createIncomeSchema }, async function (request, reply) {
-        const { cantidad, fecha, descripcion } = request.body;
+        const { cantidad, fecha, descripcion, subcategoria_id, categoria_id } = request.body;
         const { usuario_id } = request.params;
         try {
-            const res = await query(insertIngresoQuery, [cantidad, fecha, descripcion, usuario_id]);
+            const res = await query(insertIngresoQuery, [cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id]);
             reply.code(201);
             return res.rows[0];
         } catch (error) {

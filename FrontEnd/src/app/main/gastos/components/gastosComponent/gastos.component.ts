@@ -22,6 +22,7 @@ export class GastosComponent implements OnInit {
       this.datosA = datos;
       this.gastosService.ConsultarCategorias(3, "gastos").subscribe((datosC) => {
         this.categorias = datosC;
+        console.log("Categorias gasto: ", this.categorias)
         this.calcularCantidadesTotales(this.datosA);
       });
     });
@@ -51,7 +52,7 @@ export class GastosComponent implements OnInit {
   verDetalleCategoria(idCategoria: number): void {
 
     console.log('ID de Categoría:', idCategoria);
-    this.categoriasService.setCategoriaId(idCategoria)
+    this.categoriasService.setCategoriaIdGastos(idCategoria)
     this.router.navigate(['/gastos/ver', idCategoria]);
   }
 

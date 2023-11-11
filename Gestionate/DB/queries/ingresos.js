@@ -7,10 +7,16 @@ SELECT * FROM ingresos WHERE usuario_id = $1;
 export const getIngresoByIdQuery = `
 SELECT * FROM ingresos WHERE usuario_id = $1 AND id = $2;
 `;
+export const getIngresoByCategoriaQuery = `
+  SELECT * FROM ingresos
+  WHERE usuario_id = $1 AND categoria_id = $2;
+`;
 
 // Crear un nuevo ingreso para un usuario
 export const insertIngresoQuery = `
-INSERT INTO ingresos (cantidad, fecha, descripcion, usuario_id) VALUES ($1, $2, $3, $4) RETURNING *;
+  INSERT INTO ingresos (cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id)
+  VALUES ($1, $2, $3, $4, $5, $6)
+  RETURNING *;
 `;
 
 // Actualizar un ingreso de un usuario por su ID

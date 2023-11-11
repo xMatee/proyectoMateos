@@ -19,6 +19,6 @@ export class IngresosService {
         return this.http.get<Categoria[]>(`/usuarios/${usuarioId}/categorias/${tipo}`);
     }
     ConsultarIngresosPorCategoria(usuarioId: number, categoriaId: number): Observable<Ingreso[]> {
-        return this.http.get<Ingreso[]>(`/usuarios/${usuarioId}/gastos/categorias/${categoriaId}`);
+        return this.http.get<Ingreso[]>(`/usuarios/${usuarioId}/ingresos/categorias/${categoriaId}`);
     }
 }

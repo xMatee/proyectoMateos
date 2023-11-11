@@ -20,8 +20,10 @@ export class IngresosComponent implements OnInit {
   ngOnInit(): void {
     this.ingresosService.ConsultarIngresos(3).subscribe((datos) => {
       this.datosA = datos;
+      console.log("Ingresos: ", this.datosA)
       this.ingresosService.ConsultarCategorias(3, "ingresos").subscribe((datosC) => {
         this.categorias = datosC;
+        console.log("Categorias ingreso: ", this.categorias)
         this.calcularCantidadesTotales(this.datosA);
       });
     });
@@ -46,12 +48,14 @@ export class IngresosComponent implements OnInit {
 
     this.categoriasTotales = Array.from(categoriasMap.values());
     this.categoriasTotales.sort((a, b) => b.cantidad - a.cantidad);
+    console.log("Total: ", this.categoriasTotales)
   }
 
   verDetalleCategoria(idCategoria: number): void {
 
     console.log('ID de Categoría:', idCategoria);
-    this.categoriasService.setCategoriaId(idCategoria)
+    this.categoriasService.setCategoriaIdIngresos(idCategoria)
+    console.log(idCategoria)
     this.router.navigate(['/ingresos/ver', idCategoria]);
   }
 
