@@ -5,7 +5,7 @@
 -- Dumped from database version 15.4
 -- Dumped by pg_dump version 15.4
 
--- Started on 2023-10-23 03:00:14
+-- Started on 2023-11-11 20:00:59
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,21 +23,23 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 214 (class 1259 OID 25115)
+-- TOC entry 217 (class 1259 OID 16712)
 -- Name: categorias; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.categorias (
     id integer NOT NULL,
     nombre character varying(255),
-    estado integer DEFAULT 1 NOT NULL
+    estado integer DEFAULT 1 NOT NULL,
+    usuario_id integer,
+    tipo integer
 );
 
 
 ALTER TABLE public.categorias OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 25118)
+-- TOC entry 216 (class 1259 OID 16711)
 -- Name: categorias_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -54,7 +56,7 @@ ALTER TABLE public.categorias_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3395 (class 0 OID 0)
--- Dependencies: 215
+-- Dependencies: 216
 -- Name: categorias_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -62,13 +64,13 @@ ALTER SEQUENCE public.categorias_id_seq OWNED BY public.categorias.id;
 
 
 --
--- TOC entry 216 (class 1259 OID 25119)
+-- TOC entry 223 (class 1259 OID 16738)
 -- Name: gastos; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.gastos (
     id integer NOT NULL,
-    cantidad numeric,
+    cantidad integer,
     fecha date,
     descripcion text,
     categoria_id integer,
@@ -80,7 +82,7 @@ CREATE TABLE public.gastos (
 ALTER TABLE public.gastos OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 25124)
+-- TOC entry 222 (class 1259 OID 16737)
 -- Name: gastos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -97,7 +99,7 @@ ALTER TABLE public.gastos_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3396 (class 0 OID 0)
--- Dependencies: 217
+-- Dependencies: 222
 -- Name: gastos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -105,7 +107,7 @@ ALTER SEQUENCE public.gastos_id_seq OWNED BY public.gastos.id;
 
 
 --
--- TOC entry 218 (class 1259 OID 25125)
+-- TOC entry 227 (class 1259 OID 16776)
 -- Name: gastos_productos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -119,7 +121,7 @@ CREATE TABLE public.gastos_productos (
 ALTER TABLE public.gastos_productos OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 25128)
+-- TOC entry 226 (class 1259 OID 16775)
 -- Name: gastos_productos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -136,7 +138,7 @@ ALTER TABLE public.gastos_productos_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3397 (class 0 OID 0)
--- Dependencies: 219
+-- Dependencies: 226
 -- Name: gastos_productos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -144,23 +146,25 @@ ALTER SEQUENCE public.gastos_productos_id_seq OWNED BY public.gastos_productos.i
 
 
 --
--- TOC entry 220 (class 1259 OID 25129)
+-- TOC entry 225 (class 1259 OID 16762)
 -- Name: ingresos; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.ingresos (
     id integer NOT NULL,
-    cantidad numeric,
     fecha date,
     descripcion text,
-    usuario_id integer
+    usuario_id integer,
+    categoria_id integer,
+    subcategoria_id integer,
+    cantidad integer
 );
 
 
 ALTER TABLE public.ingresos OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 25134)
+-- TOC entry 224 (class 1259 OID 16761)
 -- Name: ingresos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -177,7 +181,7 @@ ALTER TABLE public.ingresos_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3398 (class 0 OID 0)
--- Dependencies: 221
+-- Dependencies: 224
 -- Name: ingresos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -185,7 +189,7 @@ ALTER SEQUENCE public.ingresos_id_seq OWNED BY public.ingresos.id;
 
 
 --
--- TOC entry 222 (class 1259 OID 25135)
+-- TOC entry 221 (class 1259 OID 16731)
 -- Name: productos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -198,7 +202,7 @@ CREATE TABLE public.productos (
 ALTER TABLE public.productos OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 25138)
+-- TOC entry 220 (class 1259 OID 16730)
 -- Name: productos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -215,7 +219,7 @@ ALTER TABLE public.productos_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3399 (class 0 OID 0)
--- Dependencies: 223
+-- Dependencies: 220
 -- Name: productos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -223,7 +227,7 @@ ALTER SEQUENCE public.productos_id_seq OWNED BY public.productos.id;
 
 
 --
--- TOC entry 224 (class 1259 OID 25139)
+-- TOC entry 219 (class 1259 OID 16719)
 -- Name: subcategorias; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -238,7 +242,7 @@ CREATE TABLE public.subcategorias (
 ALTER TABLE public.subcategorias OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 25142)
+-- TOC entry 218 (class 1259 OID 16718)
 -- Name: subcategorias_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -255,7 +259,7 @@ ALTER TABLE public.subcategorias_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3400 (class 0 OID 0)
--- Dependencies: 225
+-- Dependencies: 218
 -- Name: subcategorias_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -263,7 +267,7 @@ ALTER SEQUENCE public.subcategorias_id_seq OWNED BY public.subcategorias.id;
 
 
 --
--- TOC entry 226 (class 1259 OID 25143)
+-- TOC entry 215 (class 1259 OID 16703)
 -- Name: usuarios; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -279,7 +283,7 @@ CREATE TABLE public.usuarios (
 ALTER TABLE public.usuarios OWNER TO postgres;
 
 --
--- TOC entry 227 (class 1259 OID 25148)
+-- TOC entry 214 (class 1259 OID 16702)
 -- Name: usuarios_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -296,7 +300,7 @@ ALTER TABLE public.usuarios_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3401 (class 0 OID 0)
--- Dependencies: 227
+-- Dependencies: 214
 -- Name: usuarios_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -304,7 +308,7 @@ ALTER SEQUENCE public.usuarios_id_seq OWNED BY public.usuarios.id;
 
 
 --
--- TOC entry 3203 (class 2604 OID 25149)
+-- TOC entry 3205 (class 2604 OID 16715)
 -- Name: categorias id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -312,7 +316,7 @@ ALTER TABLE ONLY public.categorias ALTER COLUMN id SET DEFAULT nextval('public.c
 
 
 --
--- TOC entry 3205 (class 2604 OID 25150)
+-- TOC entry 3210 (class 2604 OID 16741)
 -- Name: gastos id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -320,7 +324,7 @@ ALTER TABLE ONLY public.gastos ALTER COLUMN id SET DEFAULT nextval('public.gasto
 
 
 --
--- TOC entry 3206 (class 2604 OID 25151)
+-- TOC entry 3212 (class 2604 OID 16779)
 -- Name: gastos_productos id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -328,7 +332,7 @@ ALTER TABLE ONLY public.gastos_productos ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
--- TOC entry 3207 (class 2604 OID 25152)
+-- TOC entry 3211 (class 2604 OID 16765)
 -- Name: ingresos id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -336,7 +340,7 @@ ALTER TABLE ONLY public.ingresos ALTER COLUMN id SET DEFAULT nextval('public.ing
 
 
 --
--- TOC entry 3208 (class 2604 OID 25153)
+-- TOC entry 3209 (class 2604 OID 16734)
 -- Name: productos id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -344,7 +348,7 @@ ALTER TABLE ONLY public.productos ALTER COLUMN id SET DEFAULT nextval('public.pr
 
 
 --
--- TOC entry 3209 (class 2604 OID 25154)
+-- TOC entry 3207 (class 2604 OID 16722)
 -- Name: subcategorias id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -352,7 +356,7 @@ ALTER TABLE ONLY public.subcategorias ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 3211 (class 2604 OID 25155)
+-- TOC entry 3203 (class 2604 OID 16706)
 -- Name: usuarios id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -360,103 +364,88 @@ ALTER TABLE ONLY public.usuarios ALTER COLUMN id SET DEFAULT nextval('public.usu
 
 
 --
--- TOC entry 3376 (class 0 OID 25115)
--- Dependencies: 214
+-- TOC entry 3379 (class 0 OID 16712)
+-- Dependencies: 217
 -- Data for Name: categorias; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.categorias (id, nombre, estado) FROM stdin;
-61	Ropa	1
-25	Dispositivos Electrónicos	1
-27	Tarifas	1
-29	Muebles	1
-30	Muebles	1
-63	Muebles	1
-64	Muebles	1
-65	Muebles	1
-66	Muebles	1
-67	Muebles	1
-68	Muebles	1
-69	Muebles	1
-70	Muebles	1
-71	Muebles	1
-72	Muebles	1
-73	Muebles	1
-74	Muebles	1
-75	Muebles	1
-76	Muebles	1
-77	Muebles	1
-78	Muebles	1
-79	Muebles	1
-80	Muebles	1
-81	Muebles	1
-82	Muebles	1
-60	Alimentos	-1
+COPY public.categorias (id, nombre, estado, usuario_id, tipo) FROM stdin;
+1	Nombre de la categoría	1	\N	\N
+22	Nombre de la cataaaaegoría	1	\N	\N
+23	Muebles	1	\N	\N
+61	Ropa	1	\N	\N
+24	Muebles	1	\N	\N
+25	Muebles	1	\N	\N
+26	Muebles	1	\N	\N
+27	Muebles	1	\N	\N
+28	Muebles	1	\N	\N
+29	Muebles	1	\N	\N
+30	Muebles	1	\N	\N
+60	Alimentos	1	\N	\N
+32	Comida	-1	3	\N
+31	Comida	-1	3	\N
+34	Salud	-1	3	\N
+35	Salud	-1	3	0
+36	Baile	-1	3	0
+37	Sueldo	-1	3	1
+38	Sueldo	1	3	1
+39	Comision	1	3	1
+40	Comida	1	3	0
+41	Salud	1	3	0
 \.
 
 
 --
--- TOC entry 3378 (class 0 OID 25119)
--- Dependencies: 216
+-- TOC entry 3385 (class 0 OID 16738)
+-- Dependencies: 223
 -- Data for Name: gastos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.gastos (id, cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id) FROM stdin;
-21	2400	2023-10-01	Zapatos de gala - Fino señores	61	69	27
-22	200	2023-11-11	Pastel	60	70	26
-23	200	2023-11-11	Pastel	60	70	26
-24	200	2023-11-11	Pastel	60	70	26
-25	200	2023-11-11	Pastel	60	70	26
-28	2400	2023-10-21	Gorro con vicera	61	69	51
-101	600	2023-08-31	Camisa de jean	61	71	51
-29	200	2023-11-11	Pastel	60	70	51
-30	200	2023-11-11	Pastel	60	70	51
-31	200	2023-11-11	Pastel	60	70	51
-32	200	2023-11-11	Pastel	60	70	51
-33	200	2023-11-11	Pastel	60	70	51
-34	200	2023-11-11	Pastel	60	70	51
-35	200	2023-11-11	Pastel	60	70	51
-36	200	2023-11-11	Pastel	60	70	51
-37	200	2023-11-11	Pastel	60	70	51
-38	200	2023-11-11	Pastel	60	70	51
-39	200	2023-11-11	Pastel	60	70	51
-40	200	2023-11-11	Pastel	60	70	51
+101	600	2023-08-31	Camisa de jean oscura con botones metalicos - Jack and Jones	61	71	51
+46	500	2023-11-15	Pizzeria	40	\N	3
+47	50	2023-11-15	leche	40	\N	3
+48	1500	2023-11-15	medico	41	\N	3
+49	250	2023-11-15	perifar	41	\N	3
 \.
 
 
 --
--- TOC entry 3380 (class 0 OID 25125)
--- Dependencies: 218
+-- TOC entry 3389 (class 0 OID 16776)
+-- Dependencies: 227
 -- Data for Name: gastos_productos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.gastos_productos (id, gasto_id, producto_id) FROM stdin;
+91	101	81
 \.
 
 
 --
--- TOC entry 3382 (class 0 OID 25129)
--- Dependencies: 220
+-- TOC entry 3387 (class 0 OID 16762)
+-- Dependencies: 225
 -- Data for Name: ingresos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.ingresos (id, cantidad, fecha, descripcion, usuario_id) FROM stdin;
-10	3400	2023-10-22	Cobro de una comisión	50
-121	1200	2023-08-31	Venta de una camisa color negro	51
-11	1000	2023-08-31	Ganancia de una apuesta clandestina	50
-12	1000	2023-08-31	Ganancia de una apuesta clandestina	50
-13	1000	2023-08-31	Ganancia de una apuesta clandestina	50
-14	1000	2023-08-31	Ganancia de una apuesta clandestina	50
+COPY public.ingresos (id, fecha, descripcion, usuario_id, categoria_id, subcategoria_id, cantidad) FROM stdin;
+120	2023-08-31	Venta de una licuadora	50	\N	\N	1000
+121	2023-08-31	Venta de una camisa	51	\N	\N	1200
+20	2023-11-15	Salario noviembre	3	38	\N	25000
+21	2023-11-15	Salario Diciembre	3	38	\N	25000
+22	2023-11-15	Comision 1	3	39	\N	500
+24	2023-11-15	Comision 2	3	39	\N	500
 \.
 
 
 --
--- TOC entry 3384 (class 0 OID 25135)
--- Dependencies: 222
+-- TOC entry 3383 (class 0 OID 16731)
+-- Dependencies: 221
 -- Data for Name: productos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.productos (id, nombre) FROM stdin;
+17	Nuevo Producto
+18	Pantalón deportivo color negro - Puma
 80	Chivito
 19	Pantalón deportivo color negro - Puma
 20	Pantalón deportivo color negro - Puma
@@ -465,145 +454,117 @@ COPY public.productos (id, nombre) FROM stdin;
 23	Pantalón deportivo color negro - Puma
 24	Pantalón deportivo color negro - Puma
 25	Pantalón deportivo color negro - Puma
-26	Gorra Nike con vicera, color negro y con estilo de camionero - naaasheee
-27	Pantalón deportivo color negro - Puma
-28	Pantalón deportivo color negro - Puma
-29	Pantalón deportivo color negro - Puma
-30	Pantalón deportivo color negro - Puma
-31	Pantalón deportivo color negro - Puma
-32	Pantalón deportivo color negro - Puma
-33	Pantalón deportivo color negro - Puma
-34	Pantalón deportivo color negro - Puma
-35	Pantalón deportivo color negro - Puma
-36	Pantalón deportivo color negro - Puma
-37	Pantalón deportivo color negro - Puma
-38	Pantalón deportivo color negro - Puma
+81	Camisa de jean negra
 \.
 
 
 --
--- TOC entry 3386 (class 0 OID 25139)
--- Dependencies: 224
+-- TOC entry 3381 (class 0 OID 16719)
+-- Dependencies: 219
 -- Data for Name: subcategorias; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.subcategorias (id, nombre, categoria_id, estado) FROM stdin;
+1	Nombre de la subcategoría	1	1
+32	Nombre de la subcateaaaagoría	22	1
 71	Camisas	61	1
+34	Sin glúten	60	1
+35	Sin glúten	60	1
 36	Sin glúten	60	1
-69	Calzados	61	1
-72	Sin glúten	60	1
-73	Sin glúten	60	1
-74	Sin glúten	60	1
-75	Sin glúten	60	1
-76	Sin glúten	60	1
-77	Sin glúten	60	1
-78	Sin glúten	60	1
-79	Sin glúten	60	1
-80	Sin glúten	60	1
-81	Sin glúten	60	1
-82	Sin glúten	60	1
-83	Sin glúten	60	1
-84	Sin glúten	60	1
-85	Sin glúten	60	1
-86	Sin glúten	60	1
-87	Sin glúten	60	1
-88	Sin glúten	60	1
-89	Sin glúten	60	1
-70	Sin azucares procesados	60	1
+37	Sin glúten	60	1
+38	Sin glúten	60	1
+39	Sin glúten	60	1
+40	Sin glúten	60	1
 \.
 
 
 --
--- TOC entry 3388 (class 0 OID 25143)
--- Dependencies: 226
+-- TOC entry 3377 (class 0 OID 16703)
+-- Dependencies: 215
 -- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.usuarios (id, nombre, email, contrasena, estado) FROM stdin;
-26	Juanito	juanito777@gmail.com	juanito123	1
-27	Juanseto01	juanseto01@gmail.com	juanseto0123	1
-51	Don Jose	jose@hotmail.com	\N	1
-34	Armando	armando@outlook.com	123456	1
-35	Armando	armando@outlook.com	123456	1
-36	Armando	armando@outlook.com	123456	1
-37	Armando	armando@outlook.com	123456	1
-38	Armando	armando@outlook.com	123456	1
-39	Armando	armando@outlook.com	123456	1
-40	Armando	armando@outlook.com	123456	1
-41	Armando	armando@outlook.com	123456	1
-42	Armando	armando@outlook.com	123456	1
-43	Armando	armando@outlook.com	123456	1
-44	Armando	armando@outlook.com	123456	1
-45	Armando	armando@outlook.com	123456	1
+3	Nuevo Nombre del Usuario	nuevomail	nuevacontra	1
+24	Armando	armando@outlook.com	123456	1
+51	Don Jose	jose@hotmail.com	123456	1
+25	Armando	armando@outlook.com	123456	1
+26	Armando	armando@outlook.com	123456	1
+27	NombreUsuar1111io	nombreusuario@example.com	contraseñase	-1
+28	Armando	armando@outlook.com	123456	1
+29	Armando	armando@outlook.com	123456	1
+30	Armando	armando@outlook.com	123456	1
+31	Armando	armando@outlook.com	123456	1
+32	Armando	armando@outlook.com	123456	1
 50	Armando Paredes	armando@outlook.com	123456789	-1
 \.
 
 
 --
 -- TOC entry 3402 (class 0 OID 0)
--- Dependencies: 215
+-- Dependencies: 216
 -- Name: categorias_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.categorias_id_seq', 82, true);
+SELECT pg_catalog.setval('public.categorias_id_seq', 41, true);
 
 
 --
 -- TOC entry 3403 (class 0 OID 0)
--- Dependencies: 217
+-- Dependencies: 222
 -- Name: gastos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.gastos_id_seq', 40, true);
+SELECT pg_catalog.setval('public.gastos_id_seq', 49, true);
 
 
 --
 -- TOC entry 3404 (class 0 OID 0)
--- Dependencies: 219
+-- Dependencies: 226
 -- Name: gastos_productos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.gastos_productos_id_seq', 16, true);
+SELECT pg_catalog.setval('public.gastos_productos_id_seq', 4, true);
 
 
 --
 -- TOC entry 3405 (class 0 OID 0)
--- Dependencies: 221
+-- Dependencies: 224
 -- Name: ingresos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.ingresos_id_seq', 14, true);
+SELECT pg_catalog.setval('public.ingresos_id_seq', 24, true);
 
 
 --
 -- TOC entry 3406 (class 0 OID 0)
--- Dependencies: 223
+-- Dependencies: 220
 -- Name: productos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.productos_id_seq', 38, true);
+SELECT pg_catalog.setval('public.productos_id_seq', 25, true);
 
 
 --
 -- TOC entry 3407 (class 0 OID 0)
--- Dependencies: 225
+-- Dependencies: 218
 -- Name: subcategorias_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.subcategorias_id_seq', 89, true);
+SELECT pg_catalog.setval('public.subcategorias_id_seq', 40, true);
 
 
 --
 -- TOC entry 3408 (class 0 OID 0)
--- Dependencies: 227
+-- Dependencies: 214
 -- Name: usuarios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.usuarios_id_seq', 45, true);
+SELECT pg_catalog.setval('public.usuarios_id_seq', 32, true);
 
 
 --
--- TOC entry 3214 (class 2606 OID 25157)
+-- TOC entry 3216 (class 2606 OID 16717)
 -- Name: categorias categorias_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -612,7 +573,7 @@ ALTER TABLE ONLY public.categorias
 
 
 --
--- TOC entry 3216 (class 2606 OID 25159)
+-- TOC entry 3222 (class 2606 OID 16745)
 -- Name: gastos gastos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -621,7 +582,7 @@ ALTER TABLE ONLY public.gastos
 
 
 --
--- TOC entry 3218 (class 2606 OID 25161)
+-- TOC entry 3226 (class 2606 OID 16781)
 -- Name: gastos_productos gastos_productos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -630,7 +591,7 @@ ALTER TABLE ONLY public.gastos_productos
 
 
 --
--- TOC entry 3220 (class 2606 OID 25163)
+-- TOC entry 3224 (class 2606 OID 16769)
 -- Name: ingresos ingresos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -639,7 +600,7 @@ ALTER TABLE ONLY public.ingresos
 
 
 --
--- TOC entry 3222 (class 2606 OID 25165)
+-- TOC entry 3220 (class 2606 OID 16736)
 -- Name: productos productos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -648,7 +609,7 @@ ALTER TABLE ONLY public.productos
 
 
 --
--- TOC entry 3224 (class 2606 OID 25167)
+-- TOC entry 3218 (class 2606 OID 16724)
 -- Name: subcategorias subcategorias_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -657,7 +618,7 @@ ALTER TABLE ONLY public.subcategorias
 
 
 --
--- TOC entry 3226 (class 2606 OID 25169)
+-- TOC entry 3214 (class 2606 OID 16710)
 -- Name: usuarios usuarios_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -666,7 +627,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 3227 (class 2606 OID 25170)
+-- TOC entry 3228 (class 2606 OID 16746)
 -- Name: gastos gastos_categoria_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -675,7 +636,7 @@ ALTER TABLE ONLY public.gastos
 
 
 --
--- TOC entry 3230 (class 2606 OID 25175)
+-- TOC entry 3232 (class 2606 OID 16782)
 -- Name: gastos_productos gastos_productos_gasto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -684,7 +645,7 @@ ALTER TABLE ONLY public.gastos_productos
 
 
 --
--- TOC entry 3231 (class 2606 OID 25180)
+-- TOC entry 3233 (class 2606 OID 16787)
 -- Name: gastos_productos gastos_productos_producto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -693,7 +654,7 @@ ALTER TABLE ONLY public.gastos_productos
 
 
 --
--- TOC entry 3228 (class 2606 OID 25185)
+-- TOC entry 3229 (class 2606 OID 16751)
 -- Name: gastos gastos_subcategoria_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -702,7 +663,7 @@ ALTER TABLE ONLY public.gastos
 
 
 --
--- TOC entry 3229 (class 2606 OID 25190)
+-- TOC entry 3230 (class 2606 OID 16756)
 -- Name: gastos gastos_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -711,7 +672,7 @@ ALTER TABLE ONLY public.gastos
 
 
 --
--- TOC entry 3232 (class 2606 OID 25195)
+-- TOC entry 3231 (class 2606 OID 16770)
 -- Name: ingresos ingresos_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -720,7 +681,7 @@ ALTER TABLE ONLY public.ingresos
 
 
 --
--- TOC entry 3233 (class 2606 OID 25200)
+-- TOC entry 3227 (class 2606 OID 16725)
 -- Name: subcategorias subcategorias_categoria_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -728,7 +689,7 @@ ALTER TABLE ONLY public.subcategorias
     ADD CONSTRAINT subcategorias_categoria_id_fkey FOREIGN KEY (categoria_id) REFERENCES public.categorias(id);
 
 
--- Completed on 2023-10-23 03:00:15
+-- Completed on 2023-11-11 20:00:59
 
 --
 -- PostgreSQL database dump complete
