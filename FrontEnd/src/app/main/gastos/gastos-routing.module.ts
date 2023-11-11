@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutPageComponent } from 'src/app/share/pages/main-layout-page/main-layout-page.component';
-import { GastosComponent } from './gastosComponent/gastos.component';
-import { VerGastosCategoriaComponent } from './ver-gastos-categoria/ver-gastos-categoria.component';
+import { GastosComponent } from './components/gastosComponent/gastos.component';
+import { VerGastosCategoriaComponent } from './components/ver-gastos-categoria/ver-gastos-categoria.component';
 
 const routes: Routes = [{
   path: "",

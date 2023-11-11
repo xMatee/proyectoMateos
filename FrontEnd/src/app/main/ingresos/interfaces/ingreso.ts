@@ -1,4 +1,4 @@
-export interface Gasto {
+export interface Ingreso {
     id: number,
     cantidad: number,
     fecha: string,

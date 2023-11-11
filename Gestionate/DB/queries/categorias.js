@@ -2,6 +2,9 @@ export const getAllCategoriasByUserQuery = `
 SELECT * FROM categorias WHERE estado = 1 AND usuario_id = $1;
 `;
 
+export const getCategoriasByTipoQuery = `
+SELECT * FROM categorias WHERE estado = 1 AND usuario_id = $1 AND tipo = $2;
+`;
 export const getCategoriaByIdAndUserQuery = `
 SELECT * FROM categorias WHERE id = $1 AND usuario_id = $2;
 `;

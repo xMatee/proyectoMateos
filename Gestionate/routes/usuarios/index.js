@@ -330,6 +330,36 @@ export default async function (fastify, opts) {
         }
     });
 
+    //Obtener categorias de un usuario por su id y tipo de categoria gasto
+    fastify.get("/:usuario_id/categorias/gastos", async function (request, reply) {
+        const { usuario_id } = request.params;
+        const tipoGastos = 0;
+
+        try {
+            const res = await query(getCategoriasByTipoQuery, [usuario_id, tipoGastos]);
+            const categorias = res.rows.map(row => new Categoria(row.id, row.nombre, row.estado, row.usuario_id, row.tipo));
+            return categorias;
+        } catch (error) {
+            console.error("Error al obtener las categorías de gastos del usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    //Obtener categorias de un usuario por su id y tipo de categoria ingreso
+    fastify.get("/:usuario_id/categorias/ingresos", async function (request, reply) {
+        const { usuario_id } = request.params;
+        const tipoIngresos = 1;
+
+        try {
+            const res = await query(getCategoriasByTipoQuery, [usuario_id, tipoIngresos]);
+            const categorias = res.rows.map(row => new Categoria(row.id, row.nombre, row.estado, row.usuario_id, row.tipo));
+            return categorias;
+        } catch (error) {
+            console.error("Error al obtener las categorías de ingresos del usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
     // Obtener una categoría de un usuario por su ID
     fastify.get("/:usuario_id/categorias/:categoria_id", async function (request, reply) {
         const { usuario_id, categoria_id } = request.params;

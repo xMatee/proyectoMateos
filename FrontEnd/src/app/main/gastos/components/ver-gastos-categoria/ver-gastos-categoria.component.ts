@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GastosService } from '../gastos.service';
-import { Gasto } from '../interfaces/gasto';
-import { CategoriasService } from '../../services/categorias-service.service';
-parseInt
+import { GastosService } from '../../gastos.service';
+import { Gasto } from '../../interfaces/gasto';
+import { CategoriasService } from '../../../services/categorias-service.service';
 @Component({
   selector: 'app-ver-gastos-categoria',
   templateUrl: './ver-gastos-categoria.component.html',

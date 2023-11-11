@@ -10,7 +10,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a href="#" class="navbar-brand">Gestionate<b>App</b></a>
+        <a href="" class="navbar-brand">Gestionate<b>App</b></a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,12 +23,12 @@
             <div class="list-group ml-auto">
                 <div *ngIf="!isLoggedIn(); else loggedIn">
                     <a routerLink="/auth/login"
-                        class="list-group-item btn btn-danger text-black mb-2 bg-danger">Login</a>
+                        class="list-group-item btn btn-danger text-white mb-2 bg-danger">Login</a>
                     <a routerLink="/auth/register"
-                        class="list-group-item btn btn-danger text-black bg-danger">Registro</a>
+                        class="list-group-item btn btn-danger text-white bg-danger">Registro</a>
                 </div>
                 <ng-template #loggedIn>
-                    <a (click)="logout()" class="list-group-item btn btn-danger text-black bg-danger">Logout</a>
+                    <a (click)="logout()" class="list-group-item btn btn-danger text-white bg-danger">Logout</a>
                 </ng-template>
             </div>
         </div>

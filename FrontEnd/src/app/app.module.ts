@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http'
 import { AuthModule } from './auth/auth.module';
 import { ShareModule } from './share/share.module';
 import { MainModule } from './main/main.module';
+import { GastosModule } from './main/gastos/gastos.module';
+import { IngresosModule } from './main/ingresos/ingresos.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { MainModule } from './main/main.module';
     HttpClientModule,
     AuthModule,
     ShareModule,
-    MainModule
+    MainModule,
+    GastosModule,
+    IngresosModule
   ],
   providers: [],
   bootstrap: [AppComponent]

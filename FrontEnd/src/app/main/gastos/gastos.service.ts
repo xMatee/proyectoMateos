@@ -15,12 +15,8 @@ export class GastosService {
         return this.http.get<Gasto[]>(`/usuarios/${usuarioId}/gastos`);
     }
 
-    ConsultarCategorias(usuarioId: number): Observable<Categoria[]> {
-        return this.http.get<Categoria[]>(`/usuarios/${usuarioId}/categorias`);
-    }
-
-    ConsultarCategoriaId(usuarioId: number, id: number): Observable<Categoria> {
-        return this.http.get<Categoria>(`/usuarios/${usuarioId}/categorias/${id}`);
+    ConsultarCategorias(usuarioId: number, tipo: string): Observable<Categoria[]> {
+        return this.http.get<Categoria[]>(`/usuarios/${usuarioId}/categorias/${tipo}`);
     }
 
     ConsultarGastosPorCategoria(usuarioId: number, categoriaId: number): Observable<Gasto[]> {
