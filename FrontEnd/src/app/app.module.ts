@@ -9,6 +9,7 @@ import { ShareModule } from './share/share.module';
 import { MainModule } from './main/main.module';
 import { GastosModule } from './main/gastos/gastos.module';
 import { IngresosModule } from './main/ingresos/ingresos.module';
+import { HomeComponent } from './share/pages/home/home.component';
 
 @NgModule({
   declarations: [
