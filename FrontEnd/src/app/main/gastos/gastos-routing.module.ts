@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutPageComponent } from 'src/app/share/pages/main-layout-page/main-layout-page.component';
 import { GastosComponent } from './components/gastosComponent/gastos.component';
 import { VerGastosCategoriaComponent } from './components/ver-gastos-categoria/ver-gastos-categoria.component';
+import { GastosFormComponent } from './components/gastos-form/gastos-form.component';
 
 const routes: Routes = [{
   path: "",
@@ -15,6 +16,10 @@ const routes: Routes = [{
     {
       path: "ver/:id",
       component: VerGastosCategoriaComponent
+    },
+    {
+      path: "nuevo",
+      component: GastosFormComponent
     },
   ]
 },];
