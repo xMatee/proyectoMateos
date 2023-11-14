@@ -3,5 +3,6 @@ export interface Categoria {
     nombre: string,
     estado: number,
     usuario_id: number,
-    tipo: number
+    tipo: number,
+    imagen: string
 }

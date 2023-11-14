@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GastosService } from '../../gastos.service';
 import { Gasto } from '../../interfaces/gasto';
-import { CategoriasService } from '../../../services/categorias-service.service';
+import { GlobalService } from '../../../services/global-service.service';
 @Component({
   selector: 'app-ver-gastos-categoria',
   templateUrl: './ver-gastos-categoria.component.html',
@@ -11,10 +11,10 @@ export class VerGastosCategoriaComponent implements OnInit {
   gastos: Gasto[] = [];
   categoriaId: number = 0;
 
-  constructor(private gastosService: GastosService, private categoriasService: CategoriasService) { }
+  constructor(private gastosService: GastosService, private globalServuce: GlobalService) { }
 
   ngOnInit(): void {
-    this.categoriasService.categoriaId$.subscribe(id => {
+    this.globalServuce.categoriaId$.subscribe(id => {
       this.categoriaId = id;
       console.log('ID CATEGORIA2:', this.categoriaId);
       this.obtenerGastosPorCategoria();

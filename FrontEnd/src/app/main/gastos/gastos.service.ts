@@ -12,6 +12,7 @@ export class GastosService {
     constructor(private http: HttpClient) { }
 
     ConsultarGastos(usuarioId: number): Observable<Gasto[]> {
+        console.log(this.http.get<Gasto[]>(`/usuarios/${usuarioId}/gastos`))
         return this.http.get<Gasto[]>(`/usuarios/${usuarioId}/gastos`);
     }
 

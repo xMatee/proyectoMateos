@@ -5,13 +5,14 @@ SELECT * FROM categorias WHERE estado = 1 AND usuario_id = $1;
 export const getCategoriasByTipoQuery = `
 SELECT * FROM categorias WHERE estado = 1 AND usuario_id = $1 AND tipo = $2;
 `;
+
 export const getCategoriaByIdAndUserQuery = `
 SELECT * FROM categorias WHERE id = $1 AND usuario_id = $2;
 `;
 
 export const insertCategoriaForUserQuery = `
 INSERT INTO categorias (nombre, usuario_id, tipo)
-VALUES ($1, $2, $3)
+VALUES ($1, $2, $3, $4)
 RETURNING *;
 `;
 

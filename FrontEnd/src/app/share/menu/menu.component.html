@@ -16,8 +16,10 @@
         </button>
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <div class="navbar-nav">
-                <a routerLink="/gastos" class="nav-item nav-link" [class.active]="isActive('/gastos')">Gastos</a>
                 <a routerLink="/ingresos" class="nav-item nav-link" [class.active]="isActive('/ingresos')">Ingresos</a>
+                <a routerLink="/gastos" class="nav-item nav-link" [class.active]="isActive('/gastos')">Gastos</a>
+                <a routerLink="/categorias" class="nav-item nav-link"
+                    [class.active]="isActive('/categorias')">Categorias</a>
             </div>
 
             <div class="list-group ml-auto">
