@@ -1,1 +1,19 @@
-<p>gastos-form works!</p>
+<form formGroup="gastosForm" (ngSubmit)="guardarGasto()">
+    <label>Cantidad:</label>
+    <input type="number" formControlName="cantidad" />
+
+    <label>Descripción:</label>
+    <input type="text" formControlName="descripcion" />
+
+    <label>Fecha:</label>
+    <input type="date" formControlName="fecha" />
+
+    <label>Categoría:</label>
+    <select formControlName="categoria">
+        <option *ngFor="let categoria of categorias" [value]="categoria.id">
+            {{ categoria.nombre }}
+        </option>
+    </select>
+
+    <button type="submit">Guardar Gasto</button>
+</form>

@@ -2,7 +2,7 @@ import { GlobalService } from './../../../services/global-service.service';
 import { Component, OnInit } from '@angular/core';
 import { GastosService } from '../../gastos.service';
 import { Gasto } from '../../interfaces/gasto';
-import { Categoria } from '../../interfaces/categoria';
+import { Categoria } from '../../../interfaces/categoria';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,7 +21,7 @@ export class GastosComponent implements OnInit {
   ngOnInit(): void {
     this.gastosService.ConsultarGastos(3).subscribe((datos) => {
       this.datosA = datos;
-      this.gastosService.ConsultarCategorias(3, "gastos").subscribe((datosC) => {
+      this.gastosService.ConsultarCategorias(3).subscribe((datosC) => {
         this.categorias = datosC;
         console.log("Categorias gasto: ", this.categorias)
         this.calcularCantidadesTotales(this.datosA);

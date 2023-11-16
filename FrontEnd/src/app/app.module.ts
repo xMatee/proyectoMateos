@@ -10,6 +10,7 @@ import { MainModule } from './main/main.module';
 import { GastosModule } from './main/gastos/gastos.module';
 import { IngresosModule } from './main/ingresos/ingresos.module';
 import { HomeComponent } from './share/pages/home/home.component';
+import { CategoriasModule } from './main/categorias/categorias.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { HomeComponent } from './share/pages/home/home.component';
     ShareModule,
     MainModule,
     GastosModule,
-    IngresosModule
+    IngresosModule,
+    CategoriasModule
   ],
   providers: [],
   bootstrap: [AppComponent]

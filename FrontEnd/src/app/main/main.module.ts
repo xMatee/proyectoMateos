@@ -5,6 +5,7 @@ import { MainRoutingModule } from './main-routing.module';
 import { GastosComponent } from './gastos/components/gastosComponent/gastos.component';
 import { IngresosComponent } from './ingresos/components/ingresosComponents/ingresos.component';
 import { GastosService } from './gastos/gastos.service';
+import { CategoriasComponent } from './categorias/components/categoriasComponent/categorias.component';
 
 
 @NgModule({
