@@ -18,6 +18,10 @@ const routes: Routes = [{
       component: VerGastosCategoriaComponent
     },
     {
+      path: "ver/:id/editar",
+      component: VerGastosCategoriaComponent
+    },
+    {
       path: "nuevo",
       component: GastosFormComponent
     },

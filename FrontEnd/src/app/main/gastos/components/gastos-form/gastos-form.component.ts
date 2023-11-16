@@ -42,9 +42,8 @@ export class GastosFormComponent implements OnInit {
   }
 
   guardarGasto(): void {
-    console.log(this.gastosForm)
     if (this.gastosForm.valid) {
-      const nuevoGasto = this.gastosForm.value;
+      const nuevoGasto = { ...this.gastosForm.value, categoria_id: +this.gastosForm.value.categoria };
       this.gastosService.guardarGasto(nuevoGasto).subscribe(
         (respuesta) => {
           console.log('Gasto guardado exitosamente:', respuesta);

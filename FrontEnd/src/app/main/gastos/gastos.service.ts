@@ -24,7 +24,16 @@ export class GastosService {
     }
 
     guardarGasto(nuevoGasto: any): Observable<any> {
-        // Asegúrate de ajustar el siguiente endpoint según tu backend
         return this.http.post<any>(`/usuarios/3/gastos`, nuevoGasto);
+    }
+    editarGasto(usuarioId: number, gastoId: number, gasto: any): Observable<any> {
+        return this.http.put<any>(`/usuarios/${usuarioId}/gastos/${gastoId}`, gasto);
+    }
+
+    eliminarGasto(usuarioId: number, gastoId: number): Observable<any> {
+        console.log("llego aca")
+        console.log("usuario: ", usuarioId)
+        console.log("gasto: ", gastoId)
+        return this.http.delete<any>(`/usuarios/${usuarioId}/gastos/${gastoId}`);
     }
 }

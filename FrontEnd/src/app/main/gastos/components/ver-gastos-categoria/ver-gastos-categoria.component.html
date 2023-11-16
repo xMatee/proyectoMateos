@@ -1,6 +1,5 @@
 <div>
-    <h2>Gastos de la Categoría
-    </h2>
+    <h2>Gastos de la Categoría</h2>
     <ul class="list-group">
         <li *ngFor="let gasto of gastos" class="list-group-item">
             <div class="d-flex justify-content-between align-items-center">
@@ -8,8 +7,13 @@
                     <h4 class="mb-1">{{ gasto.descripcion }}</h4>
                     <p class="mb-1">{{ gasto.fecha }}</p>
                 </div>
-                <span class="badge badge-danger badge-pill text-white">${{ gasto.cantidad
-                    }}</span>
+                <span class="badge badge-danger badge-pill text-white">${{ gasto.cantidad }}</span>
+
+                <!-- Botones de editar y eliminar -->
+                <div class="d-flex">
+                    <button class="btn btn-primary mr-2" (click)="editarGasto(gasto.id)">Editar</button>
+                    <button class="btn btn-danger" (click)="eliminarGasto(gasto.id)">Eliminar</button>
+                </div>
             </div>
         </li>
     </ul>
