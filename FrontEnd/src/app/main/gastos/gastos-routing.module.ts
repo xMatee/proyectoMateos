@@ -4,6 +4,7 @@ import { MainLayoutPageComponent } from 'src/app/share/pages/main-layout-page/ma
 import { GastosComponent } from './components/gastosComponent/gastos.component';
 import { VerGastosCategoriaComponent } from './components/ver-gastos-categoria/ver-gastos-categoria.component';
 import { GastosFormComponent } from './components/gastos-form/gastos-form.component';
+import { EditarGastoComponent } from './components/editar-gasto/editar-gasto.component';
 
 const routes: Routes = [{
   path: "",
@@ -19,7 +20,7 @@ const routes: Routes = [{
     },
     {
       path: "ver/:id/editar",
-      component: VerGastosCategoriaComponent
+      component: EditarGastoComponent
     },
     {
       path: "nuevo",

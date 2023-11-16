@@ -188,7 +188,9 @@ export default async function (fastify, opts) {
         const { usuario_id, id } = request.params;
         try {
             const res = await query(getGastoByIdQuery, [usuario_id, id]);
-            return res.rows[0];
+            const gasto = new Gasto(res.id, res.cantidad, res.fecha, res.descripcion, res.categoria_id, res.subcategoria_id, res.usuario_id);
+            console.log(gasto)
+            return gasto
         } catch (error) {
             console.error("Error al obtener el gasto", error.message);
             reply.status(500).send("Error del servidor");
