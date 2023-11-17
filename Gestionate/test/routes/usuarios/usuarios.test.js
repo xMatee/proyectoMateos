@@ -2,6 +2,7 @@ import { test } from 'tap'
 import { build } from '../../helper.js'
 
 test('get all users', async (t) => {
+
     const app = await build(t);
     t.teardown(() => app.close());
     const res = await app.inject({
@@ -17,7 +18,7 @@ test('get user by id', async (t) => {
     t.teardown(() => app.close());
     const res = await app.inject({
         method: 'GET',
-        url: '/usuarios/50'
+        url: '/usuarios/51'
     })
     const payload = JSON.parse(res.payload);
     t.equal(res.statusCode, 200, 'El código de respuesta es 200 (OK)')

@@ -4,7 +4,6 @@ import { query } from '../../../DB/db.js';
 
 query(`INSERT INTO ingresos (id, cantidad, fecha, descripcion, usuario_id) VALUES (120, 1000, '2023-08-31', 'Venta de una licuadora', 50);`);
 
-
 test('get all incomes', async (t) => {
     const app = await build(t);
     t.teardown(() => app.close());

@@ -6,7 +6,8 @@ import {
     getUserByIdQuery,
     createUserQuery,
     updateUserQuery,
-    deleteUserQuery
+    deleteUserQuery,
+    getLoggedUserQuery
 } from "../../DB/queries/users.js";
 
 import {
@@ -29,8 +30,41 @@ import {
 } from "../../DB/queries/productos.js";
 
 export default async function (fastify, opts) {
+
+    // Loguear usuario
+    fastify.post("/login", async (request, reply) => {
+        const { email, contrasena } = request.body;
+        try {
+            console.log(email, contrasena);
+            const res = await query(getLoggedUserQuery, [email, contrasena]);
+            if (res.rowCount === 0) {
+                console.error("Credenciales incorrectas");
+                return reply.status(401).send("Usuario no encontrado");
+            }
+            const token = fastify.jwt.sign({ email }, { expiresIn: "1h" });
+            const user_id = res.rows[0].id;
+            return reply.status(200).send({ token, user_id });
+        }
+        catch (error) {
+            console.error("Error al iniciar sesion", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    })
+
+    fastify.put("/logout", { onRequest: [fastify.authenticate] }, async (req, reply) => {
+        const authRequest = req.headers["Authorizatio"];
+        try {
+            fastify.jwt.sign(authRequest, { expiresIn: 1 });
+            return reply.status(200).send({ message: 'Has sido desconectado' });
+        }
+        catch (error) {
+            console.error("Error al cerrar sesion", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
     // Obtener Todos los usuarios
-    fastify.get("/", async (request, reply) => {
+    fastify.get("/", { onRequest: [fastify.authenticate] }, async (request, reply) => {
         try {
             const res = await query(getUsersQuery);
             return res.rows;
@@ -41,7 +75,7 @@ export default async function (fastify, opts) {
     });
 
     // Obtener usuario por su ID
-    fastify.get("/:id", async (request, reply) => {
+    fastify.get("/:id", { onRequest: [fastify.authenticate] }, async (request, reply) => {
         const { id } = request.params;
         try {
             const res = await query(getUserByIdQuery, [id]);
@@ -56,15 +90,19 @@ export default async function (fastify, opts) {
     });
 
     // Crear un usuario
-    fastify.post("/", { schema: schemas.createUserSchema }, async (request, reply) => {
-        const { nombre, email, contrasena } = request.body;
-        try {
-            const res = await query(createUserQuery, [nombre, email, contrasena]);
-            reply.code(201);
-            return res.rows[0];
-        } catch (error) {
-            console.error("Error al crear usuario", error.message);
-            reply.status(500).send("Error del servidor");
+    fastify.post("/", {
+        handler: async (request, reply) => {
+            const { nombre, email, contrasena } = request.body;
+            try {
+                const res = await query(createUserQuery, [nombre, email, contrasena]);
+                reply.code(201);
+                console.log("Respuesta unica:", res);
+                console.log("Respuesta row", res.rows[0])
+                return res.rows[0];
+            } catch (error) {
+                console.error("Error al crear usuario", error.message);
+                reply.status(500).send("Error del servidor");
+            }
         }
     });
 
