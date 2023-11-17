@@ -23,7 +23,7 @@ const routes: Routes = [{
       component: EditarGastoComponent
     },
     {
-      path: "nuevo",
+      path: "new",
       component: GastosFormComponent
     },
   ]

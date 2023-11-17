@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Categoria } from '../../../interfaces/categoria';
 import { GastosService } from '../../../gastos/gastos.service';
 import { IngresosService } from '../../../ingresos/ingresos.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categorias',
@@ -12,14 +13,13 @@ export class CategoriasComponent implements OnInit {
   gastosCategorias: Categoria[] = [];
   ingresosCategorias: Categoria[] = [];
 
-  constructor(private gastosService: GastosService, private ingresosService: IngresosService) { }
+  constructor(private gastosService: GastosService, private ingresosService: IngresosService, private router: Router) { }
 
   ngOnInit(): void {
     this.obtenerCategorias();
   }
 
   obtenerCategorias() {
-    // Obtener categorías de gastos
     this.gastosService.ConsultarCategorias(3).subscribe(
       (categorias) => {
         this.gastosCategorias = categorias;
@@ -29,7 +29,6 @@ export class CategoriasComponent implements OnInit {
       }
     );
 
-    // Obtener categorías de ingresos
     this.ingresosService.ConsultarCategorias(3).subscribe(
       (categorias) => {
         this.ingresosCategorias = categorias;
@@ -38,5 +37,11 @@ export class CategoriasComponent implements OnInit {
         console.error('Error al obtener categorías de ingresos:', error);
       }
     );
+  }
+  nuevaCategoriaIngreso(): void {
+    this.router.navigate(['/categorias/new/ingreso']);
+  }
+  nuevaCategoriaGasto(): void {
+    this.router.navigate(['/categorias/new/gasto']);
   }
 }

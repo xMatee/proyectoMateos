@@ -1,6 +1,5 @@
 <div class="container mt-4">
     <div class="row">
-        <!-- Categorías de Gastos -->
         <div class="col">
             <div class="card">
                 <div class="card-header">
@@ -14,12 +13,11 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-success">Agregar Gasto</button>
+                    <button class="btn btn-success " (click)="nuevaCategoriaGasto()">Agregar a Gasto</button>
                 </div>
             </div>
         </div>
 
-        <!-- Categorías de Ingresos -->
         <div class=" col">
             <div class="card">
                 <div class="card-header">
@@ -33,7 +31,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-success">Agregar Ingreso</button>
+                    <button class="btn btn-success" (click)="nuevaCategoriaIngreso()">Agregar a Ingreso</button>
                 </div>
             </div>
         </div>

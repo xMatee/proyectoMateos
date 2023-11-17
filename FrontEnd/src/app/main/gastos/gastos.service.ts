@@ -25,7 +25,9 @@ export class GastosService {
     ConsultarGastosPorCategoria(usuarioId: number, categoriaId: number): Observable<Gasto[]> {
         return this.http.get<Gasto[]>(`/usuarios/${usuarioId}/gastos/categorias/${categoriaId}`);
     }
-
+    guardarCategoria(nuevaCategoria: any): Observable<any> {
+        return this.http.post<any>(`/usuarios/3/categorias`, nuevaCategoria);
+    }
     guardarGasto(nuevoGasto: any): Observable<any> {
         return this.http.post<any>(`/usuarios/3/gastos`, nuevoGasto);
     }
@@ -34,9 +36,6 @@ export class GastosService {
     }
 
     eliminarGasto(usuarioId: number, gastoId: number): Observable<any> {
-        console.log("llego aca")
-        console.log("usuario: ", usuarioId)
-        console.log("gasto: ", gastoId)
         return this.http.delete<any>(`/usuarios/${usuarioId}/gastos/${gastoId}`);
     }
 }

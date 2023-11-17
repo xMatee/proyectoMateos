@@ -38,7 +38,6 @@ export class VerGastosCategoriaComponent implements OnInit {
 
   eliminarGasto(gastoId: number): void {
     console.log("seclickeo")
-    console.log(gastoId)
-    this.gastosService.eliminarGasto(3, gastoId)
+    this.gastosService.eliminarGasto(3, gastoId).subscribe()
   }
 }

@@ -47,7 +47,7 @@ export class GastosFormComponent implements OnInit {
       this.gastosService.guardarGasto(nuevoGasto).subscribe(
         (respuesta) => {
           console.log('Gasto guardado exitosamente:', respuesta);
-          // Puedes redirigir a la página de gastos o hacer alguna otra acción después de guardar.
+          this.router.navigate(['/gastos']);
         },
         (error) => {
           console.error('Error al guardar el gasto:', error);

@@ -60,6 +60,6 @@ export class IngresosComponent implements OnInit {
     return this.globalService.getTotalDiferencia()
   }
   nuevoGasto(): void {
-    this.router.navigate(['/gastos/nuevo']);
+    this.router.navigate(['/gastos/new']);
   }
 }

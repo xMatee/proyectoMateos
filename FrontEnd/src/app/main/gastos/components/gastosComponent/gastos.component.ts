@@ -30,8 +30,6 @@ export class GastosComponent implements OnInit {
 
   calcularCantidadesTotales(gastos: Gasto[]): void {
     const categoriasMap = new Map<number, { id: number, nombre: string, cantidad: number, imagen: string }>();
-
-    // Agrupar gastos por categoría y sumar las cantidades
     gastos.forEach((gasto) => {
       const categoriaId = gasto.categoria_id;
       const cantidad = gasto.cantidad;
@@ -60,7 +58,7 @@ export class GastosComponent implements OnInit {
     return this.globalService.getTotalDiferencia()
   }
   nuevoGasto(): void {
-    this.router.navigate(['/gastos/nuevo']);
+    this.router.navigate(['/gastos/new']);
   }
 
 }

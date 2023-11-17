@@ -19,7 +19,7 @@ const routes: Routes = [{
       component: VerIngresosCategoriaComponent
     },
     {
-      path: "nuevo",
+      path: "new",
       component: IngresosFormComponent
     }
   ]

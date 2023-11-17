@@ -12,7 +12,7 @@ import { Gasto } from '../../interfaces/gasto';
 })
 export class EditarGastoComponent implements OnInit {
   gastoId: number = 0;
-  usuarioId: number = 3; // Ajusta el usuarioId según tus necesidades
+  usuarioId: number = 3;
   categorias: Categoria[] = [];
   gasto: Gasto = { id: 0, cantidad: 0, fecha: "", descripcion: "", categoria_id: 0, subcategoria_id: 0, usuario_id: 0 }
 
@@ -29,7 +29,6 @@ export class EditarGastoComponent implements OnInit {
 
     if (!this.gastoId) {
       console.error('ID de gasto no válido.');
-      // Puedes manejar la falta de ID según tus necesidades, como redirigir a una página de error.
       return;
     }
 
@@ -39,7 +38,6 @@ export class EditarGastoComponent implements OnInit {
   }
 
   obtenerGasto() {
-    // Obtener categorías de gastos
     this.gastosService.ConsultarGastoPorId(this.usuarioId, this.gastoId).subscribe(
       (gasto) => {
         this.gasto = gasto;
