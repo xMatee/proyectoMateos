@@ -2,8 +2,9 @@ import { GlobalService } from './../../../services/global-service.service';
 import { Component, OnInit } from '@angular/core';
 import { GastosService } from '../../gastos.service';
 import { Gasto } from '../../interfaces/gasto';
-import { Categoria } from '../../../interfaces/categoria';
+import { Categoria } from '../../../categorias/interfaces/categoria';
 import { Router } from '@angular/router';
+import { CategoriasService } from 'src/app/main/categorias/categorias.service';
 
 @Component({
   selector: 'app-gastos',
@@ -16,12 +17,12 @@ export class GastosComponent implements OnInit {
   categorias: Categoria[] = [];
   totalGastos: number = 0;
 
-  constructor(private gastosService: GastosService, private router: Router, private globalService: GlobalService) { }
+  constructor(private gastosService: GastosService, private categoriasSerivce: CategoriasService, private router: Router, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.gastosService.ConsultarGastos(3).subscribe((datos) => {
       this.datosA = datos;
-      this.gastosService.ConsultarCategorias(3).subscribe((datosC) => {
+      this.categoriasSerivce.ConsultarCategoriasGastos(3).subscribe((datosC) => {
         this.categorias = datosC;
         this.calcularCantidadesTotales(this.datosA);
       });

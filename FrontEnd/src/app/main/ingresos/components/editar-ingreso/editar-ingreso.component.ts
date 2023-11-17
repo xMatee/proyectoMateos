@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { IngresosService } from '../../ingresos.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Categoria } from 'src/app/main/interfaces/categoria';
+import { Categoria } from 'src/app/main/categorias/interfaces/categoria';
 import { Ingreso } from '../../interfaces/ingreso';
+import { CategoriasService } from 'src/app/main/categorias/categorias.service';
 
 @Component({
   selector: 'app-editar-ingreso',
@@ -18,6 +19,7 @@ export class EditarIngresoComponent {
 
   constructor(
     private ingresosService: IngresosService,
+    private categoriasService: CategoriasService,
     private FormBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
@@ -28,7 +30,7 @@ export class EditarIngresoComponent {
     this.ingresoId = ingresoIdParam ? +ingresoIdParam : 0;
 
     if (!this.ingresoId) {
-      console.error('ID de gasto no válido.');
+      console.error('ID de ingreso no válido.');
       return;
     }
 
@@ -43,12 +45,12 @@ export class EditarIngresoComponent {
         this.ingreso = ingreso;
       },
       (error) => {
-        console.error('Error al obtener categorías de gastos:', error);
+        console.error('Error al obtener categorías de ingresos:', error);
       }
     );
   }
   obtenerCategorias(): void {
-    this.ingresosService.ConsultarCategorias(this.usuarioId).subscribe(
+    this.categoriasService.ConsultarCategoriasIngresos(this.usuarioId).subscribe(
       (categorias) => {
         this.categorias = categorias;
       },

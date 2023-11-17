@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GastosService } from '../../gastos.service';
-import { Categoria } from '../../../interfaces/categoria';
+import { Categoria } from '../../../categorias/interfaces/categoria';
 import { Gasto } from '../../interfaces/gasto';
+import { CategoriasService } from 'src/app/main/categorias/categorias.service';
 
 @Component({
   selector: 'app-editar-gasto',
@@ -18,6 +19,7 @@ export class EditarGastoComponent implements OnInit {
 
   constructor(
     private gastosService: GastosService,
+    private categoriasService: CategoriasService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
@@ -48,7 +50,7 @@ export class EditarGastoComponent implements OnInit {
     );
   }
   obtenerCategorias(): void {
-    this.gastosService.ConsultarCategorias(this.usuarioId).subscribe(
+    this.categoriasService.ConsultarCategoriasGastos(this.usuarioId).subscribe(
       (categorias) => {
         this.categorias = categorias;
       },

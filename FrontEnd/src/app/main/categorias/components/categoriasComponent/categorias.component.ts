@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Categoria } from '../../../interfaces/categoria';
+import { Categoria } from '../../interfaces/categoria';
 import { GastosService } from '../../../gastos/gastos.service';
 import { IngresosService } from '../../../ingresos/ingresos.service';
 import { Router } from '@angular/router';
+import { CategoriasService } from '../../categorias.service';
 
 @Component({
   selector: 'app-categorias',
@@ -13,14 +14,14 @@ export class CategoriasComponent implements OnInit {
   gastosCategorias: Categoria[] = [];
   ingresosCategorias: Categoria[] = [];
 
-  constructor(private gastosService: GastosService, private ingresosService: IngresosService, private router: Router) { }
+  constructor(private categoriasService: CategoriasService, private router: Router) { }
 
   ngOnInit(): void {
     this.obtenerCategorias();
   }
 
   obtenerCategorias() {
-    this.gastosService.ConsultarCategorias(3).subscribe(
+    this.categoriasService.ConsultarCategoriasGastos(3).subscribe(
       (categorias) => {
         this.gastosCategorias = categorias;
       },
@@ -29,7 +30,7 @@ export class CategoriasComponent implements OnInit {
       }
     );
 
-    this.ingresosService.ConsultarCategorias(3).subscribe(
+    this.categoriasService.ConsultarCategoriasIngresos(3).subscribe(
       (categorias) => {
         this.ingresosCategorias = categorias;
       },
@@ -43,5 +44,17 @@ export class CategoriasComponent implements OnInit {
   }
   nuevaCategoriaGasto(): void {
     this.router.navigate(['/categorias/new/gasto']);
+  }
+
+  editarCategoria(categoriaId: number): void {
+    this.router.navigate([`/categorias/editar/${categoriaId}`]);
+  }
+
+  eliminarCategoria(categoriaId: number): void {
+    this.categoriasService.eliminarCategoria(3, categoriaId).subscribe()
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }

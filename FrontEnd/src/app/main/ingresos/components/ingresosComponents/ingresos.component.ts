@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Categoria } from '../../../interfaces/categoria';
+import { Categoria } from '../../../categorias/interfaces/categoria';
 import { Router } from '@angular/router';
 import { GlobalService } from '../../../services/global-service.service';
 import { Ingreso } from '../../interfaces/ingreso';
 import { IngresosService } from '../../ingresos.service';
+import { CategoriasService } from 'src/app/main/categorias/categorias.service';
 
 @Component({
   selector: 'app-ingresos',
@@ -16,12 +17,12 @@ export class IngresosComponent implements OnInit {
   categorias: Categoria[] = [];
   totalIngresos: number = 0;
 
-  constructor(private ingresosService: IngresosService, private router: Router, private globalService: GlobalService) { }
+  constructor(private ingresosService: IngresosService, private categoriasService: CategoriasService, private router: Router, private globalService: GlobalService) { }
 
   ngOnInit(): void {
     this.ingresosService.ConsultarIngresos(3).subscribe((datos) => {
       this.datosA = datos;
-      this.ingresosService.ConsultarCategorias(3).subscribe((datosC) => {
+      this.categoriasService.ConsultarCategoriasIngresos(3).subscribe((datosC) => {
         this.categorias = datosC;
         this.calcularCantidadesTotales(this.datosA);
       });

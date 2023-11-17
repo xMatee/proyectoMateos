@@ -4,6 +4,7 @@ import { MainLayoutPageComponent } from 'src/app/share/pages/main-layout-page/ma
 import { IngresosComponent } from './components/ingresosComponents/ingresos.component';
 import { VerIngresosCategoriaComponent } from './components/ver-ingresos-categoria/ver-ingresos-categoria.component';
 import { IngresosFormComponent } from './components/ingresos-form/ingresos-form.component';
+import { EditarIngresoComponent } from './components/editar-ingreso/editar-ingreso.component';
 
 
 const routes: Routes = [{
@@ -17,6 +18,10 @@ const routes: Routes = [{
     {
       path: "ver/:id",
       component: VerIngresosCategoriaComponent
+    },
+    {
+      path: "ver/:id/editar",
+      component: EditarIngresoComponent
     },
     {
       path: "new",

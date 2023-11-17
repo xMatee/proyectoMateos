@@ -19,9 +19,10 @@ RETURNING *;
 
 export const updateCategoriaForUserQuery = `
 UPDATE categorias
-SET nombre = $2
+SET nombre = $2, imagen = $4
 WHERE id = $1 AND usuario_id = $3
 RETURNING *;
+
 `;
 
 export const deleteCategoriaForUserQuery = `

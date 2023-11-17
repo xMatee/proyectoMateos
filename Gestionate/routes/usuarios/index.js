@@ -298,7 +298,21 @@ export default async function (fastify, opts) {
         const { usuario_id, id } = request.params;
         try {
             const res = await query(getIngresoByIdQuery, [usuario_id, id]);
-            return res.rows[0];
+
+            if (res.rows.length > 0) {
+                const ingreso = {
+                    id: res.rows[0].id,
+                    cantidad: res.rows[0].cantidad,
+                    fecha: res.rows[0].fecha,
+                    descripcion: res.rows[0].descripcion,
+                    categoria_id: res.rows[0].categoria_id,
+                    subcategoria_id: res.rows[0].subcategoria_id,
+                    usuario_id: res.rows[0].usuario_id
+                };
+                return ingreso;
+            } else {
+                reply.status(404).send("Ingreso no encontrado");
+            }
         } catch (error) {
             console.error("Error al obtener el ingreso", error.message);
             reply.status(500).send("Error del servidor");
@@ -432,9 +446,9 @@ export default async function (fastify, opts) {
     // Actualizar una categoría de un usuario por su ID
     fastify.put("/:usuario_id/categorias/:categoria_id", async function (request, reply) {
         const { usuario_id, categoria_id } = request.params;
-        const { nombre } = request.body;
+        const { nombre, imagen } = request.body;
         try {
-            const res = await query(updateCategoriaForUserQuery, [categoria_id, nombre, usuario_id]);
+            const res = await query(updateCategoriaForUserQuery, [categoria_id, nombre, usuario_id, imagen]);
             return res.rows[0];
         } catch (error) {
             console.error("Error al actualizar la categoría del usuario", error.message);

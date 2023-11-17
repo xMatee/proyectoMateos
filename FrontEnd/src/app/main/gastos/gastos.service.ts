@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Gasto } from './interfaces/gasto';
-import { Categoria } from '../interfaces/categoria';
+import { Categoria } from '../categorias/interfaces/categoria';
 
 @Injectable({
     providedIn: 'root'
@@ -14,23 +14,23 @@ export class GastosService {
     ConsultarGastos(usuarioId: number): Observable<Gasto[]> {
         return this.http.get<Gasto[]>(`/usuarios/${usuarioId}/gastos`);
     }
-    ConsultarGastoPorId(usuarioId: number, gastoid: number): Observable<Gasto> {
-        return this.http.get<Gasto>(`/usuarios/${usuarioId}/gastos/${gastoid}`);
-    }
-
-    ConsultarCategorias(usuarioId: number): Observable<Categoria[]> {
-        return this.http.get<Categoria[]>(`/usuarios/${usuarioId}/categorias/gastos`);
-    }
 
     ConsultarGastosPorCategoria(usuarioId: number, categoriaId: number): Observable<Gasto[]> {
         return this.http.get<Gasto[]>(`/usuarios/${usuarioId}/gastos/categorias/${categoriaId}`);
     }
+
+    ConsultarGastoPorId(usuarioId: number, gastoid: number): Observable<Gasto> {
+        return this.http.get<Gasto>(`/usuarios/${usuarioId}/gastos/${gastoid}`);
+    }
+
     guardarCategoria(nuevaCategoria: any): Observable<any> {
         return this.http.post<any>(`/usuarios/3/categorias`, nuevaCategoria);
     }
+
     guardarGasto(nuevoGasto: any): Observable<any> {
         return this.http.post<any>(`/usuarios/3/gastos`, nuevoGasto);
     }
+
     editarGasto(usuarioId: number, gastoId: number, gasto: any): Observable<any> {
         return this.http.put<any>(`/usuarios/${usuarioId}/gastos/${gastoId}`, gasto);
     }

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IngresosService } from '../../ingresos.service';
-import { Categoria } from '../../../interfaces/categoria';
+import { Categoria } from '../../../categorias/interfaces/categoria';
+import { CategoriasService } from 'src/app/main/categorias/categorias.service';
 
 @Component({
   selector: 'app-ingresos-form',
@@ -14,6 +15,7 @@ export class IngresosFormComponent implements OnInit {
 
   constructor(
     private ingresosService: IngresosService,
+    private categoriasService: CategoriasService,
     private formBuilder: FormBuilder,
     private router: Router
   ) { }
@@ -31,7 +33,7 @@ export class IngresosFormComponent implements OnInit {
 
 
   obtenerCategorias(): void {
-    this.ingresosService.ConsultarCategorias(3).subscribe(
+    this.categoriasService.ConsultarCategoriasIngresos(3).subscribe(
       (categorias) => {
         this.categorias = categorias;
       },

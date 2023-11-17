@@ -3,6 +3,7 @@ import { GastosService } from '../../gastos.service';
 import { Gasto } from '../../interfaces/gasto';
 import { GlobalService } from '../../../services/global-service.service';
 import { Router } from '@angular/router';
+import { CategoriasService } from 'src/app/main/categorias/categorias.service';
 
 @Component({
   selector: 'app-ver-gastos-categoria',
@@ -15,6 +16,7 @@ export class VerGastosCategoriaComponent implements OnInit {
 
   constructor(
     private gastosService: GastosService,
+    private categoriasService: CategoriasService,
     private globalService: GlobalService,
     private router: Router
   ) { }
@@ -37,7 +39,10 @@ export class VerGastosCategoriaComponent implements OnInit {
   }
 
   eliminarGasto(gastoId: number): void {
-    console.log("seclickeo")
     this.gastosService.eliminarGasto(3, gastoId).subscribe()
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }

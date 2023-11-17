@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GastosService } from '../../gastos.service';
-import { Categoria } from '../../../interfaces/categoria';
+import { Categoria } from '../../../categorias/interfaces/categoria';
+import { CategoriasService } from 'src/app/main/categorias/categorias.service';
 
 @Component({
   selector: 'app-gastos-form',
@@ -14,6 +15,7 @@ export class GastosFormComponent implements OnInit {
 
   constructor(
     private gastosService: GastosService,
+    private categoriasService: CategoriasService,
     private formBuilder: FormBuilder,
     private router: Router
   ) { }
@@ -31,7 +33,7 @@ export class GastosFormComponent implements OnInit {
 
 
   obtenerCategorias(): void {
-    this.gastosService.ConsultarCategorias(3).subscribe(
+    this.categoriasService.ConsultarCategoriasGastos(3).subscribe(
       (categorias) => {
         this.categorias = categorias;
       },

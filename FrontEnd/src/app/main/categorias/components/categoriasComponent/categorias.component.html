@@ -10,15 +10,21 @@
                         <img [src]="categoria.imagen" alt="Imagen de la categoría" class="rounded-circle mr-2"
                             width="40" height="40">
                         {{ categoria.nombre }}
+                        <div class="ml-auto">
+                            <button class="btn btn-sm btn-primary mr-2"
+                                (click)="editarCategoria(categoria.id)">Editar</button>
+                            <button class="btn btn-sm btn-danger"
+                                (click)="eliminarCategoria(categoria.id)">Eliminar</button>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-success " (click)="nuevaCategoriaGasto()">Agregar a Gasto</button>
+                    <button class="btn btn-success" (click)="nuevaCategoriaGasto()">Agregar a Gasto</button>
                 </div>
             </div>
         </div>
 
-        <div class=" col">
+        <div class="col">
             <div class="card">
                 <div class="card-header">
                     Categorías de Ingresos
@@ -28,6 +34,12 @@
                         <img [src]="categoria.imagen" alt="Imagen de la categoría" class="rounded-circle mr-2"
                             width="40" height="40">
                         {{ categoria.nombre }}
+                        <div class="ml-auto">
+                            <button class="btn btn-sm btn-primary mr-2"
+                                (click)="editarCategoria(categoria.id)">Editar</button>
+                            <button class="btn btn-sm btn-danger"
+                                (click)="eliminarCategoria(categoria.id)">Eliminar</button>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
