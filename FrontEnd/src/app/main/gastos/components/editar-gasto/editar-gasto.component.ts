@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GastosService } from '../../gastos.service';
 import { Categoria } from '../../../interfaces/categoria';
+import { Gasto } from '../../interfaces/gasto';
 
 @Component({
   selector: 'app-editar-gasto',
@@ -13,6 +14,7 @@ export class EditarGastoComponent implements OnInit {
   gastoId: number = 0;
   usuarioId: number = 3; // Ajusta el usuarioId según tus necesidades
   categorias: Categoria[] = [];
+  gasto: Gasto = { id: 0, cantidad: 0, fecha: "", descripcion: "", categoria_id: 0, subcategoria_id: 0, usuario_id: 0 }
 
   constructor(
     private gastosService: GastosService,
@@ -32,9 +34,21 @@ export class EditarGastoComponent implements OnInit {
     }
 
     this.obtenerCategorias();
+    this.obtenerGasto();
     this.cargarGasto();
   }
 
+  obtenerGasto() {
+    // Obtener categorías de gastos
+    this.gastosService.ConsultarGastoPorId(this.usuarioId, this.gastoId).subscribe(
+      (gasto) => {
+        this.gasto = gasto;
+      },
+      (error) => {
+        console.error('Error al obtener categorías de gastos:', error);
+      }
+    );
+  }
   obtenerCategorias(): void {
     this.gastosService.ConsultarCategorias(this.usuarioId).subscribe(
       (categorias) => {
@@ -47,21 +61,21 @@ export class EditarGastoComponent implements OnInit {
   }
 
   public gastoForm: FormGroup = this.formBuilder.group({
-    cantidad: [null, [Validators.required, Validators.min(0)]],
-    descripcion: [null, [Validators.required]],
-    fecha: [null, [Validators.required]],
-    categoria: [null, [Validators.required]]
+    cantidad: [this.gasto.cantidad, [Validators.required, Validators.min(0)]],
+    descripcion: [this.gasto.descripcion, [Validators.required]],
+    fecha: [this.gasto.fecha, [Validators.required]],
+    categoria: [this.gasto.categoria_id, [Validators.required]]
   });
 
 
   cargarGasto(): void {
     this.gastosService.ConsultarGastoPorId(this.usuarioId, this.gastoId).subscribe(
       (gasto) => {
-        this.gastoForm.patchValue({
-          cantidad: +gasto.cantidad, // Convertir a número
+        this.gastoForm.setValue({
+          cantidad: gasto.cantidad,
           descripcion: gasto.descripcion,
           fecha: gasto.fecha,
-          categoria: +gasto.categoria_id // Convertir a número
+          categoria: gasto.categoria_id
         });
       },
       (error) => {
@@ -72,7 +86,13 @@ export class EditarGastoComponent implements OnInit {
 
   guardarEdicion(): void {
     if (this.gastoForm.valid) {
-      const gastoEditado = this.gastoForm.value;
+      const gastoEditado = {
+        cantidad: this.gastoForm.value.cantidad,
+        descripcion: this.gastoForm.value.descripcion,
+        fecha: this.gastoForm.value.fecha,
+        categoria_id: this.gastoForm.value.categoria
+      };
+
       this.gastosService.editarGasto(this.usuarioId, this.gastoId, gastoEditado).subscribe(
         (respuesta) => {
           console.log('Gasto editado exitosamente:', respuesta);

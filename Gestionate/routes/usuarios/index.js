@@ -188,9 +188,23 @@ export default async function (fastify, opts) {
         const { usuario_id, id } = request.params;
         try {
             const res = await query(getGastoByIdQuery, [usuario_id, id]);
-            const gasto = new Gasto(res.id, res.cantidad, res.fecha, res.descripcion, res.categoria_id, res.subcategoria_id, res.usuario_id);
-            console.log(gasto)
-            return gasto
+
+            if (res.rows.length > 0) {
+                const gasto = {
+                    id: res.rows[0].id,
+                    cantidad: res.rows[0].cantidad,
+                    fecha: res.rows[0].fecha,
+                    descripcion: res.rows[0].descripcion,
+                    categoria_id: res.rows[0].categoria_id,
+                    subcategoria_id: res.rows[0].subcategoria_id,
+                    usuario_id: res.rows[0].usuario_id
+                };
+                console.log(gasto);
+                return gasto;
+            } else {
+                // Manejar el caso en que no se encuentre el gasto
+                reply.status(404).send("Gasto no encontrado");
+            }
         } catch (error) {
             console.error("Error al obtener el gasto", error.message);
             reply.status(500).send("Error del servidor");
