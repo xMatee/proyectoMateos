@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoriasComponent } from './components/categoriasComponent/categorias.component';
 import { MainLayoutPageComponent } from 'src/app/share/pages/main-layout-page/main-layout-page.component';
-import { CategoriasFormIngresoComponent } from './components/categorias-form-ingreso/categorias-form.component';
+import { CategoriasFormIngresoComponent } from './components/categorias-form/categorias-form.component';
 import { CategoriasFormGastoComponent } from './components/categorias-form-gasto/categorias-form-gasto.component';
 
 const routes: Routes = [{

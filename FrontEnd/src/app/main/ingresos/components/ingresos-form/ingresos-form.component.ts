@@ -22,7 +22,7 @@ export class IngresosFormComponent implements OnInit {
     this.obtenerCategorias();
   }
 
-  public gastosForm: FormGroup = this.formBuilder.group({
+  public ingresosForm: FormGroup = this.formBuilder.group({
     cantidad: ['', [Validators.required]],
     descripcion: ['', [Validators.required]],
     fecha: ['', [Validators.required]],
@@ -42,13 +42,12 @@ export class IngresosFormComponent implements OnInit {
   }
 
   guardarIngreso(): void {
-    console.log(this.gastosForm)
-    if (this.gastosForm.valid) {
-      const nuevoGasto = this.gastosForm.value;
-      this.ingresosService.guardarIngreso(nuevoGasto).subscribe(
+    if (this.ingresosForm.valid) {
+      const nuevoIngreso = { ...this.ingresosForm.value, categoria_id: +this.ingresosForm.value.categoria };
+      this.ingresosService.guardarIngreso(nuevoIngreso).subscribe(
         (respuesta) => {
           console.log('Gasto guardado exitosamente:', respuesta);
-          // Puedes redirigir a la página de gastos o hacer alguna otra acción después de guardar.
+          this.router.navigate(['/ingresos']);
         },
         (error) => {
           console.error('Error al guardar el gasto:', error);

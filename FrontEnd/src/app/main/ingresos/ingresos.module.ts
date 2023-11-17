@@ -5,17 +5,23 @@ import { IngresosRoutingModule } from './ingresos-routing.module';
 import { IngresosComponent } from './components/ingresosComponents/ingresos.component';
 import { VerIngresosCategoriaComponent } from './components/ver-ingresos-categoria/ver-ingresos-categoria.component';
 import { IngresosFormComponent } from './components/ingresos-form/ingresos-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditarIngresoComponent } from './components/editar-ingreso/editar-ingreso.component';
 
 
 @NgModule({
   declarations: [
     VerIngresosCategoriaComponent,
     IngresosComponent,
-    IngresosFormComponent
+    IngresosFormComponent,
+    EditarIngresoComponent,
+
   ],
   imports: [
     CommonModule,
-    IngresosRoutingModule
+    IngresosRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class IngresosModule { }

@@ -9,6 +9,10 @@
                     <p class="mb-1">{{ ingreso.fecha }}</p>
                 </div>
                 <span class="badge badge-success badge-pill text-white">${{ ingreso.cantidad }}</span>
+                <div class="d-flex">
+                    <button class="btn btn-primary mr-2" (click)="editarIngreso(ingreso.id)">Editar</button>
+                    <button class="btn btn-danger" (click)="eliminarIngreso(ingreso.id)">Eliminar</button>
+                </div>
             </div>
         </li>
     </ul>

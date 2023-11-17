@@ -1,19 +1,31 @@
-<form formGroup="myForm" (ngSubmit)="guardarIngreso()">
-    <label>Cantidad:</label>
-    <input type="number" formControlName="cantidad" />
+<form [formGroup]="ingresosForm" (ngSubmit)="guardarIngreso()" class="form-inline">
+    <div class="form-group mb-2">
+        <label class="mr-2">Cantidad:</label>
+        <input type="number" class="form-control" formControlName="cantidad" />
+    </div>
 
-    <label>Descripción:</label>
-    <input type="text" formControlName="descripcion" />
+    <div class="form-group mb-2">
+        <label class="mr-2">Descripción:</label>
+        <input type="text" class="form-control" formControlName="descripcion" />
+    </div>
 
-    <label>Fecha:</label>
-    <input type="date" formControlName="fecha" />
+    <div class="form-group mb-2">
+        <label class="mr-2">Fecha:</label>
+        <input type="date" class="form-control" formControlName="fecha" />
+    </div>
 
-    <label>Categoría:</label>
-    <select formControlName="categoria">
-        <option *ngFor="let categoria of categorias" [value]="categoria.id">
-            {{ categoria.nombre }}
-        </option>
-    </select>
+    <div class="form-group mb-2">
+        <label class="mr-2">Categoría:</label>
+        <select class="form-control" formControlName="categoria">
+            <option *ngFor="let categoria of categorias" [value]="categoria.id">
+                {{ categoria.nombre }}
+            </option>
+        </select>
+    </div>
 
-    <button type="submit">Guardar Ingreso</button>
+    <button type="submit" class="btn btn-primary mb-2">Guardar Ingreso</button>
+
+    <span class="form-text text-danger" *ngIf="!ingresosForm.valid && ingresosForm.touched && !ingresosForm.pristine">
+        Asegúrate de completar todos los campos.
+    </span>
 </form>

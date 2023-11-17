@@ -15,6 +15,9 @@ export class IngresosService {
     ConsultarIngresos(usuarioId: number): Observable<Ingreso[]> {
         return this.http.get<Ingreso[]>(`/usuarios/${usuarioId}/ingresos`);
     }
+    ConsultarGastoPorId(usuarioId: number, ingresoId: number): Observable<Ingreso> {
+        return this.http.get<Ingreso>(`/usuarios/${usuarioId}/gastos/${ingresoId}`);
+    }
     ConsultarCategorias(usuarioId: number): Observable<Categoria[]> {
         return this.http.get<Categoria[]>(`/usuarios/${usuarioId}/categorias/ingresos`);
     }
@@ -22,7 +25,13 @@ export class IngresosService {
         return this.http.get<Ingreso[]>(`/usuarios/${usuarioId}/ingresos/categorias/${categoriaId}`);
     }
     guardarIngreso(nuevoIngreso: any): Observable<any> {
-        // Asegúrate de ajustar el siguiente endpoint según tu backend
-        return this.http.post<any>(`/usuarios/3/gastos`, nuevoIngreso);
+        return this.http.post<any>(`/usuarios/3/ingresos`, nuevoIngreso);
+    }
+    editarIngreso(usuarioId: number, gastoId: number, ingreso: any): Observable<any> {
+        return this.http.put<any>(`/usuarios/${usuarioId}/ingresos/${gastoId}`, ingreso);
+    }
+
+    eliminarIngreso(usuarioId: number, gastoId: number): Observable<any> {
+        return this.http.delete<any>(`/usuarios/${usuarioId}/ingresos/${gastoId}`);
     }
 }
