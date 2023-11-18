@@ -15,6 +15,7 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder, private validationService: ValidationService) { }
 
   public error: boolean = false;
+  public errorMessage: string = "";
 
 
   public myForm: FormGroup = this.formBuilder.group({
@@ -26,10 +27,9 @@ export class LoginComponent {
     this.myForm.markAllAsTouched();
     if (this.myForm.invalid) {
       this.error = true;
+      this.errorMessage = "Uno o más campos son inválidos";
       return;
     }
-
-    this.error = false;
 
     this.authService.doLogin(this.myForm.value.email, this.myForm.value.contrasena)
       .subscribe({
@@ -39,8 +39,10 @@ export class LoginComponent {
         error: (error: any) => {
           console.error("Error capturado: ", error.message);
           this.error = true;
+          this.errorMessage = "Email o contraseña incorrectos";
+          return;
         }
       });
-    return;
+    this.error = false;
   }
 }

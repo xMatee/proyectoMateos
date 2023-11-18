@@ -16,7 +16,8 @@ export class RegisterComponent {
   constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder, private validationService: ValidationService) { }
 
   public error: boolean = false;
-
+  public errorMessage: string = "";
+  public diffPass: boolean = false;
 
   public myForm: FormGroup = this.formBuilder.group({
     nombre: ["", [Validators.required, Validators.minLength(3)]],
@@ -27,11 +28,15 @@ export class RegisterComponent {
 
   onSubmit() {
     this.myForm.markAllAsTouched();
-    if (this.myForm.value.contrasena2 !== this.myForm.value.contrasena) {
-      console.log("Las contrasenas no coinciden");
-    }
     if (this.myForm.invalid) {
       this.error = true;
+      this.errorMessage = "Uno o más campos son inválidos";
+      return;
+    }
+    if (this.myForm.value.contrasena2 !== this.myForm.value.contrasena) {
+      this.diffPass = true;
+      console.log(this.myForm.value.contrasena2, this.myForm.value.contrasena)
+      console.log("Las contrasenas no coinciden");
       return;
     }
 
@@ -41,15 +46,14 @@ export class RegisterComponent {
           this.authService.doLogin(this.myForm.value.email, this.myForm.value.contrasena).subscribe({
             next: () => {
               this.router.navigate(['/']);
-              console.log("Usuario registrado y logueado: ", user.nombre, " Email: ", user.email);
             }
           })
         },
         error: (error: any) => {
           console.error("Error capturado: ", error.message);
-          this.error = true;
-          return;
         }
       });
+    this.error = false;
+    this.diffPass = false;
   }
 }

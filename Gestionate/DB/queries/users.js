@@ -26,4 +26,8 @@ UPDATE usuarios SET estado = -1 WHERE id = $1;
 
 export const getLoggedUserQuery = `
   SELECT * FROM public.usuarios WHERE email = $1 and contrasena = $2;
-  `
+  `;
+
+export const getUserByEmail = `
+SELECT * FROM public.usuarios WHERE email = $1;
+`;
