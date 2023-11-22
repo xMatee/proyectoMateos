@@ -7,6 +7,7 @@ import { VerGastosCategoriaComponent } from './components/ver-gastos-categoria/v
 import { GastosFormComponent } from './components/gastos-form/gastos-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditarGastoComponent } from './components/editar-gasto/editar-gasto.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { EditarGastoComponent } from './components/editar-gasto/editar-gasto.com
     CommonModule,
     GastosRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserModule,
   ],
 })
 export class GastosModule { }
