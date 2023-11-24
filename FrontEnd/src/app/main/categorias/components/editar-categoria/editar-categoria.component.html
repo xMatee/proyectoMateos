@@ -1,0 +1,10 @@
+<form [formGroup]="categoriaForm" (ngSubmit)="guardarEdicion()">
+    <label>Nombre:</label>
+    <input type="text" formControlName="nombre" />
+
+    <label>Imagen:</label>
+    <input type="text" formControlName="imagen" />
+
+
+    <button type="submit">Guardar Edición</button>
+</form>

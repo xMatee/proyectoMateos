@@ -1,17 +1,41 @@
-<ol class="list-group">
-    <li class="list-group-item" *ngIf="!isLoggedIn(); else loggedIn">
-        <a routerLink="/auth/login" class="btn btn-primary text-white d-block mb-2">Login</a>
-        <a routerLink="/auth/register" class="btn btn-primary text-white d-block">Registro</a>
-    </li>
-    <ng-template #loggedIn>
-        <li class="list-group-item">
-            <a (click)="logout()" class="btn btn-primary text-white">Logout</a>
-        </li>
-        <li class="list-group-item">
-            <a routerLink="/gastos" class="btn btn-primary text-white">Gastos</a>
-        </li>
-        <li class="list-group-item">
-            <a routerLink="/ingresos" class="btn btn-primary text-white">Ingresos</a>
-        </li>
-    </ng-template>
-</ol>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>GestionateApp</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a href="" class="navbar-brand">Gestionate<b>App</b></a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarCollapse" class="collapse navbar-collapse">
+            <div class="navbar-nav">
+                <a routerLink="/ingresos" class="nav-item nav-link" [class.active]="isActive('/ingresos')">Ingresos</a>
+                <a routerLink="/gastos" class="nav-item nav-link" [class.active]="isActive('/gastos')">Gastos</a>
+                <a routerLink="/categorias" class="nav-item nav-link"
+                    [class.active]="isActive('/categorias')">Categorias</a>
+            </div>
+
+            <div class="list-group ml-auto">
+                <div *ngIf="!isLoggedIn(); else loggedIn">
+                    <a routerLink="/auth/login"
+                        class="list-group-item btn btn-danger text-white mb-2 bg-danger">Login</a>
+                    <a routerLink="/auth/register"
+                        class="list-group-item btn btn-danger text-white bg-danger">Registro</a>
+                </div>
+                <ng-template #loggedIn>
+                    <a (click)="logout()" class="list-group-item btn btn-danger text-white bg-danger">Logout</a>
+                </ng-template>
+            </div>
+        </div>
+    </nav>
+
+</body>
+
+</html>

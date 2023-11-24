@@ -1,0 +1,53 @@
+body {
+    font-family: 'Varela Round', sans-serif;
+}
+
+.navbar {
+    background: #fff;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-bottom: 1px solid #dfe3e8;
+    border-radius: 0;
+}
+
+.navbar-brand b {
+    color: #8b0000;
+    /* Rojo medio oscuro */
+}
+
+.navbar-toggler-icon {
+    background-color: #333;
+    /* Color del icono del botón del menú en modo colapsado */
+}
+
+.navbar-nav {
+    margin-right: auto;
+    /* Alinea los elementos a la izquierda y a la derecha */
+}
+
+.navbar-nav .nav-item {
+    margin-right: 10px;
+}
+
+.list-group {
+    display: flex;
+    align-items: center;
+}
+
+.list-group-item {
+    margin-right: 10px;
+}
+
+.btn-primary {
+    background: #33cabb;
+    border: none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: #31bfb1;
+}
+
+.text-white {
+    color: #fff;
+}

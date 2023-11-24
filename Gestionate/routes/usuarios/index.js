@@ -1,5 +1,6 @@
 import { query } from '../../DB/db.js';
 import schemas from "../../schemas/index.js";
+
 import bcrypt from 'bcrypt';
 
 import {
@@ -18,10 +19,12 @@ import {
     insertGastoQuery,
     updateGastoQuery,
     deleteGastoQuery,
+    getGastosByCategoriaQuery
 } from "../../DB/queries/gastos.js";
 import {
     getAllIngresosQuery,
     getIngresoByIdQuery,
+    getIngresoByCategoriaQuery,
     insertIngresoQuery,
     updateIngresoQuery,
     deleteIngresoQuery,
@@ -30,7 +33,64 @@ import {
     associateProductoToGastoQuery,
     disassociateProductoFromGastoQuery,
 } from "../../DB/queries/productos.js";
+import {
+    getAllCategoriasByUserQuery,
+    getCategoriasByTipoQuery,
+    getCategoriaByIdAndUserQuery,
+    insertCategoriaForUserQuery,
+    updateCategoriaForUserQuery,
+    deleteCategoriaForUserQuery,
+} from "../../DB/queries/categorias.js";
+import {
+    crearSubcategoriaQuery,
+    editarSubcategoriaQuery,
+    eliminarSubcategoriaQuery,
+    getSubcategoriaPorIdYCategoriaQuery,
+    getSubcategoriasPorCategoriaQuery
+} from '../../DB/queries/subcategorias.js';
+class Gasto {
+    constructor(id, cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id) {
+        this.id = id;
+        this.cantidad = cantidad;
+        this.fecha = fecha;
+        this.descripcion = descripcion;
+        this.categoria_id = categoria_id;
+        this.subcategoria_id = subcategoria_id;
+        this.usuario_id = usuario_id
+    }
+}
+class Ingreso {
+    constructor(id, cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id) {
+        this.id = id;
+        this.cantidad = cantidad;
+        this.fecha = fecha;
+        this.descripcion = descripcion;
+        this.categoria_id = categoria_id;
+        this.subcategoria_id = subcategoria_id;
+        this.usuario_id = usuario_id
+    }
 
+}
+class Categoria {
+    constructor(id, nombre, estado, usuario_id, tipo, imagen) {
+        this.id = id;
+        this.nombre = nombre;
+        this.estado = estado;
+        this.usuario_id = usuario_id;
+        this.tipo = tipo;
+        this.imagen = imagen;
+    }
+}
+import fastify from 'fastify';
+import fastifyCors from 'fastify-cors';
+
+const server = fastify();
+
+// Habilita CORS con opciones personalizadas
+server.register(fastifyCors, {
+    origin: 'http://localhost:4200', //
+    methods: 'GET,PUT,POST,DELETE',
+});
 export default async function (fastify, opts) {
 
     // Loguear usuario
@@ -160,19 +220,49 @@ export default async function (fastify, opts) {
         const { usuario_id } = request.params;
         try {
             const res = await query(getAllGastosQuery, [usuario_id]);
-            return res.rows;
+            const gastos = res.rows.map(row => new Gasto(row.id, row.cantidad, row.fecha, row.descripcion, row.categoria_id, row.subcategoria_id, row.usuario_id));
+            return gastos;
         } catch (error) {
             console.error("Error al obtener gastos", error.message);
             reply.status(500).send("Error del servidor");
         }
     });
+    // Obtener todos los gastos de un usuario dentro de una categoría
+    fastify.get("/:usuario_id/gastos/categorias/:categoria_id", async function (request, reply) {
+        const { usuario_id, categoria_id } = request.params;
+        try {
+            const res = await query(getGastosByCategoriaQuery, [usuario_id, categoria_id]);
+            const gastos = res.rows.map(row => new Gasto(row.id, row.cantidad, row.fecha, row.descripcion, row.categoria_id, row.subcategoria_id, row.usuario_id));
+            return gastos;
+        } catch (error) {
+            console.error("Error al obtener gastos por categoría", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
 
     // Obtener un gasto de un usuario por su ID
     fastify.get("/:usuario_id/gastos/:id", async function (request, reply) {
         const { usuario_id, id } = request.params;
         try {
             const res = await query(getGastoByIdQuery, [usuario_id, id]);
-            return res.rows[0];
+
+            if (res.rows.length > 0) {
+                const gasto = {
+                    id: res.rows[0].id,
+                    cantidad: res.rows[0].cantidad,
+                    fecha: res.rows[0].fecha,
+                    descripcion: res.rows[0].descripcion,
+                    categoria_id: res.rows[0].categoria_id,
+                    subcategoria_id: res.rows[0].subcategoria_id,
+                    usuario_id: res.rows[0].usuario_id
+                };
+                console.log(gasto);
+                return gasto;
+            } else {
+                // Manejar el caso en que no se encuentre el gasto
+                reply.status(404).send("Gasto no encontrado");
+            }
         } catch (error) {
             console.error("Error al obtener el gasto", error.message);
             reply.status(500).send("Error del servidor");
@@ -266,19 +356,45 @@ export default async function (fastify, opts) {
         const { usuario_id, id } = request.params;
         try {
             const res = await query(getIngresoByIdQuery, [usuario_id, id]);
-            return res.rows[0];
+
+            if (res.rows.length > 0) {
+                const ingreso = {
+                    id: res.rows[0].id,
+                    cantidad: res.rows[0].cantidad,
+                    fecha: res.rows[0].fecha,
+                    descripcion: res.rows[0].descripcion,
+                    categoria_id: res.rows[0].categoria_id,
+                    subcategoria_id: res.rows[0].subcategoria_id,
+                    usuario_id: res.rows[0].usuario_id
+                };
+                return ingreso;
+            } else {
+                reply.status(404).send("Ingreso no encontrado");
+            }
         } catch (error) {
             console.error("Error al obtener el ingreso", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+    // Obtener todos los ingresos de un usuario dentro de una categoría
+    fastify.get("/:usuario_id/ingresos/categorias/:categoria_id", async function (request, reply) {
+        const { usuario_id, categoria_id } = request.params;
+        try {
+            const res = await query(getIngresoByCategoriaQuery, [usuario_id, categoria_id]);
+            const ingresos = res.rows.map(row => new Ingreso(row.id, row.cantidad, row.fecha, row.descripcion, row.categoria_id, row.subcategoria_id, row.usuario_id));
+            return ingresos;
+        } catch (error) {
+            console.error("Error al obtener ingresos por categoría", error.message);
             reply.status(500).send("Error del servidor");
         }
     });
 
     // Crear un nuevo ingreso para un usuario
     fastify.post("/:usuario_id/ingresos", { schema: schemas.createIncomeSchema }, async function (request, reply) {
-        const { cantidad, fecha, descripcion } = request.body;
+        const { cantidad, fecha, descripcion, subcategoria_id, categoria_id } = request.body;
         const { usuario_id } = request.params;
         try {
-            const res = await query(insertIngresoQuery, [cantidad, fecha, descripcion, usuario_id]);
+            const res = await query(insertIngresoQuery, [cantidad, fecha, descripcion, categoria_id, subcategoria_id, usuario_id]);
             reply.code(201);
             return res.rows[0];
         } catch (error) {
@@ -312,5 +428,199 @@ export default async function (fastify, opts) {
             reply.status(500).send("Error del servidor");
         }
     });
+
+
+    //CATEGORIAS
+
+    fastify.get("/:usuario_id/categorias", async function (request, reply) {
+        const { usuario_id } = request.params;
+        try {
+            const res = await query(getAllCategoriasByUserQuery, [usuario_id]);
+            const categorias = res.rows.map(row => new Categoria(row.id, row.nombre, row.estado, row.usuario_id, row.tipo));
+            return categorias;
+        } catch (error) {
+            console.error("Error al obtener las categorías del usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    //Obtener categorias de un usuario por su id y tipo de categoria gasto
+    fastify.get("/:usuario_id/categorias/gastos", async function (request, reply) {
+        const { usuario_id } = request.params;
+        const tipoGastos = 0;
+
+        try {
+            const res = await query(getCategoriasByTipoQuery, [usuario_id, tipoGastos]);
+            const categorias = res.rows.map(row => new Categoria(row.id, row.nombre, row.estado, row.usuario_id, row.tipo, row.imagen));
+            return categorias;
+        } catch (error) {
+            console.error("Error al obtener las categorías de gastos del usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    //Obtener categorias de un usuario por su id y tipo de categoria ingreso
+    fastify.get("/:usuario_id/categorias/ingresos", async function (request, reply) {
+        const { usuario_id } = request.params;
+        const tipoIngresos = 1;
+
+        try {
+            const res = await query(getCategoriasByTipoQuery, [usuario_id, tipoIngresos]);
+            const categorias = res.rows.map(row => new Categoria(row.id, row.nombre, row.estado, row.usuario_id, row.tipo, row.imagen));
+            return categorias;
+        } catch (error) {
+            console.error("Error al obtener las categorías de ingresos del usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    // Obtener una categoría de un usuario por su ID
+    fastify.get("/:usuario_id/categorias/:categoria_id", async function (request, reply) {
+        const { usuario_id, categoria_id } = request.params;
+        try {
+            const res = await query(getCategoriaByIdAndUserQuery, [categoria_id, usuario_id]);
+            return new Categoria(res.rows[0].id, res.rows[0].nombre, res.rows[0].estado, res.rows[0].usuario_id, res.rows[0].tipo, res.rows[0].imagen);
+        } catch (error) {
+            console.error("Error al obtener la categoría del usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    // Crear una nueva categoría para un usuario
+    fastify.post("/:usuario_id/categorias", { schema: schemas.createExpenseCategorySchema }, async function (request, reply) {
+        const { nombre, tipo, imagen } = request.body;
+        const { usuario_id } = request.params;
+        try {
+            const res = await query(insertCategoriaForUserQuery, [nombre, usuario_id, tipo, imagen]);
+            reply.code(201);
+            return res.rows[0];
+        } catch (error) {
+            console.error("Error al crear la categoría para el usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+
+    // Actualizar una categoría de un usuario por su ID
+    fastify.put("/:usuario_id/categorias/:categoria_id", async function (request, reply) {
+        const { usuario_id, categoria_id } = request.params;
+        const { nombre, imagen } = request.body;
+        try {
+            const res = await query(updateCategoriaForUserQuery, [categoria_id, nombre, usuario_id, imagen]);
+            return res.rows[0];
+        } catch (error) {
+            console.error("Error al actualizar la categoría del usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+    // Eliminar una categoría de un usuario por su ID
+    fastify.delete("/:usuario_id/categorias/:categoria_id", async function (request, reply) {
+        const { usuario_id, categoria_id } = request.params;
+        try {
+            await query(deleteCategoriaForUserQuery, [categoria_id, usuario_id]);
+            reply.code(204);
+        } catch (error) {
+            console.error("Error al eliminar la categoría del usuario", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    });
+
+
+
+    //SUBCATEGORIAS
+
+
+    // //Obtener todas las subcategorías de una categoría
+    // fastify.get('/:categoriaId/subcategorias', {
+    //     handler: async function (request, reply) {
+    //         const { categoriaId } = request.params;
+
+    //         try {
+    //             const queryResult = await query(getSubcategoriasPorCategoriaQuery, [categoriaId]);
+    //             return queryResult.rows;
+    //         } catch (error) {
+    //             console.error('Error al obtener subcategorías:', error.message);
+    //             reply.status(500).send('Error del servidor');
+    //         }
+    //     }
+    // });
+
+    // //Obtener una subcategoría por su id
+    // fastify.get('/:categoriaId/subcategorias/:subcategoriaId', {
+    //     handler: async function (request, reply) {
+    //         const { subcategoriaId } = request.params;
+
+    //         try {
+    //             const queryResult = await query(getSubcategoriaPorIdYCategoriaQuery, [subcategoriaId, request.params.categoriaId]);
+    //             if (queryResult.rows.length === 0) {
+    //                 reply.status(404).send('Subcategoría no encontrada');
+    //             } else {
+    //                 return queryResult.rows[0];
+    //             }
+    //         } catch (error) {
+    //             console.error('Error al obtener subcategoría:', error.message);
+    //             reply.status(500).send('Error del servidor');
+    //         }
+    //     }
+    // });
+
+    // //crear una subcategoría
+    // fastify.post('/:categoriaId/subcategorias', {
+    //     handler: async function (request, reply) {
+    //         const { nombre } = request.body;
+    //         const { categoriaId } = request.params;
+
+    //         try {
+    //             const queryResult = await query(crearSubcategoriaQuery, [nombre, categoriaId]);
+    //             reply.code(201);
+    //             return queryResult.rows[0];
+    //         } catch (error) {
+    //             console.error('Error al crear subcategoría:', error.message);
+    //             reply.status(500).send('Error del servidor');
+    //         }
+    //     }
+    // });
+
+    // //Editar una subcategoría
+    // fastify.put('/:categoriaId/subcategorias/:subcategoriaId', {
+    //     handler: async function (request, reply) {
+    //         const { subcategoriaId } = request.params;
+    //         const { nombre } = request.body;
+
+    //         try {
+    //             const queryResult = await query(editarSubcategoriaQuery, [nombre, subcategoriaId, request.params.categoriaId]);
+    //             if (queryResult.rows.length === 0) {
+    //                 reply.status(404).send('Subcategoría no encontrada');
+    //             } else {
+    //                 return queryResult.rows[0];
+    //             }
+    //         } catch (error) {
+    //             console.error('Error al editar subcategoría:', error.message);
+    //             reply.status(500).send('Error del servidor');
+    //         }
+    //     }
+    // });
+
+    // //Eliminar una subcategoría
+    // fastify.delete('/:categoriaId/subcategorias/:subcategoriaId', {
+    //     handler: async function (request, reply) {
+    //         const { subcategoriaId } = request.params;
+
+    //         try {
+    //             const queryResult = await query(eliminarSubcategoriaQuery, [subcategoriaId, request.params.categoriaId]);
+    //             if (queryResult.rows.length === 0) {
+    //                 reply.status(404).send('Subcategoría no encontrada');
+    //             } else {
+    //                 reply.code(204);
+    //                 return;
+    //             }
+    //         } catch (error) {
+    //             console.error('Error al eliminar subcategoría:', error.message);
+    //             reply.status(500).send('Error del servidor');
+    //         }
+    //     }
+    // });
 }
+
 
