@@ -1,11 +1,16 @@
 import { query } from '../../DB/db.js';
 import schemas from "../../schemas/index.js";
+
+import bcrypt from 'bcrypt';
+
 import {
     getUsersQuery,
     getUserByIdQuery,
     createUserQuery,
     updateUserQuery,
-    deleteUserQuery
+    deleteUserQuery,
+    getLoggedUserQuery,
+    getUserByEmail
 } from "../../DB/queries/users.js";
 
 import {
@@ -87,8 +92,39 @@ server.register(fastifyCors, {
     methods: 'GET,PUT,POST,DELETE',
 });
 export default async function (fastify, opts) {
+
+    // Loguear usuario
+    fastify.post("/login", async (request, reply) => {
+        const { email, contrasena } = request.body;
+        try {
+            const user = await query(getUserByEmail, [email]);
+            if (user.rowCount === 0) {
+                console.error("El email ingresado es incorrecto, no se encuentra en la base de datos.");
+                return reply.status(400).send({ error: "Email incorrecto", code: "EMAIL_NOT_FOUND" });
+            }
+            const hashedPassword = user.rows[0].contrasena;
+            const match = await bcrypt.compare(contrasena, hashedPassword);
+            if (match) {
+                console.log(email, contrasena);
+                console.log("Contraseña hasheada: ", hashedPassword);
+                const res = await query(getLoggedUserQuery, [email, hashedPassword]);
+                const token = fastify.jwt.sign({ email }, { expiresIn: "1h" });
+                const user_id = res.rows[0].id;
+                return reply.status(200).send({ token, user_id });
+            }
+            else {
+                console.error("La contraseña ingresada es incorrecta.");
+                return reply.status(400).send({ error: "Contraseña incorrecta", code: "WRONG_PASSWORD" });
+            }
+        }
+        catch (error) {
+            console.error("Error al iniciar sesion", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    })
+
     // Obtener Todos los usuarios
-    fastify.get("/", async (request, reply) => {
+    fastify.get("/", { onRequest: [fastify.authenticate] }, async (request, reply) => {
         try {
             const res = await query(getUsersQuery);
             return res.rows;
@@ -99,7 +135,7 @@ export default async function (fastify, opts) {
     });
 
     // Obtener usuario por su ID
-    fastify.get("/:id", async (request, reply) => {
+    fastify.get("/:id", { onRequest: [fastify.authenticate] }, async (request, reply) => {
         const { id } = request.params;
         try {
             const res = await query(getUserByIdQuery, [id]);
@@ -114,15 +150,37 @@ export default async function (fastify, opts) {
     });
 
     // Crear un usuario
-    fastify.post("/", { schema: schemas.createUserSchema }, async (request, reply) => {
-        const { nombre, email, contrasena } = request.body;
-        try {
-            const res = await query(createUserQuery, [nombre, email, contrasena]);
-            reply.code(201);
-            return res.rows[0];
-        } catch (error) {
-            console.error("Error al crear usuario", error.message);
-            reply.status(500).send("Error del servidor");
+    fastify.post("/", {
+        schema: {
+            summary: "Crea un nuevo usuario",
+            tags: ["users"],
+            body: { $ref: "createUserSchema" },
+            response: {
+                201: {
+                    type: "object",
+                    properties: {
+                        id: { type: "number" },
+                        nombre: { type: "string" },
+                        email: { type: "string" },
+                        contrasena: { type: "string" },
+                        estado: { type: "number" }
+                    }
+                }
+            }
+        },
+        handler: async (request, reply) => {
+            const { nombre, email, contrasena } = request.body;
+            const hashedContra = await bcrypt.hash(contrasena, 10);
+            try {
+                const res = await query(createUserQuery, [nombre, email, hashedContra]);
+                reply.code(201);
+                console.log("Respuesta unica:", res);
+                console.log("Respuesta row", res.rows[0])
+                return res.rows[0];
+            } catch (error) {
+                console.error("Error al crear usuario", error.message);
+                reply.status(500).send("Error del servidor");
+            }
         }
     });
 

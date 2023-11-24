@@ -39,8 +39,8 @@ export default async function (fastify, opts) {
         }
     });
 
-    //Crear una nueva categoría
-    fastify.post("/", { schema: schemas.createExpenseCategorySchema }, async function (request, reply) {
+    //rear una nueva categoría
+    fastify.post("/", async function (request, reply) {
         const { nombre } = request.body;
         try {
             const res = await query(insertCategoriaQuery, [nombre]);

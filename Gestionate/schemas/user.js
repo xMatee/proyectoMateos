@@ -15,29 +15,7 @@ const createUserSchema = {
             "description": "Contraseña del usuario."
         }
     },
-    "required": ["nombre", "email", "contrasena"],
-    response: {
-        201: {
-            "$id": "userCreatedResponseSchema",
-            "type": "object",
-            "properties": {
-                "mensaje": {
-                    "type": "string",
-                    "description": "Mensaje de éxito."
-                }
-            }
-        },
-        400: {
-            "$id": "errorResponseSchema",
-            "type": "object",
-            "properties": {
-                "error": {
-                    "type": "string",
-                    "description": "Mensaje de error."
-                }
-            }
-        }
-    }
+    "required": ["nombre", "email", "contrasena"]
 }
 
 const loginUserSchema = {
