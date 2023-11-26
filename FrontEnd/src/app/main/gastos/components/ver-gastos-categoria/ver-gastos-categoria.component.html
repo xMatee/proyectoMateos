@@ -1,19 +1,23 @@
-<div>
-    <h2>Gastos de la Categoría</h2>
-    <ul class="list-group">
-        <li *ngFor="let gasto of gastos" class="list-group-item">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h4 class="mb-1">{{ gasto.descripcion }}</h4>
-                    <p class="mb-1">{{ gasto.fecha }}</p>
-                </div>
-                <span class="badge badge-danger badge-pill text-white">${{ gasto.cantidad }}</span>
+<div class="container mt-4">
+    <div class="card mx-auto" style="max-width: 600px;">
+        <div class="card-header">
+            <h2>Gastos de la Categoría</h2>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li *ngFor="let gasto of gastos" class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-1">{{ gasto.descripcion }}</h4>
+                        <p class="mb-1">{{ gasto.fecha }}</p>
+                    </div>
+                    <span class="badge badge-danger badge-pill text-white">${{ gasto.cantidad }}</span>
 
-                <div class="d-flex">
-                    <button class="btn btn-primary mr-2" (click)="editarGasto(gasto.id)">Editar</button>
-                    <button class="btn btn-danger" (click)="eliminarGasto(gasto.id)">Eliminar</button>
+                    <div class="d-flex">
+                        <button class="btn btn-primary mr-2" (click)="editarGasto(gasto.id)">✏️</button>
+                        <button class="btn btn-danger" (click)="eliminarGasto(gasto.id)">❌</button>
+                    </div>
                 </div>
-            </div>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </div>
 </div>

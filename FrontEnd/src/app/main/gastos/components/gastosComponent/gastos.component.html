@@ -1,16 +1,20 @@
-<div class="text-center">
-    <h2>Mis Gastos</h2>
-    <h4 class="text-success">Total: {{getTotal()}}</h4>
-    <button class="btn btn-primary rounded-circle"
-        style="background-color: white; border: 2px solid black; color: green; width: 40px; height: 40px;"
-        (click)="nuevoGasto()">+</button>
+<div class="container mt-4">
+    <div class="card mx-auto" style="max-width: 600px;">
+        <div class="text-center card-header">
+            <h2>Mis Gastos</h2>
+            <h4 class="text-success">Total: {{getTotal()}}</h4>
+            <button class="btn btn-primary rounded-circle"
+                style="background-color: white; border: 2px solid black; color: green; width: 40px; height: 40px;"
+                (click)="nuevoGasto()">+</button>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li *ngFor="let categoria of categoriasTotales"
+                class="list-group-item d-flex justify-content-between align-items-center">
+                <img [src]="categoria.imagen" alt="Imagen de la categoría"
+                    style="max-width: 50px; max-height: 50px; margin-right: 10px;">
+                {{ categoria.nombre }} - Total: {{ categoria.cantidad }}
+                <button class="btn btn-success text-white" (click)="verDetalleCategoria(categoria.id)">Ver</button>
+            </li>
+        </ul>
+    </div>
 </div>
-<ul class="list-group">
-    <li *ngFor="let categoria of categoriasTotales"
-        class="list-group-item d-flex justify-content-between align-items-center">
-        <img [src]="categoria.imagen" alt="Imagen de la categoría"
-            style="max-width: 50px; max-height: 50px; margin-right: 10px;">
-        {{ categoria.nombre }} - Total: {{ categoria.cantidad }}
-        <button class="btn btn-success text-white" (click)="verDetalleCategoria(categoria.id)">Ver</button>
-    </li>
-</ul>

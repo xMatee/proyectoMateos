@@ -6,15 +6,18 @@
                     Categorías de Gastos
                 </div>
                 <div class="card-body">
-                    <div *ngFor="let categoria of gastosCategorias" class="d-flex align-items-center mb-3">
-                        <img [src]="categoria.imagen" alt="Imagen de la categoría" class="rounded-circle mr-2"
-                            width="40" height="40">
-                        {{ categoria.nombre }}
-                        <div class="ml-auto">
-                            <button class="btn btn-sm btn-primary mr-2"
-                                (click)="editarCategoria(categoria.id)">Editar</button>
-                            <button class="btn btn-sm btn-danger"
-                                (click)="eliminarCategoria(categoria.id)">Eliminar</button>
+                    <div *ngFor="let categoria of gastosCategorias"
+                        class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <img [src]="categoria.imagen" alt="Imagen de la categoría" class="rounded-circle mr-2"
+                                width="40" height="40">
+                            {{ categoria.nombre }}
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-primary mr-2" (click)="editarCategoria(categoria.id)">
+                                ✏️</button>
+                            <button class="btn btn-sm btn-danger" (click)="eliminarCategoria(categoria.id)">
+                                ❌</button>
                         </div>
                     </div>
                 </div>
@@ -30,15 +33,18 @@
                     Categorías de Ingresos
                 </div>
                 <div class="card-body">
-                    <div *ngFor="let categoria of ingresosCategorias" class="d-flex align-items-center mb-3">
-                        <img [src]="categoria.imagen" alt="Imagen de la categoría" class="rounded-circle mr-2"
-                            width="40" height="40">
-                        {{ categoria.nombre }}
-                        <div class="ml-auto">
-                            <button class="btn btn-sm btn-primary mr-2"
-                                (click)="editarCategoria(categoria.id)">Editar</button>
-                            <button class="btn btn-sm btn-danger"
-                                (click)="eliminarCategoria(categoria.id)">Eliminar</button>
+                    <div *ngFor="let categoria of ingresosCategorias"
+                        class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <img [src]="categoria.imagen" alt="Imagen de la categoría" class="rounded-circle mr-2"
+                                width="40" height="40">
+                            {{ categoria.nombre }}
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-primary mr-2" (click)="editarCategoria(categoria.id)">
+                                ✏️</button>
+                            <button class="btn btn-sm btn-danger" (click)="eliminarCategoria(categoria.id)">
+                                ❌</button>
                         </div>
                     </div>
                 </div>
