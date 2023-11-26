@@ -51,3 +51,41 @@ body {
 .text-white {
     color: #fff;
 }
+
+/* Nuevos estilos para el botón de navegación en pantallas pequeñas */
+.navbar-toggler {
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+.navbar-toggler-icon {
+    background-color: #8b0000;
+    /* Color de fondo para el icono del botón del menú en modo colapsado */
+}
+
+.navbar-toggler {
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+.navbar-toggler-icon {
+    background-color: #8b0000;
+    /* Color de fondo para el icono del botón del menú en modo colapsado */
+    border: 1px solid #8b0000;
+    /* Añade un borde al icono para mejorar la visibilidad */
+}
+
+/* Ajuste de estilo para la lista en pantallas pequeñas */
+.list-group {
+    flex-direction: column;
+    /* Cambia la dirección de la lista a columna */
+}
+
+.list-group-item {
+    margin-right: 0;
+    /* Elimina el margen derecho para los elementos de la lista */
+    margin-bottom: 5px;
+    /* Agrega un espacio entre los elementos de la lista */
+}
