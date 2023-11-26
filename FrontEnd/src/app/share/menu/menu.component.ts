@@ -25,4 +25,8 @@ export class MenuComponent {
   isLoggedIn(): boolean {
     return !!localStorage.getItem('user');
   }
+  isActive(route: string): boolean {
+    return window.location.href.endsWith(route);
+  }
 }
+

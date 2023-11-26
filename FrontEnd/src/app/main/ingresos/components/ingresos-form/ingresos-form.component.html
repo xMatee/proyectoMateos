@@ -1,0 +1,31 @@
+<form [formGroup]="ingresosForm" (ngSubmit)="guardarIngreso()" class="form-inline">
+    <div class="form-group mb-2">
+        <label class="mr-2">Cantidad:</label>
+        <input type="number" class="form-control" formControlName="cantidad" />
+    </div>
+
+    <div class="form-group mb-2">
+        <label class="mr-2">Descripción:</label>
+        <input type="text" class="form-control" formControlName="descripcion" />
+    </div>
+
+    <div class="form-group mb-2">
+        <label class="mr-2">Fecha:</label>
+        <input type="date" class="form-control" formControlName="fecha" />
+    </div>
+
+    <div class="form-group mb-2">
+        <label class="mr-2">Categoría:</label>
+        <select class="form-control" formControlName="categoria">
+            <option *ngFor="let categoria of categorias" [value]="categoria.id">
+                {{ categoria.nombre }}
+            </option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-2">Guardar Ingreso</button>
+
+    <span class="form-text text-danger" *ngIf="!ingresosForm.valid && ingresosForm.touched && !ingresosForm.pristine">
+        Asegúrate de completar todos los campos.
+    </span>
+</form>

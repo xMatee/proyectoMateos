@@ -1,0 +1,31 @@
+<form [formGroup]="gastosForm" (ngSubmit)="guardarGasto()" class="form-inline">
+    <div class="form-group mb-2">
+        <label class="mr-2">Cantidad:</label>
+        <input type="number" class="form-control" formControlName="cantidad" />
+    </div>
+
+    <div class="form-group mb-2">
+        <label class="mr-2">Descripción:</label>
+        <input type="text" class="form-control" formControlName="descripcion" />
+    </div>
+
+    <div class="form-group mb-2">
+        <label class="mr-2">Fecha:</label>
+        <input type="date" class="form-control" formControlName="fecha" />
+    </div>
+
+    <div class="form-group mb-2">
+        <label class="mr-2">Categoría:</label>
+        <select class="form-control" formControlName="categoria">
+            <option *ngFor="let categoria of categorias" [value]="categoria.id">
+                {{ categoria.nombre }}
+            </option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mb-2">Guardar Gasto</button>
+
+    <span class="form-text text-danger" *ngIf="!gastosForm.valid && gastosForm.touched && !gastosForm.pristine">
+        Asegúrate de completar todos los campos.
+    </span>
+</form>

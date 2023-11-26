@@ -1,0 +1,91 @@
+body {
+    font-family: 'Varela Round', sans-serif;
+}
+
+.navbar {
+    background: #fff;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-bottom: 1px solid #dfe3e8;
+    border-radius: 0;
+}
+
+.navbar-brand b {
+    color: #8b0000;
+    /* Rojo medio oscuro */
+}
+
+.navbar-toggler-icon {
+    background-color: #333;
+    /* Color del icono del botón del menú en modo colapsado */
+}
+
+.navbar-nav {
+    margin-right: auto;
+    /* Alinea los elementos a la izquierda y a la derecha */
+}
+
+.navbar-nav .nav-item {
+    margin-right: 10px;
+}
+
+.list-group {
+    display: flex;
+    align-items: center;
+}
+
+.list-group-item {
+    margin-right: 10px;
+}
+
+.btn-primary {
+    background: #33cabb;
+    border: none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: #31bfb1;
+}
+
+.text-white {
+    color: #fff;
+}
+
+/* Nuevos estilos para el botón de navegación en pantallas pequeñas */
+.navbar-toggler {
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+.navbar-toggler-icon {
+    background-color: #8b0000;
+    /* Color de fondo para el icono del botón del menú en modo colapsado */
+}
+
+.navbar-toggler {
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+.navbar-toggler-icon {
+    background-color: #8b0000;
+    /* Color de fondo para el icono del botón del menú en modo colapsado */
+    border: 1px solid #8b0000;
+    /* Añade un borde al icono para mejorar la visibilidad */
+}
+
+/* Ajuste de estilo para la lista en pantallas pequeñas */
+.list-group {
+    flex-direction: column;
+    /* Cambia la dirección de la lista a columna */
+}
+
+.list-group-item {
+    margin-right: 0;
+    /* Elimina el margen derecho para los elementos de la lista */
+    margin-bottom: 5px;
+    /* Agrega un espacio entre los elementos de la lista */
+}
