@@ -123,6 +123,24 @@ export default async function (fastify, opts) {
         }
     })
 
+    // Validar si email está en uso
+    fastify.post("/email", async (request, reply) => {
+        const { email } = request.body;
+        try {
+            const res = await query(getUserByEmail, [email]);
+            if (res.rowCount === 0) {
+                return reply.status(200).send({ valid: false });
+            }
+            else {
+                return reply.status(200).send({ valid: true });
+            }
+        }
+        catch (error) {
+            console.error("Error al iniciar sesion", error.message);
+            reply.status(500).send("Error del servidor");
+        }
+    })
+
     // Obtener Todos los usuarios
     fastify.get("/", { onRequest: [fastify.authenticate] }, async (request, reply) => {
         try {
@@ -622,5 +640,3 @@ export default async function (fastify, opts) {
     //     }
     // });
 }
-
-
