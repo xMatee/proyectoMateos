@@ -10,27 +10,27 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a href="" class="navbar-brand">Gestionate<b>App</b></a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a href="" class="navbar-brand">Gestionate<b class="text-danger">App</b></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav">
+            <div class="navbar-nav" *ngIf="(isLoggedIn() | async )">
                 <a routerLink="/ingresos" class="nav-item nav-link" [class.active]="isActive('/ingresos')">Ingresos</a>
                 <a routerLink="/gastos" class="nav-item nav-link" [class.active]="isActive('/gastos')">Gastos</a>
                 <a routerLink="/categorias" class="nav-item nav-link"
                     [class.active]="isActive('/categorias')">Categorias</a>
             </div>
 
-            <div class="list-group ml-auto">
-                <div *ngIf="!isLoggedIn(); else loggedIn">
+            <div class="list-group ml-auto flex-row">
+                <div *ngIf="!(isLoggedIn() | async ); else loggedIn">
                     <a routerLink="/auth/login"
-                        class="list-group-item btn btn-danger text-white mb-2 bg-danger">Login</a>
+                        class="list-group-item btn btn-danger text-white mb-2 bg-danger rounded">Login</a>
                     <a routerLink="/auth/register"
-                        class="list-group-item btn btn-danger text-white bg-danger">Registro</a>
+                        class="list-group-item btn btn-danger text-white bg-danger rounded">Registro</a>
                 </div>
                 <ng-template #loggedIn>
                     <a (click)="logout()" class="list-group-item btn btn-danger text-white bg-danger">Logout</a>

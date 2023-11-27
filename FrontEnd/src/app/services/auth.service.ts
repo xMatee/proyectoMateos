@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of, switchMap, tap, throwError } from 'rxjs';
 import { TokenAndIdResponse, User, UserAndToken } from '../../interfaces/user';
 import { HttpClient } from '@angular/common/http';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -63,21 +63,12 @@ export class AuthService {
       console.log("No hay usuario logueado")
       return;
     }
-    return this.http.put(`${this.baseUrl}/usuarios/logout/`, {}).pipe(
-      tap((message: any) => {
-        localStorage.clear();
-        this.userAndToken = undefined
-        this.route.navigate(['${this.baseUrl}/usuarios/login/']);
-        console.log(message);
-      }),
-      catchError((error: any) => {
-        console.error(error.message);
-        return throwError(() => error.message);
-      })
-    )
+    localStorage.clear();
+    this.userAndToken = undefined
+    this.route.navigate(['/']);
   }
 
-  isActive(): Observable<Boolean> {
+  isActive(): Observable<boolean> {
     if (!localStorage.getItem(this.USER_KEY)) {
       this.userAndToken = undefined
       return of(false)

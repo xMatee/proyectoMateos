@@ -1,0 +1,13 @@
+body {
+    padding-top: 4.5rem;
+}
+
+.content {
+    text-align: center;
+    padding: 3rem;
+}
+
+.content-notLoggedIn {
+    text-align: center;
+    padding: 3rem;
+}

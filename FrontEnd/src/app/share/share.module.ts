@@ -5,6 +5,9 @@ import { MainLayoutPageComponent } from './pages/main-layout-page/main-layout-pa
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
+import { AuthService } from '../services/auth.service';
+import { LoginComponent } from '../auth/login/login.component';
+import { AuthModule } from '../auth/auth.module';
 
 
 
@@ -12,7 +15,14 @@ import { HomeComponent } from './pages/home/home.component';
   declarations: [MenuComponent, MainLayoutPageComponent, NotFoundComponent, HomeComponent],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    AuthModule
+  ],
+  exports: [
+    MainLayoutPageComponent,
+    NotFoundComponent,
+    MenuComponent,
+    HomeComponent
   ]
 })
 export class ShareModule { }
