@@ -12,7 +12,7 @@ import { Categoria } from '../../interfaces/categoria';
 export class EditarCategoriaComponent {
   categoriaId: number = 0;
   usuarioId: number = 3;
-  categoria: Categoria = { id: 0, nombre: "", estado: -1, usuario_id: -1, tipo: -1, imagen: "" }
+  categoria: Categoria = { id: 0, nombre: "", estado: -1, usuario_id: -1, tipo: -1, imagen: "", color: "" }
 
   constructor(
     private categoriasService: CategoriasService,
