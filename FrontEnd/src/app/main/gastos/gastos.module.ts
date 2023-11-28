@@ -7,10 +7,11 @@ import { VerGastosCategoriaComponent } from './components/ver-gastos-categoria/v
 import { GastosFormComponent } from './components/gastos-form/gastos-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditarGastoComponent } from './components/editar-gasto/editar-gasto.component';
+import { PieChartComponent } from '../grafica/pie-chart/pie-chart.component';
 
 
 @NgModule({
-  declarations: [GastosComponent, VerGastosCategoriaComponent, GastosFormComponent, EditarGastoComponent],
+  declarations: [GastosComponent, VerGastosCategoriaComponent, GastosFormComponent, EditarGastoComponent, PieChartComponent],
   imports: [
     CommonModule,
     GastosRoutingModule,
