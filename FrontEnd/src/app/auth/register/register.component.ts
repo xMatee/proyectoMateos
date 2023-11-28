@@ -43,11 +43,7 @@ export class RegisterComponent {
     this.authService.doRegister(this.myForm.value.email, this.myForm.value.contrasena, this.myForm.value.nombre)
       .subscribe({
         next: (user) => {
-          this.authService.doLogin(this.myForm.value.email, this.myForm.value.contrasena).subscribe({
-            next: () => {
-              this.router.navigate(['/']);
-            }
-          })
+          this.router.navigate(['/login']);
         },
         error: (error: any) => {
           console.error("Error capturado: ", error.message);
