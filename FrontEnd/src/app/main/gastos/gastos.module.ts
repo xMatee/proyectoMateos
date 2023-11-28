@@ -7,7 +7,7 @@ import { VerGastosCategoriaComponent } from './components/ver-gastos-categoria/v
 import { GastosFormComponent } from './components/gastos-form/gastos-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditarGastoComponent } from './components/editar-gasto/editar-gasto.component';
-import { PieChartComponent } from '../grafica/pie-chart/pie-chart.component';
+import { PieChartComponent } from './components/graficaGastos/pie-chart/pie-chart.component';
 
 
 @NgModule({

@@ -25,10 +25,10 @@ export class GastosComponent implements OnInit {
       this.categoriasSerivce.ConsultarCategoriasGastos(3).subscribe((datosC) => {
         this.categorias = datosC;
         this.calcularCantidadesTotales(this.datosA);
+        this.globalService.setCategoriasTotales(this.categoriasTotales);
       });
     });
   }
-
   calcularCantidadesTotales(gastos: Gasto[]): void {
     const categoriasMap = new Map<number, { id: number, nombre: string, cantidad: number, imagen: string }>();
     gastos.forEach((gasto) => {
@@ -49,7 +49,17 @@ export class GastosComponent implements OnInit {
     this.globalService.setTotalGastos(this.totalGastos)
     this.categoriasTotales = Array.from(categoriasMap.values());
     this.categoriasTotales.sort((a, b) => b.cantidad - a.cantidad);
+    this.asignarColores(this.categoriasTotales);
+
   }
+  private asignarColores(categorias: any[]): void {
+    const colores = ['bg-primary', 'bg-secondary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info', 'bg-dark'];
+
+    categorias.forEach((categoria, index) => {
+      categoria.color = colores[index % colores.length];
+    });
+  }
+
 
   verDetalleCategoria(idCategoria: number): void {
     this.globalService.setCategoriaId(idCategoria)
