@@ -16,15 +16,11 @@ export class PieChartComponent implements OnInit {
   constructor(private globalService: GlobalService) { }
 
   ngOnInit(): void {
-    this.categoriasTotales = this.globalService.getCategoriasTotales();
+    this.categoriasTotales = this.globalService.getCategoriasTotalesIngresos();
     this.createChart();
   }
 
   createChart() {
-    // Utiliza this.categoriasTotales para crear la gráfica según esos datos
-    // ...
-
-    // Ejemplo de código (ajústalo según tus necesidades):
     this.chart = new Chart("MyChart", {
       type: 'pie',
       data: {

@@ -25,7 +25,7 @@ export class GastosComponent implements OnInit {
       this.categoriasSerivce.ConsultarCategoriasGastos(3).subscribe((datosC) => {
         this.categorias = datosC;
         this.calcularCantidadesTotales(this.datosA);
-        this.globalService.setCategoriasTotales(this.categoriasTotales);
+        this.globalService.setCategoriasTotalesGastos(this.categoriasTotales);
       });
     });
   }

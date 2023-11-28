@@ -16,7 +16,7 @@ export class PieChartComponent implements OnInit {
   constructor(private globalService: GlobalService) { }
 
   ngOnInit(): void {
-    this.categoriasTotales = this.globalService.getCategoriasTotales();
+    this.categoriasTotales = this.globalService.getCategoriasTotalesGastos();
     this.createChart();
   }
 
