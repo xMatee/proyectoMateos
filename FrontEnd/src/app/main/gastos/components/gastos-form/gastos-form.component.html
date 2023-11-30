@@ -24,7 +24,8 @@
 
                         <div class="form-group">
                             <label for="categoria">Categoría:</label>
-                            <select class="form-control" id="categoria" formControlName="categoria">
+                            <select class="form-control" id="categoria" class="form-select form-select-sm"
+                                formControlName="categoria">
                                 <option *ngFor="let categoria of categorias" [value]="categoria.id">
                                     {{ categoria.nombre }}
                                 </option>
@@ -32,8 +33,8 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary mr-2">Guardar Gasto</button>
-                            <a routerLink="/gastos" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-danger m-2">Guardar Gasto</button>
+                            <a routerLink="/gastos" class="btn btn-secondary m-2">Cancelar</a>
                         </div>
 
                         <span class="form-text text-danger"

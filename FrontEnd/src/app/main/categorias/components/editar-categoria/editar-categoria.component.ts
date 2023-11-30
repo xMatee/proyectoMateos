@@ -14,8 +14,9 @@ export class EditarCategoriaComponent {
   private readonly USER_KEY = environment.USER_KEY;
   private userAndToken = JSON.parse(localStorage.getItem(this.USER_KEY)!);
 
+  categoriaId: number = 0;
   usuarioId: number = this.userAndToken.user.id;
-  categoria: Categoria = { id: 0, nombre: "", estado: -1, usuario_id: -1, tipo: -1, imagen: "" }
+  categoria: Categoria = { id: 0, nombre: "", estado: -1, usuario_id: -1, tipo: -1, imagen: "", color: "" };
 
   constructor(
     private categoriasService: CategoriasService,
