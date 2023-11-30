@@ -10,7 +10,7 @@
                         <h4 class="mb-1">{{ ingreso.descripcion }}</h4>
                         <p class="mb-1">{{ ingreso.fecha }}</p>
                     </div>
-                    <span class="badge badge-success badge-pill text-white">${{ ingreso.cantidad }}</span>
+                    <span class="badge badge-success badge-pill text-black">${{ ingreso.cantidad }}</span>
                     <div class="d-flex">
                         <button class="btn btn-primary mr-2" (click)="editarIngreso(ingreso.id)">✏️</button>
                         <button class="btn btn-danger" (click)="eliminarIngreso(ingreso.id)">❌</button>
