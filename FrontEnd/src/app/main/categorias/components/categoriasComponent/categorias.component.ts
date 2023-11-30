@@ -4,6 +4,7 @@ import { GastosService } from '../../../gastos/gastos.service';
 import { IngresosService } from '../../../ingresos/ingresos.service';
 import { Router } from '@angular/router';
 import { CategoriasService } from '../../categorias.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-categorias',
@@ -14,6 +15,9 @@ export class CategoriasComponent implements OnInit {
   gastosCategorias: Categoria[] = [];
   ingresosCategorias: Categoria[] = [];
 
+  private readonly USER_KEY = environment.USER_KEY;
+  private userAndToken = JSON.parse(localStorage.getItem(this.USER_KEY)!);
+
   constructor(private categoriasService: CategoriasService, private router: Router) { }
 
   ngOnInit(): void {
@@ -21,7 +25,7 @@ export class CategoriasComponent implements OnInit {
   }
 
   obtenerCategorias() {
-    this.categoriasService.ConsultarCategoriasGastos(3).subscribe(
+    this.categoriasService.ConsultarCategoriasGastos(this.userAndToken.user.id).subscribe(
       (categorias) => {
         this.gastosCategorias = categorias;
       },
@@ -30,7 +34,7 @@ export class CategoriasComponent implements OnInit {
       }
     );
 
-    this.categoriasService.ConsultarCategoriasIngresos(3).subscribe(
+    this.categoriasService.ConsultarCategoriasIngresos(this.userAndToken.user.id).subscribe(
       (categorias) => {
         this.ingresosCategorias = categorias;
       },

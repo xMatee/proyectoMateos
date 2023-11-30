@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { GastosService } from '../../gastos.service';
 import { Categoria } from '../../../categorias/interfaces/categoria';
 import { CategoriasService } from 'src/app/main/categorias/categorias.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-gastos-form',
@@ -12,6 +13,8 @@ import { CategoriasService } from 'src/app/main/categorias/categorias.service';
 })
 export class GastosFormComponent implements OnInit {
   categorias: Categoria[] = [];
+  private readonly USER_KEY = environment.USER_KEY;
+  private userAndToken = JSON.parse(localStorage.getItem(this.USER_KEY)!);
 
   constructor(
     private gastosService: GastosService,
@@ -33,7 +36,7 @@ export class GastosFormComponent implements OnInit {
 
 
   obtenerCategorias(): void {
-    this.categoriasService.ConsultarCategoriasGastos(3).subscribe(
+    this.categoriasService.ConsultarCategoriasGastos(this.userAndToken.user.id).subscribe(
       (categorias) => {
         this.categorias = categorias;
       },

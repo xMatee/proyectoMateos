@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Categoria } from 'src/app/main/categorias/interfaces/categoria';
 import { Ingreso } from '../../interfaces/ingreso';
 import { CategoriasService } from 'src/app/main/categorias/categorias.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-editar-ingreso',
@@ -12,8 +13,10 @@ import { CategoriasService } from 'src/app/main/categorias/categorias.service';
   styleUrls: ['./editar-ingreso.component.css']
 })
 export class EditarIngresoComponent {
+  private readonly USER_KEY = environment.USER_KEY;
+  private userAndToken = JSON.parse(localStorage.getItem(this.USER_KEY)!);
   ingresoId: number = 0;
-  usuarioId: number = 3;
+  usuarioId: number = this.userAndToken.user.id;
   categorias: Categoria[] = [];
   ingreso: Ingreso = { id: 0, cantidad: 0, fecha: "", descripcion: "", categoria_id: 0, subcategoria_id: 0, usuario_id: 0 }
 

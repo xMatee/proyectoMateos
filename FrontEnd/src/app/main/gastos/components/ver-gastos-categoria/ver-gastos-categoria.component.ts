@@ -4,6 +4,7 @@ import { Gasto } from '../../interfaces/gasto';
 import { GlobalService } from '../../../services/global-service.service';
 import { Router } from '@angular/router';
 import { CategoriasService } from 'src/app/main/categorias/categorias.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-ver-gastos-categoria',
@@ -11,6 +12,8 @@ import { CategoriasService } from 'src/app/main/categorias/categorias.service';
   styleUrls: ['./ver-gastos-categoria.component.css']
 })
 export class VerGastosCategoriaComponent implements OnInit {
+  private readonly USER_KEY = environment.USER_KEY;
+  private userAndToken = JSON.parse(localStorage.getItem(this.USER_KEY)!);
   gastos: Gasto[] = [];
   categoriaId: number = 0;
 
@@ -29,7 +32,7 @@ export class VerGastosCategoriaComponent implements OnInit {
   }
 
   obtenerGastosPorCategoria(): void {
-    this.gastosService.ConsultarGastosPorCategoria(3, this.categoriaId).subscribe(gastos => {
+    this.gastosService.ConsultarGastosPorCategoria(this.userAndToken.user.id, this.categoriaId).subscribe(gastos => {
       this.gastos = gastos;
     });
   }
@@ -39,7 +42,7 @@ export class VerGastosCategoriaComponent implements OnInit {
   }
 
   eliminarGasto(gastoId: number): void {
-    this.gastosService.eliminarGasto(3, gastoId).subscribe()
+    this.gastosService.eliminarGasto(this.userAndToken.user.id, gastoId).subscribe()
     const currentUrl = this.router.url;
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([currentUrl]);

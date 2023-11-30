@@ -26,11 +26,8 @@ export class ValidationService {
         return this.emailPattern
     }
     public emailAlreadyInUseAsync = (control: FormControl): Observable<boolean> => {
-        return this.http.post<boolean>(`${this.baseUrl}/usuarios/email`, { email: control.value })
+        return this.http.post<any>(`${this.baseUrl}/usuarios/email`, { email: control.value })
             .pipe(
-                map((response: boolean) => {
-                    return response;
-                }),
                 catchError((error: any) => {
                     console.log("Hubo un error");
                     console.error(error.message);

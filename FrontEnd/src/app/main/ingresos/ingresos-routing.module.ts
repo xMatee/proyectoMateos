@@ -5,11 +5,13 @@ import { IngresosComponent } from './components/ingresosComponents/ingresos.comp
 import { VerIngresosCategoriaComponent } from './components/ver-ingresos-categoria/ver-ingresos-categoria.component';
 import { IngresosFormComponent } from './components/ingresos-form/ingresos-form.component';
 import { EditarIngresoComponent } from './components/editar-ingreso/editar-ingreso.component';
+import { authGuardGuard } from 'src/app/auth/guards/auth-guard.guard';
 
 
 const routes: Routes = [{
   path: "",
   component: MainLayoutPageComponent,
+  canActivateChild: [authGuardGuard],
   children: [
     {
       path: "",
@@ -26,6 +28,10 @@ const routes: Routes = [{
     {
       path: "new",
       component: IngresosFormComponent
+    },
+    {
+      path: "*",
+      component: MainLayoutPageComponent
     }
   ]
 },];

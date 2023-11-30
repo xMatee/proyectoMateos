@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of, switchMap, tap, throwError } from 'rxjs';
-import { TokenAndIdResponse, User, UserAndToken } from '../../interfaces/user';
+import { TokenAndIdResponse, User, UserAndToken } from '../../../interfaces/user';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';

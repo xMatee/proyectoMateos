@@ -3,6 +3,7 @@ import { CategoriasService } from '../../categorias.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Categoria } from '../../interfaces/categoria';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-editar-categoria',
@@ -10,9 +11,11 @@ import { Categoria } from '../../interfaces/categoria';
   styleUrls: ['./editar-categoria.component.css']
 })
 export class EditarCategoriaComponent {
-  categoriaId: number = 0;
-  usuarioId: number = 3;
-  categoria: Categoria = { id: 0, nombre: "", estado: -1, usuario_id: -1, tipo: -1, imagen: "", color: "" }
+  private readonly USER_KEY = environment.USER_KEY;
+  private userAndToken = JSON.parse(localStorage.getItem(this.USER_KEY)!);
+
+  usuarioId: number = this.userAndToken.user.id;
+  categoria: Categoria = { id: 0, nombre: "", estado: -1, usuario_id: -1, tipo: -1, imagen: "" }
 
   constructor(
     private categoriasService: CategoriasService,
