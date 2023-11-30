@@ -28,6 +28,7 @@ export class IngresosComponent implements OnInit {
       this.categoriasService.ConsultarCategoriasIngresos(this.userAndToken.user.id).subscribe((datosC) => {
         this.categorias = datosC;
         this.calcularCantidadesTotales(this.datosA);
+        this.globalService.setCategoriasTotalesIngresos(this.categoriasTotales);
       });
     });
   }
@@ -54,8 +55,22 @@ export class IngresosComponent implements OnInit {
     this.globalService.setTotalIngresos(this.totalIngresos);
     this.categoriasTotales = Array.from(categoriasMap.values());
     this.categoriasTotales.sort((a, b) => b.cantidad - a.cantidad);
+    this.asignarColores(this.categoriasTotales);
   }
+  private asignarColores(categorias: any[]): void {
+    const colores = [
+      'red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue',
+      'light-blue', 'cyan', 'teal', 'green', 'light-green', 'lime',
+      'yellow', 'amber', 'orange', 'deep-orange', 'brown', 'blue-grey',
+      'grey', 'black'
+    ];
 
+
+    categorias.forEach((categoria, index) => {
+      categoria.color = colores[index % colores.length];
+      console.log(categoria.color)
+    });
+  }
   verDetalleCategoria(idCategoria: number): void {
     this.globalService.setCategoriaId(idCategoria)
     this.router.navigate(['/ingresos/ver', idCategoria]);

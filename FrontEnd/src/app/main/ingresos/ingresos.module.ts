@@ -7,6 +7,7 @@ import { VerIngresosCategoriaComponent } from './components/ver-ingresos-categor
 import { IngresosFormComponent } from './components/ingresos-form/ingresos-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditarIngresoComponent } from './components/editar-ingreso/editar-ingreso.component';
+import { PieChartComponent } from './components/graficaIngresos/pie-chart/pie-chart.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { EditarIngresoComponent } from './components/editar-ingreso/editar-ingre
     IngresosComponent,
     IngresosFormComponent,
     EditarIngresoComponent,
+    PieChartComponent
 
   ],
   imports: [

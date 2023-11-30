@@ -32,4 +32,21 @@ export class GlobalService {
   getTotalDiferencia(): number {
     return this.totalIngresosSource.value - this.totalGastosSource.value;
   }
+  private categoriasTotalesDataGastos: any[] = [];
+  private categoriasTotalesDataIngresos: any[] = [];
+
+  setCategoriasTotalesGastos(data: any[]): void {
+    this.categoriasTotalesDataGastos = data;
+  }
+
+  getCategoriasTotalesGastos(): any[] {
+    return this.categoriasTotalesDataGastos;
+  }
+  setCategoriasTotalesIngresos(data: any[]): void {
+    this.categoriasTotalesDataIngresos = data;
+  }
+
+  getCategoriasTotalesIngresos(): any[] {
+    return this.categoriasTotalesDataIngresos;
+  }
 }

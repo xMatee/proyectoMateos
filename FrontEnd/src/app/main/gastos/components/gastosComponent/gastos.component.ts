@@ -28,10 +28,10 @@ export class GastosComponent implements OnInit {
       this.categoriasSerivce.ConsultarCategoriasGastos(this.userAndToken.user.id).subscribe((datosC) => {
         this.categorias = datosC;
         this.calcularCantidadesTotales(this.datosA);
+        this.globalService.setCategoriasTotalesGastos(this.categoriasTotales);
       });
     });
   }
-
   calcularCantidadesTotales(gastos: Gasto[]): void {
     const categoriasMap = new Map<number, { id: number, nombre: string, cantidad: number, imagen: string }>();
     gastos.forEach((gasto) => {
@@ -44,7 +44,7 @@ export class GastosComponent implements OnInit {
         categoriasMap.get(categoriaId)!.cantidad += cantidad;
       } else {
         const categoria = this.categorias.find(c => c.id === categoriaId);
-        const categoriaNombre = categoria ? categoria.nombre : 'Categoría Desconocida';
+        const categoriaNombre = categoria ? categoria.nombre : 'Sin categoria';
         const categoriaImagen = categoria ? categoria.imagen : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fes%2Ffree-png-yxtos&psig=AOvVaw3KXZ4StP_xqlLh1C460kHx&ust=1699999406379000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOCFhLn9wYIDFQAAAAAdAAAAABAE'
         categoriasMap.set(categoriaId, { id: categoriaId, nombre: categoriaNombre, cantidad, imagen: categoriaImagen });
       }
@@ -52,7 +52,23 @@ export class GastosComponent implements OnInit {
     this.globalService.setTotalGastos(this.totalGastos)
     this.categoriasTotales = Array.from(categoriasMap.values());
     this.categoriasTotales.sort((a, b) => b.cantidad - a.cantidad);
+    this.asignarColores(this.categoriasTotales);
   }
+  private asignarColores(categorias: any[]): void {
+    const colores = [
+      'red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue',
+      'light-blue', 'cyan', 'teal', 'green', 'light-green', 'lime',
+      'yellow', 'amber', 'orange', 'deep-orange', 'brown', 'blue-grey',
+      'grey', 'black'
+    ];
+
+
+    categorias.forEach((categoria, index) => {
+      categoria.color = colores[index % colores.length];
+      console.log(categoria.color)
+    });
+  }
+
 
   verDetalleCategoria(idCategoria: number): void {
     this.globalService.setCategoriaId(idCategoria)

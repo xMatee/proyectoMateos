@@ -4,5 +4,6 @@ export interface Categoria {
     estado: number,
     usuario_id: number,
     tipo: number,
-    imagen: string
+    imagen: string,
+    color: string
 }
