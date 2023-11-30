@@ -1,0 +1,57 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Categorías de Gastos
+                </div>
+                <div class="card-body">
+                    <div *ngFor="let categoria of gastosCategorias"
+                        class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <img [src]="categoria.imagen" alt="Imagen de la categoría" class="rounded-circle mr-2"
+                                width="40" height="40">
+                            {{ categoria.nombre }}
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-primary mr-2" (click)="editarCategoria(categoria.id)">
+                                ✏️</button>
+                            <button class="btn btn-sm btn-danger" (click)="eliminarCategoria(categoria.id)">
+                                ❌</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-danger" (click)="nuevaCategoriaGasto()">Agregar a Gasto</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Categorías de Ingresos
+                </div>
+                <div class="card-body">
+                    <div *ngFor="let categoria of ingresosCategorias"
+                        class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center">
+                            <img [src]="categoria.imagen" alt="Imagen de la categoría" class="rounded-circle mr-2"
+                                width="40" height="40">
+                            {{ categoria.nombre }}
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-primary mr-2" (click)="editarCategoria(categoria.id)">
+                                ✏️</button>
+                            <button class="btn btn-sm btn-danger" (click)="eliminarCategoria(categoria.id)">
+                                ❌</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-danger" (click)="nuevaCategoriaIngreso()">Agregar a Ingreso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

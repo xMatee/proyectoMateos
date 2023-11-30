@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
-import { User } from '../../auth/interfaces/user';
+import { AuthService } from '../../auth/services/auth.service';
+import { User } from '../../../interfaces/user';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
@@ -22,7 +23,12 @@ export class MenuComponent {
     this.authService.doLogout();
   }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('user');
+  isLoggedIn(): Observable<boolean> {
+    return this.authService.isActive().pipe(map(isActive => !!isActive));
+  }
+
+  isActive(route: string): boolean {
+    return window.location.href.endsWith(route);
   }
 }
+
