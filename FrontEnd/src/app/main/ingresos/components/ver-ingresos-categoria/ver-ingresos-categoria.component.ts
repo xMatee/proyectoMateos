@@ -4,6 +4,7 @@ import { Ingreso } from '../../interfaces/ingreso';
 import { IngresosService } from '../../ingresos.service';
 import { Router } from '@angular/router';
 import { CategoriasService } from 'src/app/main/categorias/categorias.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-ver-ingresos-categoria',
   templateUrl: './ver-ingresos-categoria.component.html',
@@ -12,6 +13,8 @@ import { CategoriasService } from 'src/app/main/categorias/categorias.service';
 export class VerIngresosCategoriaComponent implements OnInit {
   ingresos: Ingreso[] = [];
   categoriaId: number = 0;
+  private readonly USER_KEY = environment.USER_KEY;
+  private userAndToken = JSON.parse(localStorage.getItem(this.USER_KEY)!);
 
   constructor(private ingresosService: IngresosService, private categoriasService: CategoriasService, private globalService: GlobalService, private router: Router) { }
 
@@ -23,7 +26,7 @@ export class VerIngresosCategoriaComponent implements OnInit {
   }
 
   obtenerGastosPorCategoria(): void {
-    this.ingresosService.ConsultarIngresosPorCategoria(3, this.categoriaId).subscribe(ingresos => {
+    this.ingresosService.ConsultarIngresosPorCategoria(this.userAndToken.user.id, this.categoriaId).subscribe(ingresos => {
       this.ingresos = ingresos;
     });
   }
@@ -32,7 +35,7 @@ export class VerIngresosCategoriaComponent implements OnInit {
   }
 
   eliminarIngreso(gastoId: number): void {
-    this.ingresosService.eliminarIngreso(3, gastoId).subscribe()
+    this.ingresosService.eliminarIngreso(this.userAndToken.user.id, gastoId).subscribe()
     const currentUrl = this.router.url;
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([currentUrl]);

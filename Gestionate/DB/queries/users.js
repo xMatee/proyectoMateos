@@ -30,4 +30,4 @@ export const getLoggedUserQuery = `
 
 export const getUserByEmail = `
 SELECT * FROM public.usuarios WHERE email = $1;
-`;
+`;  

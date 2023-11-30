@@ -5,6 +5,7 @@ import { GlobalService } from '../../../services/global-service.service';
 import { Ingreso } from '../../interfaces/ingreso';
 import { IngresosService } from '../../ingresos.service';
 import { CategoriasService } from 'src/app/main/categorias/categorias.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-ingresos',
@@ -12,6 +13,8 @@ import { CategoriasService } from 'src/app/main/categorias/categorias.service';
   styleUrls: ['./ingresos.component.css']
 })
 export class IngresosComponent implements OnInit {
+  private readonly USER_KEY = environment.USER_KEY;
+  private userAndToken = JSON.parse(localStorage.getItem(this.USER_KEY)!);
   datosA: Ingreso[] = [];
   categoriasTotales: any[] = [];
   categorias: Categoria[] = [];
@@ -20,9 +23,9 @@ export class IngresosComponent implements OnInit {
   constructor(private ingresosService: IngresosService, private categoriasService: CategoriasService, private router: Router, private globalService: GlobalService) { }
 
   ngOnInit(): void {
-    this.ingresosService.ConsultarIngresos(3).subscribe((datos) => {
+    this.ingresosService.ConsultarIngresos(this.userAndToken.user.id).subscribe((datos) => {
       this.datosA = datos;
-      this.categoriasService.ConsultarCategoriasIngresos(3).subscribe((datosC) => {
+      this.categoriasService.ConsultarCategoriasIngresos(this.userAndToken.user.id).subscribe((datosC) => {
         this.categorias = datosC;
         this.calcularCantidadesTotales(this.datosA);
       });

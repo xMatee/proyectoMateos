@@ -5,6 +5,7 @@ import { GastosService } from '../../gastos.service';
 import { Categoria } from '../../../categorias/interfaces/categoria';
 import { Gasto } from '../../interfaces/gasto';
 import { CategoriasService } from 'src/app/main/categorias/categorias.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-editar-gasto',
@@ -12,8 +13,10 @@ import { CategoriasService } from 'src/app/main/categorias/categorias.service';
   styleUrls: ['./editar-gasto.component.css']
 })
 export class EditarGastoComponent implements OnInit {
+  private readonly USER_KEY = environment.USER_KEY;
+  private userAndToken = JSON.parse(localStorage.getItem(this.USER_KEY)!);
   gastoId: number = 0;
-  usuarioId: number = 3;
+  usuarioId: number = this.userAndToken.user.id;
   categorias: Categoria[] = [];
   gasto: Gasto = { id: 0, cantidad: 0, fecha: "", descripcion: "", categoria_id: 0, subcategoria_id: 0, usuario_id: 0 }
 

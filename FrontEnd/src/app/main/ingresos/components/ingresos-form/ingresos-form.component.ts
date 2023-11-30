@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { IngresosService } from '../../ingresos.service';
 import { Categoria } from '../../../categorias/interfaces/categoria';
 import { CategoriasService } from 'src/app/main/categorias/categorias.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-ingresos-form',
@@ -12,6 +13,8 @@ import { CategoriasService } from 'src/app/main/categorias/categorias.service';
 })
 export class IngresosFormComponent implements OnInit {
   categorias: Categoria[] = [];
+  private readonly USER_KEY = environment.USER_KEY;
+  private userAndToken = JSON.parse(localStorage.getItem(this.USER_KEY)!);
 
   constructor(
     private ingresosService: IngresosService,
@@ -33,7 +36,7 @@ export class IngresosFormComponent implements OnInit {
 
 
   obtenerCategorias(): void {
-    this.categoriasService.ConsultarCategoriasIngresos(3).subscribe(
+    this.categoriasService.ConsultarCategoriasIngresos(this.userAndToken.user.id).subscribe(
       (categorias) => {
         this.categorias = categorias;
       },

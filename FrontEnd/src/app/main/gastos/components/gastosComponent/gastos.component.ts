@@ -5,6 +5,7 @@ import { Gasto } from '../../interfaces/gasto';
 import { Categoria } from '../../../categorias/interfaces/categoria';
 import { Router } from '@angular/router';
 import { CategoriasService } from 'src/app/main/categorias/categorias.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-gastos',
@@ -12,6 +13,8 @@ import { CategoriasService } from 'src/app/main/categorias/categorias.service';
   styleUrls: ['./gastos.component.css']
 })
 export class GastosComponent implements OnInit {
+  private readonly USER_KEY = environment.USER_KEY;
+  private userAndToken = JSON.parse(localStorage.getItem(this.USER_KEY)!);
   datosA: Gasto[] = [];
   categoriasTotales: any[] = [];
   categorias: Categoria[] = [];
@@ -20,9 +23,9 @@ export class GastosComponent implements OnInit {
   constructor(private gastosService: GastosService, private categoriasSerivce: CategoriasService, private router: Router, private globalService: GlobalService) { }
 
   ngOnInit(): void {
-    this.gastosService.ConsultarGastos(3).subscribe((datos) => {
+    this.gastosService.ConsultarGastos(this.userAndToken.user.id).subscribe((datos) => {
       this.datosA = datos;
-      this.categoriasSerivce.ConsultarCategoriasGastos(3).subscribe((datosC) => {
+      this.categoriasSerivce.ConsultarCategoriasGastos(this.userAndToken.user.id).subscribe((datosC) => {
         this.categorias = datosC;
         this.calcularCantidadesTotales(this.datosA);
       });

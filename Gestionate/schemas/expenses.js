@@ -27,27 +27,6 @@ const createExpenseSchema = {
       "type": "integer",
       "description": "ID del usuario al que pertenece este gasto."
     }
-  },
-  "required": ["cantidad", "fecha", "categoria_id", "usuario_id"],
-  201: {
-    "$id": "expenseCreatedResponseSchema",
-    "type": "object",
-    "properties": {
-      "mensaje": {
-        "type": "string",
-        "description": "Mensaje de éxito."
-      }
-    },
-  },
-  400: {
-    "$id": "errorResponseSchema",
-    "type": "object",
-    "properties": {
-      "error": {
-        "type": "string",
-        "description": "Mensaje de error."
-      }
-    },
   }
 }
 

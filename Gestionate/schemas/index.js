@@ -27,23 +27,18 @@ const generic404ResponseSchema = {
     "required": ["message"]
 }
 
-const errorResponseSchema = {
-    "$id": "errorResponseSchema",
-    "type": "object",
-    "properties": {
-        "error": {
-            "type": "string",
-            "description": "Mensaje de error."
-        }
-    }
-};
+const generic400ResponseSchema = {
+    $id: "generic400ResponseSchema",
+    "description": "Hubo un error",
+    type: "null",
+}
 
 
 const schemas = {
     genericLinkSchema,
     generic204ResponseSchema,
     generic404ResponseSchema,
-    errorResponseSchema,
+    generic400ResponseSchema,
     ...expenseSchemas,
     ...incomeSchema,
     ...userSchema,
